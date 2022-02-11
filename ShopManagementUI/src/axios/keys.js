@@ -1,4 +1,4 @@
-export const LOGGED_IN_USER = 'IDMS_TreatLib_LOGGED_IN_USER';
+export const LOGGED_IN_USER = 'SMS_LOGGED_IN_USER';
 export const FILES = 'FILES';
 export const KEYWORDS = 'KEYWORDS';
 export const OFFICES = 'OFFICES';
