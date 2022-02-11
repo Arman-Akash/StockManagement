@@ -1,0 +1,269 @@
+@font-face {
+	font-family: 'Arial Narrow';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/ArialNarrow2.woff2') format('woff2'),
+	   url('../fonts/ArialNarrow2.woff') format('woff');
+}
+@font-face {
+	font-family: 'Arial Narrow';
+	font-style: normal;
+	font-weight: 700;
+	src: url('../fonts/ArialNB.woff2') format('woff2'),
+	   url('../fonts/ArialNB.woff') format('woff');
+}
+@font-face {
+	font-family: 'Futura Condensed';
+	font-style: normal;
+	font-weight: 500;
+	src: url('../fonts/Futura-CondensedMedium.woff2') format('woff2'),
+	   url('../fonts/Futura-CondensedMedium.woff') format('woff');
+}
+.login2-box-body {
+	width: 420px;
+	float: right;
+	/*margin: 150px 100px 0 0;*/
+	position: fixed;
+	bottom: 30%;
+	right: 100px;
+	z-index: 101;
+}
+#login-body footer {
+   padding: 40px 0;
+   text-align: center;
+}
+#login-body .footer-note {
+   margin-top: 0;
+   width: 300px;
+	color: #fff;
+	font-family: 'Arial Narrow';
+	font-weight: 700;
+	font-size: 14px;
+	position: fixed;
+	right: 1px;
+	bottom: 1px;
+	z-index: 100;
+}
+#login-body .footer-note a {
+	text-decoration: none;
+	color: #f8981d;
+	border: none;
+}
+#login-body {
+	background-color: transparent;
+}
+#login-body .btn-login {
+	text-transform: none;
+	border-radius: 5px;
+	color: #fff;
+	font-family: 'Arial Narrow';
+	font-weight: 700;
+	font-size: 14px;
+}
+#login-body .form-group.form-md-line-input.form-md-floating-label .form-control~label {
+	color: #fff;
+	font-family: 'Arial Narrow';
+	font-weight: 700;
+	font-size: 14px;
+}
+.main-header {
+	font-family: 'Futura Condensed';
+	font-size: 30px;
+	color: #fff;
+	text-align: center;
+	margin: 10px 0;
+}
+.logo-holder img {
+	display: block;
+	width: 100px;
+	margin: 0 auto;
+}
+.form-group.form-md-line-input {
+	margin-bottom: 20px;
+}
+.form-group.form-md-line-input.margin-bottom-20 {
+	margin-bottom: 20px;
+}
+#login-body {
+	overflow: hidden;
+}
+.form-group.form-md-line-input .form-control {
+	color: #fff;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+input:-webkit-autofill, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  /*-webkit-text-fill-color: green;*/
+}
+
+
+
+
+
+
+
+
+
+.radar-wrapper2 {
+	position: absolute;
+	top: 70%;
+	left: 120px;
+	-webkit-transform: translate(-50%, -50%);
+	       transform: translate(-50%, -50%);
+	width: 57vw;
+	height: 57vw;
+	/*background: linear-gradient(-200deg, rgba(25,51,134,0.3), rgba(25,51,134,0.3));*/
+	background: url(../images/radProtractor.png);
+	background-size: cover;
+	border-radius: 50%;
+	/*border: 1px solid rgba(135,206,250,1);*/
+	overflow: hidden;
+	/*box-shadow: 0 0 50px rgba(135,206,250,1);*/
+	z-index: 101;
+}
+
+.radar-wrapper {
+	position: relative;
+	-webkit-transform: translate(13%, 18%);
+	       transform: translate(13%, 18%);
+	width: 45vw;
+	height: 45vw;
+	border-radius: 50%;
+	border: 2px solid rgba(135,206,250,1);
+	overflow: hidden;
+	box-shadow: 0 0 50px rgba(135,206,250,1);
+	z-index: 101;
+}
+
+.radar {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	border-radius: 50%;
+	background: radial-gradient(ellipse at center, transparent 0%, transparent 0.5%, transparent 13%, rgba(135,206,250,1) 13.5%, transparent 14%, transparent 45%, rgba(135,206,250,1) 45.5%, transparent 46%, rgba(0, 0, 255, 0.1) 100%);
+}
+
+.cross-section,
+.cross-section:after {
+	position: absolute;
+	width: 2px;
+	height: 100%;
+	background: rgba(135,206,250,1);
+}
+
+.cross-section {
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	       transform: translateX(-50%);
+}
+
+.cross-section:after {
+	content: '';
+	-webkit-transform: rotate(90deg);
+	       transform: rotate(90deg);
+}
+
+.spinner {
+	position: absolute;
+	height: 51%;
+	width: 20%;
+	background: linear-gradient(-290deg, rgba(135,206,250,1) 0%, transparent 49%);
+	-webkit-transform-origin: 0 0;
+	       transform-origin: 0 0;
+	left: 50%;
+	top: 50%;
+	-webkit-animation: scan 5s linear infinite;
+	       animation: scan 5s linear infinite;
+	border-left: 1px solid rgba(135,206,250,1);
+}
+
+.blip {
+	width: 2%;
+	height: 2%;
+	position: absolute;
+	background: rgba(135,206,250,1);
+	border-radius: 50%;
+	top: 25%;
+	left: 75%;
+	opacity: 0;
+	-webkit-animation: blip 5s linear infinite;
+	       animation: blip 5s linear infinite;
+}
+
+.blip + .blip {
+	-webkit-animation-delay: 1.1s;
+	       animation-delay: 1.1s;
+	top: 65%;
+	left: 75%;
+}
+
+.blip + .blip + .blip {
+	width: 3%;
+	height: 3%;
+	-webkit-animation-delay: 0.83s;
+	       animation-delay: 0.83s;
+	top: 55%;
+	left: 89%;
+}
+
+@-webkit-keyframes scan {
+	0% {
+	 -webkit-transform: translate3d(0, 0, 0) rotate(70deg);
+	         transform: translate3d(0, 0, 0) rotate(70deg);
+}
+	100% {
+		-webkit-transform: translate3d(0, 0, 0) rotate(430deg);
+	      	transform: translate3d(0, 0, 0) rotate(430deg);
+	}
+}
+
+@keyframes scan {
+	0% {
+		-webkit-transform: translate3d(0, 0, 0) rotate(70deg);
+	         transform: translate3d(0, 0, 0) rotate(70deg);
+	}
+	100% {
+		-webkit-transform: translate3d(0, 0, 0) rotate(430deg);
+	         transform: translate3d(0, 0, 0) rotate(430deg);
+	}
+}
+@-webkit-keyframes blip {
+	0% {
+		opacity: 0;
+	}
+	43% {
+		opacity: 0;
+	}
+	45.5% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 1;
+	}
+}
+@keyframes blip {
+	0% {
+		opacity: 0;
+	}
+	43% {
+		opacity: 0;
+	}
+	45.5% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 1;
+	}
+}
+.form-group.form-md-line-input.form-md-floating-label input {
+	padding-left: 10px;
+}

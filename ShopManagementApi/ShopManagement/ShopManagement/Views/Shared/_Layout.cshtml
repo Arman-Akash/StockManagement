@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  @*<partial></partial>*@
+  <meta charset="utf-8" />
+  @await Html.PartialAsync("_Bootstrap.cshtml")
+  @await Html.PartialAsync("_Styles.cshtml")
+</head>
+<body>
+  <!--Header-->
+  <div>
+      <div class="text-center">
+          <div class="row">
+              <div class="col-1"></div>
+                <div class="col-2">
+                  @await Html.PartialAsync("LogoBase64")
+                </div>
+                  <div class="col-6">
+                      <h3>Laa Tahzan Shop</h3>
+                      <h6>Mirpur-11, Pallabi, Dhaka-1216</h6>
+                  </div>
+              </div>
+              @*<h3>@ViewData["Date"]</h3>*@
+          </div>
+  </div>
+  <!--Content-->
+  <div>
+    @RenderBody()
+  </div>
+  <!--Footer-->
+</body>
+</html>

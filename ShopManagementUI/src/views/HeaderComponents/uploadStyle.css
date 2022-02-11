@@ -1,0 +1,14 @@
+.react-tagsinput {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    padding-left: 5px;
+    padding-top: 5px;
+    width: 107%; /*Only change this if necessary*/
+    margin-left: -10px; /*Only change this if necessary*/
+  }
+
+  .upload-button-style{
+    max-width: 94%;
+    margin-left: 10px;
+  }
