@@ -142,7 +142,7 @@ const PurchaseReport = (props) => {
                                                                 }} icon={faEye} />
                                                             </CTooltip>
                                                         </td>
-                                                    )
+                                                    ) 
                                             }}
                                         />
                                     </CRow>
