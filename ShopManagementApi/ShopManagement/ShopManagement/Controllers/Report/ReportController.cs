@@ -24,5 +24,11 @@ namespace ShopManagement.Web.Controllers
         {
             return new ViewAsPdf();
         }
+
+        [HttpGet("DeliveryChallan")]
+        public IActionResult DeliveryChallan()
+        {
+            return new ViewAsPdf();
+        }
     }
 }

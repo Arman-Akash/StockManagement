@@ -157,12 +157,41 @@ namespace ShopManagement.WebApi.Controllers
         //}
 
 
+        //[HttpPut("{id}")]
+        //public async Task<Result<Receive>> Put(int id, Receive purchase)
+        //{
+        //    var result = new Result<Receive>();
+
+        //    if (id != purchase.Id || !ModelState.IsValid)
+        //    {
+        //        result.Success = false;
+        //        result.Message = ResponseMessage.BAD_REQUEST;
+        //        return result;
+        //    }
+        //    try
+        //    {
+        //        await _repository.UpdateAsync(purchase);
+        //        result.Data = purchase;
+        //        result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;
+        //        return result;
+        //    }
+        //    catch (Exception exp)
+        //    {
+        //        // keep log
+        //        _logError.Error(exp);
+        //        result.Message = ResponseMessage.Get(exp);
+        //        result.Success = false;
+
+        //        return result;
+        //    }
+        //}
+
         [HttpPut("{id}")]
-        public async Task<Result<Receive>> Put(int id, Receive purchase)
+        public async Task<Result<Receive>> Put(int id, Receive receive)
         {
             var result = new Result<Receive>();
 
-            if (id != purchase.Id || !ModelState.IsValid)
+            if (id != receive.Id || !ModelState.IsValid)
             {
                 result.Success = false;
                 result.Message = ResponseMessage.BAD_REQUEST;
@@ -170,8 +199,8 @@ namespace ShopManagement.WebApi.Controllers
             }
             try
             {
-                await _repository.UpdateAsync(purchase);
-                result.Data = purchase;
+                await _repository.UpdateAsync(receive);
+                result.Data = receive;
                 result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;
                 return result;
             }
@@ -185,6 +214,7 @@ namespace ShopManagement.WebApi.Controllers
                 return result;
             }
         }
+
 
         [HttpDelete("{id}")]
         public async Task<Result> Delete(int id)
