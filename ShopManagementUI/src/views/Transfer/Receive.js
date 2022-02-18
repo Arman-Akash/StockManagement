@@ -284,8 +284,8 @@ const Receive = (props) => {
                                                     });
                                                     console.log(item);
                                                     // axios.fetchGetData(`api/Supplier/${item.supplier.address}`, address, setAddress);
-                                                    setAccordion(!accordion);
-                                                    toggleButtonSymbol(!buttonSymbol);
+                                                    setAccordion(true);
+                                                    toggleButtonSymbol(true);
                                                     setIsAdd(false);
                                                     onSetDataArray(item.transferDetails);
                                                 }}

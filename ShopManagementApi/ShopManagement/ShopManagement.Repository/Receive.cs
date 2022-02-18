@@ -10,21 +10,20 @@ using ShopManagement.Entity.Models;
 
 namespace ShopManagement.Repository
 {
-	public interface IReceiveRepository : IRepository<Receive>
+	public interface IReceiveRepository
 	{
-
+		Task<int> UpdateAsync(Receive receive);
 	}
 
-	public class ReceiveRepository : Repository<Receive>, IReceiveRepository
+	public class ReceiveRepository : IReceiveRepository
 	{
 		private readonly ShopManagementDbContext _context;
-		public ReceiveRepository(ShopManagementDbContext context, IHttpContextAccessor httpContextAccessor)
-			: base(context, httpContextAccessor)
+		public ReceiveRepository(ShopManagementDbContext context)
 		{
 			_context = context;
 		}
 
-		public override Task<int> UpdateAsync(Receive receive)
+		public Task<int> UpdateAsync(Receive receive)
 		{
 			var existingUnitType = _context.Receives
 				.Where(p => p.Id == receive.Id)
