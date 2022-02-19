@@ -20,12 +20,16 @@ namespace ShopManagement.WebApi.Controllers
     public class ReceiveController : ControllerBase
     {
         private readonly IRepository<Receive> _repository;
+        private readonly IReceiveRepository _receiveRepository;
         private readonly ILogError _logError;
 
-        public ReceiveController(IRepository<Receive> _repository, ILogError _logError)
+        public ReceiveController(IRepository<Receive> _repository,
+            IReceiveRepository _receiveReposioty,
+            ILogError _logError)
         {
             this._repository = _repository;
             this._logError = _logError;
+            this._receiveRepository = _receiveReposioty;
         }
 
         [HttpGet]
@@ -157,35 +161,6 @@ namespace ShopManagement.WebApi.Controllers
         //}
 
 
-        //[HttpPut("{id}")]
-        //public async Task<Result<Receive>> Put(int id, Receive purchase)
-        //{
-        //    var result = new Result<Receive>();
-
-        //    if (id != purchase.Id || !ModelState.IsValid)
-        //    {
-        //        result.Success = false;
-        //        result.Message = ResponseMessage.BAD_REQUEST;
-        //        return result;
-        //    }
-        //    try
-        //    {
-        //        await _repository.UpdateAsync(purchase);
-        //        result.Data = purchase;
-        //        result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;
-        //        return result;
-        //    }
-        //    catch (Exception exp)
-        //    {
-        //        // keep log
-        //        _logError.Error(exp);
-        //        result.Message = ResponseMessage.Get(exp);
-        //        result.Success = false;
-
-        //        return result;
-        //    }
-        //}
-
         [HttpPut("{id}")]
         public async Task<Result<Receive>> Put(int id, Receive receive)
         {
@@ -199,7 +174,7 @@ namespace ShopManagement.WebApi.Controllers
             }
             try
             {
-                await _repository.UpdateAsync(receive);
+                await _receiveRepository.UpdateAsync(receive);
                 result.Data = receive;
                 result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;
                 return result;

@@ -202,7 +202,6 @@ const Transfer = (props) => {
                                                             dataObj={dataObj}
                                                             onSetDataArray={onSetDataArray}
                                                             fieldsTypeWithValue={[
-
                                                                 {
                                                                     thStyle: { width: '30%' },
                                                                     fieldName: 'productId',
