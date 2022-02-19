@@ -1,6 +1,5 @@
 import React from 'react';
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
-const ConfigurationPage = React.lazy(() => import('./views/Configuration/ConfigurationPage'));
 const Branch = React.lazy(() => import('./views/Configuration/Branch'));
 const Customer = React.lazy(() => import('./views/Configuration/Customer'));
 const ProductSubType = React.lazy(() => import('./views/Configuration/ProductSubType'));
@@ -40,7 +39,6 @@ export const warehouse = [
 
 const routes = [
   ...warehouse,
-  { path: '/configuration', name: 'Configuration', component: ConfigurationPage },
   { path: '/branch', name: 'Branch Information', component: Branch },
   { path: '/purchase-report', name: 'Purchase Report', component: PurchaseReport },
 

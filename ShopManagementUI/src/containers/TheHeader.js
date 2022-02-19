@@ -5,9 +5,7 @@ import {
   CHeaderNav,
   CHeaderNavItem,
   CSubheader,
-  CBreadcrumbRouter,
-  CLink,
-  CTooltip
+  CBreadcrumbRouter
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import logo from '../assets/mansurtraders.png'
@@ -37,14 +35,6 @@ const TheHeader = () => {
         </div> */}
         </CHeaderNavItem>
       </CHeaderNav>
-
-      <CHeaderNavItem style={{ listStyle: 'none' }}>
-        <CTooltip content="Configuration">
-          <CLink style={{ textDecoration: "none" }} to="/configuration">
-            <CIcon style={{ width: "3rem", height: '3rem', marginTop: '12px' }} name="cil-settings" />
-          </CLink>
-        </CTooltip>
-      </CHeaderNavItem>
 
       <CHeaderNav className="mr-2">
         <TheHeaderDropdown />
