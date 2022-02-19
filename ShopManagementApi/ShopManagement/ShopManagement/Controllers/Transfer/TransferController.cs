@@ -20,11 +20,15 @@ namespace ShopManagement.WebApi.Controllers
     public class TransferController : ControllerBase
     {
         private readonly IRepository<Transfer> _repository;
+        private readonly ITransferRepository _transferRepository;
         private readonly ILogError _logError;
 
-        public TransferController(IRepository<Transfer> _repository, ILogError _logError)
+        public TransferController(IRepository<Transfer> _repository,
+            ITransferRepository _transferReposioty,
+            ILogError _logError)
         {
             this._repository = _repository;
+            this._transferRepository = _transferReposioty;
             this._logError = _logError;
         }
 
@@ -89,7 +93,7 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Result<Transfer>> Post(Transfer purchase)
+        public async Task<Result<Transfer>> Post(Transfer transfer)
         {
             var result = new Result<Transfer>();
 
@@ -102,8 +106,8 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
-                await _repository.InsertAsync(purchase);
-                result.Data = purchase;
+                await _repository.InsertAsync(transfer);
+                result.Data = transfer;
                 result.Message = ResponseMessage.SUCCESSFULLY_CREATED;
                 return result;
             }
@@ -119,34 +123,34 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         //[HttpPost("Search")]
-        //public async Task<IEnumerable<PurchaseVM>> Search(PurchaseVM purchaseVM)
+        //public async Task<IEnumerable<PurchaseVM>> Search(PurchaseVM transferVM)
         //{
         //    var result = _repository.Get()
         //        .Include(e => e.TransferDetails)
         //        .Include(e => e.Customer)
         //        .AsQueryable();
 
-        //    if (purchaseVM.StartDate != null)
+        //    if (transferVM.StartDate != null)
         //    {
-        //        result = result.Where(e => e.TransferDate >= purchaseVM.StartDate);
+        //        result = result.Where(e => e.TransferDate >= transferVM.StartDate);
         //    }
 
-        //    if (purchaseVM.EndDate != null)
+        //    if (transferVM.EndDate != null)
         //    {
-        //        result = result.Where(e => e.TransferDate <= purchaseVM.EndDate);
+        //        result = result.Where(e => e.TransferDate <= transferVM.EndDate);
         //    }
 
-        //    if (purchaseVM.CustomerId != 0)
+        //    if (transferVM.CustomerId != 0)
         //    {
-        //        result = result.Where(e => e.SupplierId == purchaseVM.CustomerId);
+        //        result = result.Where(e => e.SupplierId == transferVM.CustomerId);
         //    }
-        //    if (!String.IsNullOrWhiteSpace(purchaseVM.ReceiptNo))
+        //    if (!String.IsNullOrWhiteSpace(transferVM.ReceiptNo))
         //    {
-        //        result = result.Where(e => e.ReceiptNo.Contains(purchaseVM.ReceiptNo));
+        //        result = result.Where(e => e.ReceiptNo.Contains(transferVM.ReceiptNo));
         //    }
-        //    if (!String.IsNullOrWhiteSpace(purchaseVM.TransactionType))
+        //    if (!String.IsNullOrWhiteSpace(transferVM.TransactionType))
         //    {
-        //        result = result.Where(e => e.TransactionType.Contains(purchaseVM.TransactionType));
+        //        result = result.Where(e => e.TransactionType.Contains(transferVM.TransactionType));
         //    }
 
         //    return await result.Select(e => new PurchaseVM
@@ -161,11 +165,11 @@ namespace ShopManagement.WebApi.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<Result<Transfer>> Put(int id, Transfer purchase)
+        public async Task<Result<Transfer>> Put(int id, Transfer transfer)
         {
             var result = new Result<Transfer>();
 
-            if (id != purchase.Id || !ModelState.IsValid)
+            if (id != transfer.Id || !ModelState.IsValid)
             {
                 result.Success = false;
                 result.Message = ResponseMessage.BAD_REQUEST;
@@ -173,8 +177,8 @@ namespace ShopManagement.WebApi.Controllers
             }
             try
             {
-                await _repository.UpdateAsync(purchase);
-                result.Data = purchase;
+                await _transferRepository.UpdateAsync(transfer);
+                result.Data = transfer;
                 result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;
                 return result;
             }
@@ -194,8 +198,8 @@ namespace ShopManagement.WebApi.Controllers
         {
             var result = new Result();
 
-            var purchase = await _repository.FindAsync(id);
-            if (purchase == null)
+            var transfer = await _repository.FindAsync(id);
+            if (transfer == null)
             {
                 result.Success = false;
                 result.Message = ResponseMessage.NOT_FOUND;
@@ -204,7 +208,7 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
-                await _repository.DeleteAsync(purchase);
+                await _repository.DeleteAsync(transfer);
                 result.Message = ResponseMessage.SUCCESSFULLY_DELETED;
                 return result;
             }

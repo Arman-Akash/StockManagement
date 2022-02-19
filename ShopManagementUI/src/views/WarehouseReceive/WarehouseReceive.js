@@ -10,7 +10,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowAltCircleLeft, faSave, faTrash,faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleLeft, faSave, faTrash, faTimes } from '@fortawesome/free-solid-svg-icons';
 import * as axios from '../../axios/axiosLib';
 import * as initialState from '../../functionalLib/initialState';
 import * as dataApi from '../../customHooks/UseDataApi';
@@ -49,7 +49,6 @@ const WarehouseReceive = (props) => {
 
     let [dataArr, onSetDataArray] = useState([]);
 
-    const [accordion, setAccordion] = useState(false);
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let units = dataApi.useDataApi(`api/Unit`, initialState.initialCollections);
     let productReceives = dataApi.useDataApi(`api/Receive`, initialState.initialCollections);
@@ -85,11 +84,13 @@ const WarehouseReceive = (props) => {
                                                 productReceives.refresh();
                                                 rcvSerNo.refresh();
                                             });
+                                            onSetDataArray([]);
                                         } else {
                                             axios.fetchPutData(`api/Receive/${values.id}`, values, () => {
                                                 productReceives.refresh();
                                                 rcvSerNo.refresh();
                                             })
+                                            onSetDataArray([]);
                                         }
                                         resetForm();
                                         setReceiveObj({
@@ -290,15 +291,18 @@ const WarehouseReceive = (props) => {
                                                         />
                                                     </CRow>
                                                     <CRow>
-                                                        <CCol  style={{ padding: "10px", textAlign: "center" }} >
+                                                        <CCol style={{ padding: "10px", textAlign: "center" }} >
                                                             <CButton onClick={() => {
-                                                                setIsAdd(true);
+                                                                // setIsAdd(true);
                                                             }} size="sm" color="success" type="submit"><FontAwesomeIcon icon={faSave} />&nbsp;Save</CButton>
                                                             <CButton
-                                                            onClick={() => {
-                                                                setIsAdd(false);
-                                                            }}
-                                                            size="sm" style={{ marginLeft: "20px" }} color="secondary" type="rest"><FontAwesomeIcon icon={faTimes} />&nbsp;Cancel</CButton>
+                                                                onClick={() => {
+                                                                    onSetDataArray([]);
+                                                                    setReceiveObj({
+                                                                        data: ''
+                                                                    });
+                                                                }}
+                                                                size="sm" style={{ marginLeft: "20px" }} color="secondary" type="rest"><FontAwesomeIcon icon={faTimes} />&nbsp;Cancel</CButton>
                                                         </CCol>
                                                     </CRow>
                                                 </div>

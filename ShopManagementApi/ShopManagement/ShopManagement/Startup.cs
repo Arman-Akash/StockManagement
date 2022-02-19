@@ -58,6 +58,7 @@ namespace ShopManagement
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IReceiveRepository, ReceiveRepository>();
+            services.AddScoped<ITransferRepository, TransferRepository>();
 
 
             var authConfiguration = Configuration.GetSection("AuthConfiguration");

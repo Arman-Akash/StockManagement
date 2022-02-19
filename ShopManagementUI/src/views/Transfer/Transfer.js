@@ -23,7 +23,6 @@ import SADataTable from '../FormLib/saDataTable';
 import SATextArea from '../FormLib/saTextarea';
 
 const Transfer = (props) => {
-    let [buttonSymbol, toggleButtonSymbol] = useState(false);
     const [isDelete, toggleDeleteModal] = useState(false);
     const [isAdd, setIsAdd] = useState(true);
 
@@ -40,9 +39,8 @@ const Transfer = (props) => {
     }
     let [transferObj, setTransferObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
-    let [transferChallan, setTransferChallan] = useState('');
 
-    const fields = ['transferDate', 'branchName', 'username','vehicleNo','details', 'actions'];
+    const fields = ['transferDate', 'branchName', 'userName', 'vehicleNo', 'details', 'actions'];
 
     let dataObj = {
         productId: 0,
@@ -50,15 +48,13 @@ const Transfer = (props) => {
         rate: '',
         amount: ''
     };
-
     let [dataArr, onSetDataArray] = useState([]);
 
-    const [accordion, setAccordion] = useState(false);
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
-    let users = dataApi.useDataApi(`api/User`, initialState.initialCollections);
+    let users = dataApi.useDataApi(`api/Account`, initialState.initialCollections);
     let transfers = dataApi.useDataApi(`api/Transfer`, initialState.initialCollections);
-    let transferNbr = dataApi.useDataApi(`api/Transfer/TransferChallan`, initialState.initialCollections);
+    let transferChallan = dataApi.useDataApi(`api/Transfer/TransferChallan`, initialState.initialCollections);
 
     return (
         <>
@@ -78,22 +74,30 @@ const Transfer = (props) => {
                                 onSubmit={(values, { resetForm }) => {
                                     values = {
                                         ...values,
+                                        transferChallan: transferChallan.data.data,
                                         transferDetails: dataArr,
                                     }
                                     if (dataArr.length <= 0) {
                                         alert("Please Enter Product, Quantity and Rate....!")
                                     }
                                     else {
-                                        values.transferChallan = transferNbr.data.data;
                                         if (isAdd) {
                                             axios.fetchPostData('api/Transfer', values, () => {
                                                 transfers.refresh();
+                                                transferChallan.refresh();
                                             });
+                                            onSetDataArray([]);
                                         } else {
                                             axios.fetchPutData(`api/Transfer/${values.id}`, values, () => {
                                                 transfers.refresh();
+                                                transferChallan.refresh();
                                             })
+                                            onSetDataArray([]);
                                         }
+                                        resetForm();
+                                        setTransferObj({
+                                            data: data
+                                        })
                                     }
                                     // resetForm();
                                 }}
@@ -116,7 +120,7 @@ const Transfer = (props) => {
                                                                 rSize="8"
                                                                 labelClassName="float-right"
                                                                 readOnly={true}
-                                                                value={transferNbr.data.data}
+                                                                value={transferChallan.data.data}
                                                             />
                                                         </CCol>
                                                         <CCol md="4">
@@ -159,7 +163,7 @@ const Transfer = (props) => {
                                                                 labelClassName="float-right"
                                                                 formProps={formProps}
                                                                 options={users.data.data.map(item => {
-                                                                    return { label: item.name, value: item.id }
+                                                                    return { label: item.username, value: item.id }
                                                                 })}
                                                             />
                                                         </CCol>
@@ -308,16 +312,14 @@ const Transfer = (props) => {
                                                     </CRow>
                                                     <CRow>
                                                         <CCol md={{ size: 12 }} style={{ padding: "10px", textAlign: "center" }} >
-                                                            <CButton style={{marginRight:"15px"}} onClick={() => {
-                                                                // setAccordion(!accordion);
-                                                                // toggleButtonSymbol(!buttonSymbol);
-                                                                // setIsAdd(true);
+                                                            <CButton style={{ marginRight: "20px" }} onClick={() => {
                                                             }} size="sm" color="success" type="submit"><FontAwesomeIcon icon={faSave} />&nbsp;Save</CButton>
-                                                            
+
                                                             <CButton onClick={() => {
-                                                                // setAccordion(!accordion);
-                                                                // toggleButtonSymbol(!buttonSymbol);
-                                                                setIsAdd(false);
+                                                                onSetDataArray([]);
+                                                                setTransferObj({
+                                                                    data: ''
+                                                                });
                                                             }} size="sm" color="secondary"><FontAwesomeIcon icon={faTimes} />&nbsp;Cancel</CButton>
                                                         </CCol>
                                                     </CRow>
@@ -354,15 +356,11 @@ const Transfer = (props) => {
                                                             userId: item.userId,
                                                             vehicleNo: item.vehicleNo,
                                                             details: item.details,
-                                                            rcvFlg: false,
-                                                            transferChallan: item.transferChallan,
-
+                                                            rcvFlg: false
                                                         }
                                                     });
-                                                    setTransferChallan(item.transferChallan);
-                                                    console.log(item);
-                                                    setAccordion(!accordion);
-                                                    toggleButtonSymbol(!buttonSymbol);
+                                                    transferChallan.setData({ data: item.transferChallan });
+                                                    setUnitname(unitName);
                                                     setIsAdd(false);
                                                     onSetDataArray(item.transferDetails);
                                                 }}
@@ -372,7 +370,7 @@ const Transfer = (props) => {
                                                     setTransferObj({
                                                         ...transferObj,
                                                         data: {
-                                                            id: item.id,
+                                                            id: item.id
                                                         }
                                                     });
                                                     toggleDeleteModal(true);
