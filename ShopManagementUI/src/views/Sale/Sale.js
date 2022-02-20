@@ -13,7 +13,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowAltCircleLeft, faSave, faTrash, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleLeft, faSave, faTrash, faTimes } from '@fortawesome/free-solid-svg-icons';
 import * as axios from '../../axios/axiosLib';
 import * as initialState from '../../functionalLib/initialState';
 import * as dataApi from '../../customHooks/UseDataApi';
@@ -23,7 +23,6 @@ import EditIcon from '../commonComponents/EditIcon';
 import SADataTable from '../FormLib/saDataTable';
 
 const Sale = (props) => {
-    let [buttonSymbol, toggleButtonSymbol] = useState(false);
     const [isDelete, toggleDeleteModal] = useState(false);
     const [isAdd, setIsAdd] = useState(true);
 
@@ -34,8 +33,7 @@ const Sale = (props) => {
         challanNo: '',
         saleDetails: []
     }
-    let [challanObj, setChallanObj] = useState({ data: data });
-    let [challanNo, setChallanNo] = useState('');
+    let [saleObj, setSaleObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
     const fields = ['saleDate', 'challanNo', 'customerName', 'actions'];
 
@@ -48,21 +46,20 @@ const Sale = (props) => {
 
     let [dataArr, onSetDataArray] = useState([]);
 
-    const [accordion, setAccordion] = useState(false);
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let sales = dataApi.useDataApi(`api/Sale`, initialState.initialCollections);
     let customers = dataApi.useDataApi(`api/Customer`, initialState.initialCollections);
-    let clnNo = dataApi.useDataApi(`api/Sale/ChallanNo`, initialState.initialCollections);
+    let challanNo = dataApi.useDataApi(`api/Sale/ChallanNo`, initialState.initialCollections);
     return (
         <>
             <CCard>
                 <CCardBody>
-                    <h5 style={{ marginBottom: "0px" }} className='page-title'>Product Sale</h5>
+                    <h5 style={{ marginBottom: "10px" }} className='page-title'>Product Sale</h5>
                     <CRow>
                         <CCol md="12">
                             <Formik
                                 enableReinitialize
-                                initialValues={challanObj.data}
+                                initialValues={saleObj.data}
                                 validationSchema={
                                     Yup.object({
 
@@ -71,25 +68,32 @@ const Sale = (props) => {
                                 onSubmit={(values, { resetForm }) => {
                                     values = {
                                         ...values,
+                                        challanNo: challanNo.data.data,
                                         saleDetails: dataArr,
                                     }
                                     if (dataArr.length <= 0) {
                                         alert("Please Enter Product, Quantity and Rate....!")
                                     }
                                     else {
-                                        values.challanNo = clnNo.data.data;
+                                        values.challanNo = challanNo.data.data;
                                         if (isAdd) {
                                             axios.fetchPostData('api/Sale', values, () => {
                                                 sales.refresh();
-                                                clnNo.refresh();
+                                                challanNo.refresh();
                                             });
+                                            onSetDataArray([]);
                                         } else {
                                             axios.fetchPutData(`api/Sale/${values.id}`, values, () => {
                                                 sales.refresh();
+                                                challanNo.refresh();
                                             })
+                                        onSetDataArray([]);
                                         }
+                                        resetForm();
+                                        setSaleObj({
+                                            data: data
+                                        })
                                     }
-                                    // resetForm();
                                 }}
                             >
                                 {
@@ -97,28 +101,6 @@ const Sale = (props) => {
                                         return (
                                             <Form>
                                                 <div id="accordion" style={{ padding: "0px" }}>
-                                                    <CRow>
-                                                        <CCol md={{ offset: 10, size: 2 }} style={{ marginBottom: '6px' }}>
-                                                            <CTooltip content={buttonSymbol ? "Close" : "Add"}>
-                                                                <CButton
-                                                                    className="btn add-btn btn-sm float-right btn-circle"
-                                                                    onClick={() => {
-                                                                        setAccordion(!accordion);
-                                                                        toggleButtonSymbol(!buttonSymbol);
-                                                                        setIsAdd(true);
-                                                                        setChallanObj({
-                                                                            data: data
-                                                                        });
-                                                                        setChallanNo(clnNo.data.data);
-                                                                        onSetDataArray([]);
-                                                                    }}
-                                                                >
-                                                                    {buttonSymbol ? (<><FontAwesomeIcon icon={faMinus} /> Close</>) : (<><FontAwesomeIcon icon={faPlus} /> Add</>)}
-                                                                </CButton>
-                                                            </CTooltip>
-                                                        </CCol>
-                                                    </CRow>
-                                                    <CCollapse show={accordion}>
                                                         <CRow>
                                                             <CCol md="4">
                                                                 <SADatePicker
@@ -146,7 +128,7 @@ const Sale = (props) => {
                                                                     rSize="8"
                                                                     labelClassName="float-right"
                                                                     readOnly={true}
-                                                                    value={challanNo}
+                                                                    value={challanNo.data.data}
                                                                 />
                                                             </CCol>
 
@@ -286,15 +268,19 @@ const Sale = (props) => {
                                                         </CRow>
                                                         <CRow>
                                                             <CCol md={{ size: 12 }} style={{ padding: "10px", textAlign: "center" }} >
-                                                                <CButton onClick={() => {
+                                                                <CButton style={{ marginRight: "20px" }} onClick={() => {
                                                                     // setAccordion(!accordion);
                                                                     // toggleButtonSymbol(!buttonSymbol);
                                                                     // setIsAdd(true);
                                                                 }} size="sm" color="success" type="submit"><FontAwesomeIcon icon={faSave} />&nbsp;Save</CButton>
-
+                                                                <CButton onClick={() => {
+                                                                    onSetDataArray([]);
+                                                                    setSaleObj({
+                                                                        data: ''
+                                                                    });
+                                                                }} size="sm" color="secondary"><FontAwesomeIcon icon={faTimes} />&nbsp;Cancel</CButton>
                                                             </CCol>
                                                         </CRow>
-                                                    </CCollapse>
                                                 </div>
                                             </Form>
                                         );
@@ -319,35 +305,26 @@ const Sale = (props) => {
                                         <td>
                                             <EditIcon
                                                 onClick={() => {
-                                                    setChallanObj({
-                                                        ...challanObj,
+                                                    setSaleObj({
+                                                        ...saleObj,
                                                         data: {
                                                             id: item.id,
-                                                            buyerName: item.buyerName,
-                                                            orderDate: item.orderDate,
-                                                            buyerAddress: item.buyerAddress,
-                                                            buyerPhnNo: item.buyerPhnNo,
-                                                            purchaseDate: item.purchaseDate,
-                                                            deleveryType: item.deleveryType,
-                                                            advancedType: item.advancedType,
-                                                            challanNo: item.challanNo,
-                                                            advancedAmount: item.advancedAmount,
-                                                            deleveryDate: item.deleveryDate
+                                                            saleDate: item.saleDate,
+                                                            customerId: item.customerId
                                                         }
                                                     });
-                                                    setChallanNo(item.challanNo);
+                                                    challanNo.setData({ data: item.challanNo });
+                                                    setUnitname(unitName);
                                                     console.log(item);
                                                     // axios.fetchGetData(`api/Supplier/${item.supplier.address}`, address, setAddress);
-                                                    setAccordion(!accordion);
-                                                    toggleButtonSymbol(!buttonSymbol);
                                                     setIsAdd(false);
                                                     onSetDataArray(item.saleDetails);
                                                 }}
                                             />
                                             <DeleteIcon
                                                 onClick={() => {
-                                                    setChallanObj({
-                                                        ...challanObj,
+                                                    setSaleObj({
+                                                        ...saleObj,
                                                         data: {
                                                             id: item.id,
                                                         }
@@ -373,7 +350,7 @@ const Sale = (props) => {
                     isDelete={isDelete}
                     toggleDeleteModal={toggleDeleteModal}
                     deleteOpp={() => {
-                        axios.fetchDeleteData(`api/Sale/${challanObj.data.id}`, () => {
+                        axios.fetchDeleteData(`api/Sale/${saleObj.data.id}`, () => {
                             sales.refresh();
                         });
                     }}

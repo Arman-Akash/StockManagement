@@ -22,11 +22,11 @@ namespace ShopManagement.Entity.Models
         public bool RcvFlg { get; set; }
         public ICollection<TransferDetail> TransferDetails { get; set; }
 
-        [NotMapped]
-        public string BranchName
-        {
-            get { return Branch.Name; }
-        }
+        //[NotMapped]
+        //public string BranchName
+        //{
+        //    get { return Branch.Name; }
+        //}
 
         [NotMapped]
         public string UserName

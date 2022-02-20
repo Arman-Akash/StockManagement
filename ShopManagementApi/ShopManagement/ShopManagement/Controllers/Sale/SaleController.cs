@@ -19,11 +19,15 @@ namespace ShopManagement.WebApi.Controllers
     public class SaleController : ControllerBase
     {
         private readonly IRepository<Sale> _repository;
+        private readonly ISaleRepository _saleRepository;
         private readonly ILogError _logError;
 
-        public SaleController(IRepository<Sale> _repository, ILogError _logError)
+        public SaleController(IRepository<Sale> _repository,
+            ISaleRepository _saleRepository,
+            ILogError _logError)
         {
             this._repository = _repository;
+            this._saleRepository = _saleRepository;
             this._logError = _logError;
         }
 
@@ -61,10 +65,10 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
-        [HttpGet("OrderNo")]
+        [HttpGet("ChallanNo")]
         public async Task<Result<string>> OrderNo()
         {
-            var odrNo = "";
+            var clnNo = "";
             var lastRef = await _repository.Get()
                 .Where(e => e.SaleDate.Year == DateTime.Now.Year)
                 .OrderByDescending(e => e.Id)
@@ -73,17 +77,17 @@ namespace ShopManagement.WebApi.Controllers
 
             if (lastRef == null)
             {
-                odrNo = "ODR/" + "0001/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
+                clnNo = "CLN/" + "0001/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
             }
             else
             {
                 var num = lastRef.Split('/')[1];
-                odrNo = "ODR/" + (Convert.ToInt32(num) + 1).ToString().PadLeft(4, '0') + "/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
+                clnNo = "CLN/" + (Convert.ToInt32(num) + 1).ToString().PadLeft(4, '0') + "/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
             }
 
             return new Result<string>
             {
-                Data = odrNo
+                Data = clnNo
             };
         }
 
@@ -156,7 +160,7 @@ namespace ShopManagement.WebApi.Controllers
             }
             try
             {
-                await _repository.UpdateAsync(sell);
+                await _saleRepository.UpdateAsync(sell);
                 result.Data = sell;
                 result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;
                 return result;
