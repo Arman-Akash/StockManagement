@@ -118,12 +118,12 @@ const PurchaseReport = (props) => {
                                                     float: 'right',
                                                     color: 'white'
                                                 }}
-                                                // onClick={() => {
-                                                //     window.open(
-                                                //         `${apiHostName}/api/Report/Index`,
-                                                //         '_blank'
-                                                //     );
-                                                // }}
+                                                onClick={() => {
+                                                    window.open(
+                                                        `${apiHostName}/api/Report/Index`,
+                                                        '_blank'
+                                                    );
+                                                }}
                                             ><FontAwesomeIcon icon={faPrint} /> Print</CButton>
                                         </CCol>
                                     </CRow>
