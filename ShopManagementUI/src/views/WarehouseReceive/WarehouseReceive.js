@@ -21,7 +21,6 @@ import SADataTable from '../FormLib/saDataTable';
 import SATextArea from '../FormLib/saTextarea';
 
 const WarehouseReceive = (props) => {
-    let [buttonSymbol, toggleButtonSymbol] = useState(false);
     const [isDelete, toggleDeleteModal] = useState(false);
     const [isAdd, setIsAdd] = useState(true);
 

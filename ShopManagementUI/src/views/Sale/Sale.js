@@ -275,9 +275,10 @@ const Sale = (props) => {
                                                                 }} size="sm" color="success" type="submit"><FontAwesomeIcon icon={faSave} />&nbsp;Save</CButton>
                                                                 <CButton onClick={() => {
                                                                     onSetDataArray([]);
-                                                                    setSaleObj({
-                                                                        data: ''
-                                                                    });
+                                                                    // setSaleObj({
+                                                                    //     data: ''
+                                                                    // });
+                                                                    sales.refresh();
                                                                 }} size="sm" color="secondary"><FontAwesomeIcon icon={faTimes} />&nbsp;Cancel</CButton>
                                                             </CCol>
                                                         </CRow>

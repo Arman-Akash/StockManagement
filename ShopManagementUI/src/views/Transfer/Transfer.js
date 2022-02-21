@@ -84,13 +84,11 @@ const Transfer = (props) => {
                                         if (isAdd) {
                                             axios.fetchPostData('api/Transfer', values, () => {
                                                 transfers.refresh();
-                                                transferChallan.refresh();
                                             });
                                             onSetDataArray([]);
                                         } else {
                                             axios.fetchPutData(`api/Transfer/${values.id}`, values, () => {
                                                 transfers.refresh();
-                                                transferChallan.refresh();
                                             })
                                             onSetDataArray([]);
                                         }
