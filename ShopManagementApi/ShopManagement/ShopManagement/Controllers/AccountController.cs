@@ -177,7 +177,8 @@ namespace ShopManagement.WebApi.Controllers
                     new Claim(JwtRegisteredClaimNames.Sub, _user.Username),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(ClaimTypes.Role, _user.RoleNames),
-                    new Claim("user_id", _user.Id.ToString())
+                    new Claim("user_id", _user.Id.ToString()),
+                    new Claim("branch_id", _user.BranchId.ToString())
                 };
 
                 var token = new JwtSecurityToken
@@ -191,7 +192,7 @@ namespace ShopManagement.WebApi.Controllers
                             SecurityAlgorithms.HmacSha256)
                 );
 
-                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token), user_id = _user.Id, username = _user.Username, roles = _user.RoleNames, permissions = _user.Permissions });
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token), user_id = _user.Id, username = _user.Username, roles = _user.RoleNames, permissions = _user.Permissions, branch_id = _user.BranchId });
             }
 
             return BadRequest();

@@ -17,6 +17,8 @@ namespace ShopManagement.Entity.Models
         public string Details { get; set; }
         public int BranchId { get; set; }
         public Branch Branch { get; set; }
+        public int TransferedBranchId { get; set; }
+        public Branch TransferedBranch { get; set; }
         public int? UserId { get; set; }
         public User User { get; set; }
         public bool RcvFlg { get; set; }

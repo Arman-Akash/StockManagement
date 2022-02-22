@@ -33,7 +33,6 @@ const Transfer = (props) => {
         vehicleNo: '',
         details: '',
         branchId: 0,
-        userId: null,
         rcvFlg: false,
         transferDetails: []
     }
@@ -52,7 +51,6 @@ const Transfer = (props) => {
 
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
-    let users = dataApi.useDataApi(`api/Account`, initialState.initialCollections);
     let transfers = dataApi.useDataApi(`api/Transfer`, initialState.initialCollections);
     let transferChallan = dataApi.useDataApi(`api/Transfer/TransferChallan`, initialState.initialCollections);
 
@@ -147,21 +145,6 @@ const Transfer = (props) => {
                                                                 formProps={formProps}
                                                                 options={branches.data.data.map(item => {
                                                                     return { label: item.name, value: item.id }
-                                                                })}
-                                                            />
-                                                        </CCol>
-
-                                                        <CCol md='4'>
-                                                            <SAReactAutoSelect
-                                                                name="userId"
-                                                                label="User"
-                                                                isInline="true"
-                                                                lSize="4"
-                                                                rSize="8"
-                                                                labelClassName="float-right"
-                                                                formProps={formProps}
-                                                                options={users.data.data.map(item => {
-                                                                    return { label: item.username, value: item.id }
                                                                 })}
                                                             />
                                                         </CCol>
@@ -351,7 +334,6 @@ const Transfer = (props) => {
                                                             id: item.id,
                                                             transferDate: item.transferDate,
                                                             branchId: item.branchId,
-                                                            userId: item.userId,
                                                             vehicleNo: item.vehicleNo,
                                                             details: item.details,
                                                             rcvFlg: false

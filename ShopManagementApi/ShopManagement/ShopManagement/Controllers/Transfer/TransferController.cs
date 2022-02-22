@@ -57,6 +57,7 @@ namespace ShopManagement.WebApi.Controllers
                 .ThenInclude(e => e.Product)
                 .ThenInclude(e => e.Unit)
                 .FirstOrDefaultAsync();
+
             if (item == null)
             {
                 result.StatusCode = HttpStatusCode.NotFound;
@@ -106,6 +107,8 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
+                transfer.TransferedBranchId = User.GetBranchId();
+                transfer.UserId = User.GetUserId();
                 await _repository.InsertAsync(transfer);
                 result.Data = transfer;
                 result.Message = ResponseMessage.SUCCESSFULLY_CREATED;
