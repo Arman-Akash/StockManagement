@@ -5,7 +5,6 @@ using System.Text;
 
 namespace ShopManagement.Entity.Models
 {
-    [Table("sale")]
     public class Sale : BaseModel
     {
         public Sale()
