@@ -12,9 +12,9 @@ namespace ShopManagement.Data
 		public DbSet<Branch> Branches { get; set; }
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Unit> Units { get; set; }
-		public DbSet<ProductSubType> ProductSubTypes { get; set; }
+		public DbSet<ProductSubType> ProductTypes { get; set; }
 		public DbSet<OpeningStock> OpeningStocks { get; set; }
-		public DbSet<ProductType> ProductTypes { get; set; }
+		public DbSet<ProductType> ProductSubTypes { get; set; }
 		public DbSet<Product> Products { get; set; }
         #endregion
 
@@ -132,22 +132,22 @@ namespace ShopManagement.Data
 					.HasMaxLength(500);
 			});
 
-			builder.Entity<ProductSubType>(entity =>
-			{
-				entity.Property(e => e.SubType)
-					.HasDefaultValue(string.Empty)
-					.HasMaxLength(100);
-			});
-
 			builder.Entity<ProductType>(entity =>
 			{
 				entity.Property(e => e.Type)
 					.HasDefaultValue(string.Empty)
 					.HasMaxLength(100);
+			});
 
-				entity.HasOne(e => e.ProductSubType)
+			builder.Entity<ProductSubType>(entity =>
+			{
+				entity.Property(e => e.SubType)
+					.HasDefaultValue(string.Empty)
+					.HasMaxLength(100);
+
+				entity.HasOne(e => e.ProductType)
 					.WithMany()
-					.HasForeignKey(e => e.ProductSubTypeId);
+					.HasForeignKey(e => e.ProductTypeId);
 			});
 
 			builder.Entity<Product>(entity =>
@@ -173,9 +173,9 @@ namespace ShopManagement.Data
 					.WithMany()
 					.HasForeignKey(e => e.UnitId);
 
-				entity.HasOne(e => e.ProductType)
+				entity.HasOne(e => e.ProductSubType)
 				    .WithMany()
-				    .HasForeignKey(e => e.ProductTypeId);
+				    .HasForeignKey(e => e.ProductSubTypeId);
 
 				entity.Property(e => e.ReOrderLebel)
 				    .HasColumnType("decimal(15, 2)");

@@ -34,8 +34,8 @@ namespace ShopManagement.WebApi.Controllers
             {
                 Data = await _repository.Get()
                 .Include(e => e.Unit)
-                .Include(e => e.ProductType)
-                .ThenInclude(e => e.ProductSubType)
+                .Include(e => e.ProductSubType)
+                .ThenInclude(e => e.ProductType)
                 .ToListAsync()
             };
 
@@ -49,8 +49,8 @@ namespace ShopManagement.WebApi.Controllers
             var item = await _repository.Get()
                 .Where(e => e.Id == id)
                 .Include(e => e.Unit)
-                .Include(e => e.ProductType)
-                .ThenInclude(e => e.ProductSubType)
+                .Include(e => e.ProductSubType)
+                .ThenInclude(e => e.ProductType)
                 .FirstOrDefaultAsync();
             if (item == null)
             {

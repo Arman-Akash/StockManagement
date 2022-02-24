@@ -37,17 +37,18 @@ const Dashboard = () => {
             </CLink>
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
-            <CLink to="/product-type">
-              <CIcon src={iSubType} />
-              <h6>Product Type</h6>
-            </CLink>
-          </CCol>
+          <CLink to="/product-type">
+            <CIcon src={iProductType} />
+            <h6>Product Type</h6>
+          </CLink>
+        </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/product-sub-type">
-              <CIcon src={iProductType} />
+              <CIcon src={iSubType} />
               <h6>Product Sub Type</h6>
             </CLink>
           </CCol>
+         
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/product">
               <CIcon src={iProduct} />

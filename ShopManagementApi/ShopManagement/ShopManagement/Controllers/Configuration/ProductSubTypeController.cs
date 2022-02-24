@@ -8,6 +8,8 @@ using ShopManagement.Entity.Models;
 using ShopManagement.Repository;
 using ShopManagement.Utility;
 using ShopManagement.Utility.StaticData;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace ShopManagement.WebApi.Controllers
 {
@@ -30,9 +32,28 @@ namespace ShopManagement.WebApi.Controllers
         {
             var result = new ListResult<ProductSubType>()
             {
-                Data = await _repository.GetAsync()
+                Data = await _repository.Get()
+                .Include(e => e.ProductType)
+                .ToListAsync()
             };
 
+            return result;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<Result<ProductSubType>> Get(int id)
+        {
+            var result = new Result<ProductSubType>();
+            var item = await _repository.Get()
+                .Where(e => e.Id == id)
+                .Include(e => e.ProductType)
+                .FirstOrDefaultAsync();
+            if (item == null)
+            {
+                result.StatusCode = HttpStatusCode.NotFound;
+                result.Message = ResponseMessage.NOT_FOUND;
+            }
+            result.Data = item;
             return result;
         }
 
