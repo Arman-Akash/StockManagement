@@ -33,7 +33,6 @@ const Transfer = (props) => {
         vehicleNo: '',
         details: '',
         branchId: 0,
-        transferedBranchId: 0,
         rcvFlg: false,
         transferDetails: []
     }
@@ -149,21 +148,6 @@ const Transfer = (props) => {
                                                                 })}
                                                             />
                                                         </CCol>
-                                                        <CCol md='4'>
-                                                        <SAReactAutoSelect
-                                                            name="transferedBranchId"
-                                                            label="Transfered Branch"
-                                                            isRequired="true"
-                                                            isInline="true"
-                                                            lSize="4"
-                                                            rSize="8"
-                                                            labelClassName="float-right"
-                                                            formProps={formProps}
-                                                            options={branches.data.data.map(item => {
-                                                                return { label: item.name, value: item.id }
-                                                            })}
-                                                        />
-                                                    </CCol>
                                                         <CCol md="4">
                                                             <SAInput
                                                                 id="vehicleNo"
@@ -350,7 +334,6 @@ const Transfer = (props) => {
                                                             id: item.id,
                                                             transferDate: item.transferDate,
                                                             branchId: item.branchId,
-                                                            transferedBranchId: item.transferedBranchId,
                                                             vehicleNo: item.vehicleNo,
                                                             details: item.details,
                                                             rcvFlg: false

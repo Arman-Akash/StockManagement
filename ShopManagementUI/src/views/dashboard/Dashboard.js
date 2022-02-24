@@ -37,21 +37,15 @@ const Dashboard = () => {
             </CLink>
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
-            <CLink to="/customer">
-              <CIcon src={iSupplier} />
-              <h6>Customer</h6>
+            <CLink to="/product-type">
+              <CIcon src={iSubType} />
+              <h6>Product Type</h6>
             </CLink>
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/product-sub-type">
               <CIcon src={iProductType} />
               <h6>Product Sub Type</h6>
-            </CLink>
-          </CCol>
-          <CCol xs="2" sm="2" className="text-center oms-icon">
-            <CLink to="/product-type">
-              <CIcon src={iSubType} />
-              <h6>Product Type</h6>
             </CLink>
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
@@ -66,6 +60,12 @@ const Dashboard = () => {
               <h6>Unit</h6>
             </CLink>
           </CCol>
+          <CCol xs="2" sm="2" className="text-center oms-icon">
+          <CLink to="/customer">
+            <CIcon src={iSupplier} />
+            <h6>Customer</h6>
+          </CLink>
+        </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
           <CLink to="/opening-stock-entry">
             <CIcon src={iOpeningStock} />
