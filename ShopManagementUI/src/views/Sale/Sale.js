@@ -87,7 +87,7 @@ const Sale = (props) => {
                                                 sales.refresh();
                                                 challanNo.refresh();
                                             })
-                                        onSetDataArray([]);
+                                            onSetDataArray([]);
                                         }
                                         resetForm();
                                         setSaleObj({
@@ -101,187 +101,190 @@ const Sale = (props) => {
                                         return (
                                             <Form>
                                                 <div id="accordion" style={{ padding: "0px" }}>
-                                                        <CRow>
-                                                            <CCol md="4">
-                                                                <SADatePicker
-                                                                    name="saleDate"
-                                                                    label="Sale Date"
-                                                                    labelClassName="float-right"
-                                                                    isInline="true"
-                                                                    isRequired="true"
-                                                                    lSize="4"
-                                                                    rSize="8"
-                                                                    formProps={formProps}
-                                                                    dateFormat="dd/MM/yyyy"
-                                                                    placeholderText="dd/MM/yyyy"
-                                                                />
-                                                            </CCol>
-                                                            <CCol md="4">
-                                                                <SAInput
-                                                                    id="challanNo"
-                                                                    name="challanNo"
-                                                                    type="text"
-                                                                    label="Challan No."
-                                                                    isInline="true"
-                                                                    isRequired="true"
-                                                                    lSize="4"
-                                                                    rSize="8"
-                                                                    labelClassName="float-right"
-                                                                    readOnly={true}
-                                                                    value={challanNo.data.data}
-                                                                />
-                                                            </CCol>
-
-                                                            <CCol md='4'>
-                                                                <SAReactAutoSelect
-                                                                    name="customerId"
-                                                                    label="Customer"
-                                                                    isInline="true"
-                                                                    lSize="4"
-                                                                    rSize="8"
-                                                                    labelClassName="float-right"
-                                                                    formProps={formProps}
-                                                                    options={customers.data.data.map(item => {
-                                                                        return { label: item.name, value: item.id }
-                                                                    })}
-                                                                />
-                                                            </CCol>
-                                                        </CRow>
-
-                                                        <CRow style={{ marginTop: '10px' }}>
-                                                            <SADataTable
-                                                                md="12"
-                                                                tableName="Product Sale Details:"
-                                                                style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
-                                                                dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                                                                columns={["Product", "Unit", "Sale Quantity", "Rate", "Amount", "Actions"]}
-                                                                fields={["productId", "unitName", "quantity", "rate", "amount"]}
-                                                                readOnlyArr={["unitName", "amount"]}
-                                                                dataArr={dataArr}
-                                                                dataObj={dataObj}
-                                                                onSetDataArray={onSetDataArray}
-                                                                fieldsTypeWithValue={[
-
-                                                                    {
-                                                                        thStyle: { width: '30%' },
-                                                                        fieldName: 'productId',
-                                                                        fieldType: 'REACT-SELECT',
-                                                                        options: products.data.data?.map(product => {
-                                                                            return {
-                                                                                name: product.productCode + "-" + product.productName,
-                                                                                value: product.id
-                                                                            }
-                                                                        }),
-                                                                        onOptionChangeHandler: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                            axios.fetchGetData(`api/Product/${e.target.value}`, unitName, setUnitname, (response) => {
-                                                                                console.log(response.data.unitName);
-                                                                                let newArr = [...dataArr];
-                                                                                var selectedObj = { ...newArr[indexI] };
-                                                                                selectedObj['unitName'] = response.data.unitName;
-                                                                                newArr[indexI] = selectedObj;
-                                                                                console.log(newArr);
-                                                                                onSetDataArray(newArr);
-                                                                                setUnitname(response.data.unitName);
-                                                                            });
-                                                                        }
-                                                                    },
-                                                                    // {
-                                                                    //     thStyle: { width: '10%' },
-                                                                    //     fieldName: 'unitId',
-                                                                    //     fieldType: 'REACT-SELECT',
-                                                                    //     options: units.data.data?.map(unit => {
-                                                                    //         return {
-                                                                    //             name: unit.name,
-                                                                    //             value: unit.id
-                                                                    //         }
-                                                                    //     })
-                                                                    // },
-                                                                    {
-                                                                        thStyle: { width: '15%' },
-                                                                        fieldName: 'quantity',
-                                                                        fieldType: 'NUMBER',
-                                                                        min: 0,
-                                                                        onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                            let newArr = [...dataArr];
-                                                                            var selectedObj = { ...newArr[indexI] };
-                                                                            var quantity = parseFloat(e.target.value);
-                                                                            var selectedObj = newArr[indexI];
-                                                                            selectedObj['quantity'] = quantity;
-                                                                            selectedObj['rate'] = 1;
-                                                                            var rate = parseFloat(selectedObj['rate']);
-                                                                            var amount = parseFloat(quantity * rate);
-                                                                            selectedObj['amount'] = amount;
-                                                                            newArr[indexI] = selectedObj;
-                                                                            onSetDataArray(newArr);
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        thStyle: { width: '15%' },
-                                                                        fieldName: 'rate',
-                                                                        fieldType: 'NUMBER',
-                                                                        min: 0,
-                                                                        onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                            let newArr = [...dataArr];
-                                                                            var selectedObj = { ...newArr[indexI] };
-                                                                            var rate = parseFloat(e.target.value);
-                                                                            var selectedObj = newArr[indexI];
-                                                                            selectedObj['rate'] = rate;
-                                                                            // selectedObj['quantity'] = 1;
-                                                                            var quantity = parseFloat(selectedObj['quantity']);
-                                                                            var amount = parseFloat(quantity * rate);
-                                                                            selectedObj['amount'] = amount;
-                                                                            newArr[indexI] = selectedObj;
-                                                                            onSetDataArray(newArr);
-                                                                        }
-                                                                    },
-                                                                    {
-                                                                        thStyle: { width: '20%' },
-                                                                        fieldName: 'amount',
-                                                                        fieldType: 'NUMBER',
-                                                                        min: 0
-                                                                    }
-                                                                ]}
-                                                                scopedSlots={
-                                                                    (item) => {
-                                                                        return (
-                                                                            <td style={{ width: '10px important' }}>
-                                                                                <CButton
-                                                                                    className="deleteIconButton mx-auto d-block"
-                                                                                    shape="square"
-                                                                                    size="sm"
-                                                                                    onClick={() => {
-                                                                                        var theArr = [...dataArr];
-                                                                                        theArr.splice(item, 1);
-                                                                                        onSetDataArray(theArr);
-                                                                                    }}
-                                                                                    style={{
-                                                                                        marginLeft: '5%'
-                                                                                    }}
-                                                                                >
-                                                                                    <FontAwesomeIcon icon={faTrash} />
-                                                                                </CButton>
-                                                                            </td>
-                                                                        )
-                                                                    }
-                                                                }
+                                                    <CRow>
+                                                        <CCol md="4">
+                                                            <SADatePicker
+                                                                name="saleDate"
+                                                                label="Sale Date"
+                                                                labelClassName="float-right"
+                                                                isInline="true"
+                                                                isRequired="true"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                formProps={formProps}
+                                                                dateFormat="dd/MM/yyyy"
+                                                                placeholderText="dd/MM/yyyy"
                                                             />
-                                                        </CRow>
-                                                        <CRow>
-                                                            <CCol md={{ size: 12 }} style={{ padding: "10px", textAlign: "center" }} >
-                                                                <CButton style={{ marginRight: "20px" }} onClick={() => {
-                                                                    // setAccordion(!accordion);
-                                                                    // toggleButtonSymbol(!buttonSymbol);
-                                                                    // setIsAdd(true);
-                                                                }} size="sm" color="success" type="submit"><FontAwesomeIcon icon={faSave} />&nbsp;Save</CButton>
-                                                                <CButton onClick={() => {
-                                                                    onSetDataArray([]);
-                                                                    // setSaleObj({
-                                                                    //     data: ''
-                                                                    // });
-                                                                    sales.refresh();
-                                                                }} size="sm" color="secondary"><FontAwesomeIcon icon={faTimes} />&nbsp;Cancel</CButton>
-                                                            </CCol>
-                                                        </CRow>
+                                                        </CCol>
+                                                        <CCol md="4">
+                                                            <SAInput
+                                                                id="challanNo"
+                                                                name="challanNo"
+                                                                type="text"
+                                                                label="Challan No."
+                                                                isInline="true"
+                                                                isRequired="true"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                labelClassName="float-right"
+                                                                readOnly={true}
+                                                                value={challanNo.data.data}
+                                                            />
+                                                        </CCol>
+
+                                                        <CCol md='4'>
+                                                            <SAReactAutoSelect
+                                                                name="customerId"
+                                                                label="Customer"
+                                                                isInline="true"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                labelClassName="float-right"
+                                                                formProps={formProps}
+                                                                options={customers.data.data.map(item => {
+                                                                    return { label: item.name, value: item.id }
+                                                                })}
+                                                            />
+                                                        </CCol>
+                                                    </CRow>
+
+                                                    <CRow style={{ marginTop: '10px' }}>
+                                                        <SADataTable
+                                                            md="12"
+                                                            tableName="Product Sale Details:"
+                                                            style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
+                                                            dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
+                                                            columns={["Product", "Unit", "Sale Quantity", "Rate", "Amount", "Actions"]}
+                                                            fields={["productId", "unitName", "quantity", "rate", "amount"]}
+                                                            readOnlyArr={["unitName", "amount"]}
+                                                            dataArr={dataArr}
+                                                            dataObj={dataObj}
+                                                            onSetDataArray={onSetDataArray}
+                                                            fieldsTypeWithValue={[
+
+                                                                {
+                                                                    thStyle: { width: '30%' },
+                                                                    fieldName: 'productId',
+                                                                    fieldType: 'REACT-SELECT',
+                                                                    options: products.data.data?.map(product => {
+                                                                        return {
+                                                                            name: product.productCode + "-" + product.productName,
+                                                                            value: product.id
+                                                                        }
+                                                                    }),
+                                                                    onOptionChangeHandler: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
+                                                                        axios.fetchGetData(`api/Product/${e.target.value}`, unitName, setUnitname, (response) => {
+                                                                            console.log(response.data.unitName);
+                                                                            let newArr = [...dataArr];
+                                                                            var selectedObj = { ...newArr[indexI] };
+                                                                            selectedObj['unitName'] = response.data.unitName;
+                                                                            newArr[indexI] = selectedObj;
+                                                                            console.log(newArr);
+                                                                            onSetDataArray(newArr);
+                                                                            setUnitname(response.data.unitName);
+                                                                        });
+                                                                    }
+                                                                },
+                                                                // {
+                                                                //     thStyle: { width: '10%' },
+                                                                //     fieldName: 'unitId',
+                                                                //     fieldType: 'REACT-SELECT',
+                                                                //     options: units.data.data?.map(unit => {
+                                                                //         return {
+                                                                //             name: unit.name,
+                                                                //             value: unit.id
+                                                                //         }
+                                                                //     })
+                                                                // },
+                                                                {
+                                                                    thStyle: { width: '15%' },
+                                                                    fieldName: 'quantity',
+                                                                    fieldStyle: { textAlign: 'center' },
+                                                                    fieldType: 'NUMBER',
+                                                                    min: 0,
+                                                                    onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
+                                                                        let newArr = [...dataArr];
+                                                                        var selectedObj = { ...newArr[indexI] };
+                                                                        var quantity = parseFloat(e.target.value);
+                                                                        var selectedObj = newArr[indexI];
+                                                                        selectedObj['quantity'] = quantity;
+                                                                        selectedObj['rate'] = 1;
+                                                                        var rate = parseFloat(selectedObj['rate']);
+                                                                        var amount = parseFloat(quantity * rate);
+                                                                        selectedObj['amount'] = amount;
+                                                                        newArr[indexI] = selectedObj;
+                                                                        onSetDataArray(newArr);
+                                                                    }
+                                                                },
+                                                                {
+                                                                    thStyle: { width: '15%' },
+                                                                    fieldName: 'rate',
+                                                                    fieldStyle: { textAlign: 'center' },
+                                                                    fieldType: 'NUMBER',
+                                                                    min: 0,
+                                                                    onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
+                                                                        let newArr = [...dataArr];
+                                                                        var selectedObj = { ...newArr[indexI] };
+                                                                        var rate = parseFloat(e.target.value);
+                                                                        var selectedObj = newArr[indexI];
+                                                                        selectedObj['rate'] = rate;
+                                                                        // selectedObj['quantity'] = 1;
+                                                                        var quantity = parseFloat(selectedObj['quantity']);
+                                                                        var amount = parseFloat(quantity * rate);
+                                                                        selectedObj['amount'] = amount;
+                                                                        newArr[indexI] = selectedObj;
+                                                                        onSetDataArray(newArr);
+                                                                    }
+                                                                },
+                                                                {
+                                                                    thStyle: { width: '20%' },
+                                                                    fieldName: 'amount',
+                                                                    fieldStyle: { textAlign: 'center' },
+                                                                    fieldType: 'NUMBER',
+                                                                    min: 0
+                                                                }
+                                                            ]}
+                                                            scopedSlots={
+                                                                (item) => {
+                                                                    return (
+                                                                        <td style={{ width: '10px important' }}>
+                                                                            <CButton
+                                                                                className="deleteIconButton mx-auto d-block"
+                                                                                shape="square"
+                                                                                size="sm"
+                                                                                onClick={() => {
+                                                                                    var theArr = [...dataArr];
+                                                                                    theArr.splice(item, 1);
+                                                                                    onSetDataArray(theArr);
+                                                                                }}
+                                                                                style={{
+                                                                                    marginLeft: '5%'
+                                                                                }}
+                                                                            >
+                                                                                <FontAwesomeIcon icon={faTrash} />
+                                                                            </CButton>
+                                                                        </td>
+                                                                    )
+                                                                }
+                                                            }
+                                                        />
+                                                    </CRow>
+                                                    <CRow>
+                                                        <CCol md={{ size: 12 }} style={{ padding: "10px", textAlign: "center" }} >
+                                                            <CButton style={{ marginRight: "20px" }} onClick={() => {
+                                                                // setAccordion(!accordion);
+                                                                // toggleButtonSymbol(!buttonSymbol);
+                                                                // setIsAdd(true);
+                                                            }} size="sm" color="success" type="submit"><FontAwesomeIcon icon={faSave} />&nbsp;Save</CButton>
+                                                            <CButton onClick={() => {
+                                                                onSetDataArray([]);
+                                                                // setSaleObj({
+                                                                //     data: ''
+                                                                // });
+                                                                sales.refresh();
+                                                            }} size="sm" color="secondary"><FontAwesomeIcon icon={faTimes} />&nbsp;Cancel</CButton>
+                                                        </CCol>
+                                                    </CRow>
                                                 </div>
                                             </Form>
                                         );

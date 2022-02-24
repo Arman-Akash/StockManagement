@@ -199,7 +199,7 @@ const WarehouseReceive = (props) => {
                                                                     }
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '10%' },
+                                                                    thStyle: { width: '10%', textAlign:'center !important'},
                                                                     fieldName: 'unitId',
                                                                     fieldType: 'REACT-SELECT',
                                                                     options: units.data.data?.map(unit => {
@@ -213,6 +213,7 @@ const WarehouseReceive = (props) => {
                                                                     thStyle: { width: '10%' },
                                                                     fieldName: 'quantity',
                                                                     fieldType: 'NUMBER',
+                                                                    fieldStyle: { textAlign: 'center' },
                                                                     min: 0,
                                                                     onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
                                                                         let newArr = [...dataArr];
@@ -231,6 +232,7 @@ const WarehouseReceive = (props) => {
                                                                 {
                                                                     thStyle: { width: '10%' },
                                                                     fieldName: 'rate',
+                                                                    fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
                                                                     min: 0,
                                                                     onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
@@ -255,13 +257,15 @@ const WarehouseReceive = (props) => {
                                                                 {
                                                                     thStyle: { width: '15%' },
                                                                     fieldName: 'amount',
+                                                                    fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
                                                                     min: 0
                                                                 },
                                                                 {
                                                                     thStyle: { width: '10%' },
                                                                     fieldName: 'expireDate',
-                                                                    fieldType: 'REACT-DATEPICKER'
+                                                                    fieldType: 'REACT-DATEPICKER',
+                                                                    fieldStyle: { textAlign: 'center' },
                                                                 }
                                                             ]}
                                                             scopedSlots={
