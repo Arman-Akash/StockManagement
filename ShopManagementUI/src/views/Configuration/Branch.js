@@ -104,6 +104,7 @@ const Institute = () => {
                 <CModal
                     show={isOpen}
                     onClose={() => toggleModal(!isOpen)}
+                    style={{marginLeft:"0px"}}
                     color="primary"
                 >
                     <Formik
