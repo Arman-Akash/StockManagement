@@ -30,76 +30,76 @@ const Dashboard = () => {
     <CCard>
       <CCardBody className="dashboard">
         <CRow style={{ padding: "10px" }}>
-          <CCol xs="2" sm="2" className="text-center oms-icon">
+          <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/branch">
-              <CIcon src={iBusinessUnit} />
+              <CIcon className='mob-dashboard-img' src={iBusinessUnit} />
               <h6>Branch Information</h6>
             </CLink>
           </CCol>
-          <CCol xs="2" sm="2" className="text-center oms-icon">
+          <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
           <CLink to="/product-type">
-            <CIcon src={iProductType} />
+            <CIcon className='mob-dashboard-img' src={iProductType} />
             <h6>Product Type</h6>
           </CLink>
         </CCol>
-          <CCol xs="2" sm="2" className="text-center oms-icon">
+          <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/product-sub-type">
-              <CIcon src={iSubType} />
+              <CIcon className='mob-dashboard-img' src={iSubType} />
               <h6>Product Sub Type</h6>
             </CLink>
           </CCol>
          
-          <CCol xs="2" sm="2" className="text-center oms-icon">
+          <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/product">
-              <CIcon src={iProduct} />
+              <CIcon className='mob-dashboard-img' src={iProduct} />
               <h6>Product</h6>
             </CLink>
           </CCol>
-          <CCol xs="2" sm="2" className="text-center oms-icon">
+          <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/unit">
-              <CIcon src={iUnit} />
+              <CIcon className='mob-dashboard-img' src={iUnit} />
               <h6>Unit</h6>
             </CLink>
           </CCol>
-          <CCol xs="2" sm="2" className="text-center oms-icon">
+          <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
           <CLink to="/customer">
-            <CIcon src={iSupplier} />
+            <CIcon className='mob-dashboard-img' src={iSupplier} />
             <h6>Customer</h6>
           </CLink>
         </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
           <CLink to="/opening-stock-entry">
-            <CIcon src={iOpeningStock} />
+            <CIcon className='mob-dashboard-img' src={iOpeningStock} />
             <h6>Opening Stock Entry</h6>
           </CLink>
         </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/warehouse-receive">
-              <CIcon src={iOrder} />
+              <CIcon className='mob-dashboard-img' src={iOrder} />
               <h6>Warehouse Product Receive</h6>
             </CLink>
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
           <CLink to="/transfer">
-            <CIcon src={iPurchase} />
+            <CIcon className='mob-dashboard-img' src={iPurchase} />
             <h6>Transfer</h6>
           </CLink>
         </CCol>
         <CCol xs="2" sm="2" className="text-center oms-icon">
           <CLink to="/receive">
-            <CIcon src={iStock} />
+            <CIcon className='mob-dashboard-img' src={iStock} />
             <h6>Receive</h6>
           </CLink>
         </CCol>
         <CCol xs="2" sm="2" className="text-center oms-icon">
           <CLink to="/sale">
-            <CIcon src={iSell} />
+            <CIcon className='mob-dashboard-img' src={iSell} />
             <h6>Sale</h6>
           </CLink>
         </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/purchase-report">
-              <CIcon src={iReport} />
+              <CIcon className='mob-dashboard-img' src={iReport} />
               <h6>Purchase Report</h6>
             </CLink>
           </CCol>
