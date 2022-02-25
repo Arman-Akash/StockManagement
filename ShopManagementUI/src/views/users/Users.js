@@ -131,7 +131,7 @@ const Users = () => {
 
                 {/* Create New User */}
                 <CModal
-                    style={{ marginLeft: "100px", marginTop: "100px" }}
+                    style={{ marginLeft: "0px", marginTop: "100px" }}
                     show={isAddModalOpen}
                     onClose={() => toggleAddModal(!isAddModalOpen)}
                     color="primary"
