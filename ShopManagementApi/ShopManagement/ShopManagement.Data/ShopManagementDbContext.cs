@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using ShopManagement.Entity.Models;
+using ShopManagement.Entity.Models.Seeds;
 
 namespace ShopManagement.Data
 {
@@ -100,6 +101,8 @@ namespace ShopManagement.Data
 				entity.Property(e => e.Type)
 					.HasDefaultValue(string.Empty)
 					.HasMaxLength(100);
+
+				entity.HasData(BranchSeedData.Branches);
 			});
 
 			builder.Entity<Unit>(entity =>
@@ -238,9 +241,6 @@ namespace ShopManagement.Data
 				entity.Property(e => e.TransferChallan)
 					.IsRequired()
 					.HasMaxLength(100);
-
-				entity.Property(e => e.TransferDate)
-					.HasDefaultValueSql("getdate()");
 
 				entity.HasOne(e => e.Branch)
 					.WithMany()

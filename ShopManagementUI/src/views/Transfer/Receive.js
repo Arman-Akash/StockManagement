@@ -106,7 +106,7 @@ const Receive = (props) => {
                                     formProps => {
                                         return (
                                             <Form>
-                                                    <CCollapse show={accordion}>
+                                                <CCollapse show={accordion}>
                                                     <CRow>
                                                         <CCol md="4">
                                                             <SAInput
@@ -120,7 +120,7 @@ const Receive = (props) => {
                                                                 rSize="8"
                                                                 labelClassName="float-right"
                                                                 readOnly={true}
-                                                                // value={transferChallan.data.data}
+                                                            // value={transferChallan.data.data}
                                                             />
                                                         </CCol>
                                                         <CCol md="4">
@@ -171,31 +171,31 @@ const Receive = (props) => {
                                                             />
                                                         </CCol>
                                                         <CCol md="4">
-                                                        <SAInput
-                                                            id="vehicleNo"
-                                                            name="vehicleNo"
-                                                            type="text"
-                                                            label="Vehicle No"
-                                                            isInline="true"
-                                                            lSize="4"
-                                                            rSize="8"
-                                                            readOnly="true"
-                                                            labelClassName="float-right"
-                                                        />
-                                                    </CCol>
-                                                    <CCol md="4">
-                                                        <SATextArea
-                                                            id="details"
-                                                            name="details"
-                                                            type="text"
-                                                            label="Details"
-                                                            isInline="true"
-                                                            readOnly="true"
-                                                            lSize="4"
-                                                            rSize="8"
-                                                            labelClassName="float-right"
-                                                        />
-                                                    </CCol>
+                                                            <SAInput
+                                                                id="vehicleNo"
+                                                                name="vehicleNo"
+                                                                type="text"
+                                                                label="Vehicle No"
+                                                                isInline="true"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                readOnly="true"
+                                                                labelClassName="float-right"
+                                                            />
+                                                        </CCol>
+                                                        <CCol md="4">
+                                                            <SATextArea
+                                                                id="details"
+                                                                name="details"
+                                                                type="text"
+                                                                label="Details"
+                                                                isInline="true"
+                                                                readOnly="true"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                labelClassName="float-right"
+                                                            />
+                                                        </CCol>
                                                     </CRow>
 
                                                     <CRow style={{ marginTop: '10px' }}>
@@ -236,7 +236,7 @@ const Receive = (props) => {
                                                                     }
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '10%', textAlign:'center' },
+                                                                    thStyle: { width: '10%', textAlign: 'center' },
                                                                     fieldName: 'unitName',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'text',
@@ -295,10 +295,12 @@ const Receive = (props) => {
                                                             <CButton onClick={() => {
                                                                 onSetDataArray([]);
                                                                 setAccordion(false);
-                                                            }} size="sm" color="secondary"><FontAwesomeIcon icon={faTimes} />&nbsp;Cancel</CButton>
+                                                            }} size="sm" color="secondary" type="button">
+                                                                <FontAwesomeIcon icon={faTimes} />&nbsp;Cancel
+                                                            </CButton>
                                                         </CCol>
                                                     </CRow>
-                                                    </CCollapse>
+                                                </CCollapse>
                                             </Form>
                                         );
                                     }
@@ -327,7 +329,7 @@ const Receive = (props) => {
                                                         data: {
                                                             id: item.id,
                                                             transferDate: item.transferDate,
-                                                            transferChallan : item.transferChallan,
+                                                            transferChallan: item.transferChallan,
                                                             branchId: item.branchId,
                                                             vehicleNo: item.vehicleNo,
                                                             details: item.details,

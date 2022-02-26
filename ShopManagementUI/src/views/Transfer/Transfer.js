@@ -37,7 +37,6 @@ const Transfer = (props) => {
         transferDetails: []
     }
     let [transferObj, setTransferObj] = useState({ data: data });
-    let [unitName, setUnitname] = useState('');
 
     const fields = ['transferDate', 'branchName', 'userName', 'vehicleNo', 'details', 'actions'];
 
@@ -80,10 +79,12 @@ const Transfer = (props) => {
                                     }
                                     else {
                                         if (isAdd) {
-                                            axios.fetchPostData('api/Transfer', values, () => {
-                                                transfers.refresh();
+                                            axios.fetchPostData('api/Transfer', values, undefined, (response) => {
+                                                if (response.success) {
+                                                    transfers.refresh();
+                                                    onSetDataArray([]);
+                                                }
                                             });
-                                            onSetDataArray([]);
                                         } else {
                                             axios.fetchPutData(`api/Transfer/${values.id}`, values, () => {
                                                 transfers.refresh();
@@ -135,7 +136,7 @@ const Transfer = (props) => {
                                                         </CCol>
                                                         <CCol md='4'>
                                                             <SAReactAutoSelect
-                                                                name="branchId"
+                                                                name="transferedBranchId"
                                                                 label="Branch"
                                                                 isRequired="true"
                                                                 isInline="true"
@@ -180,8 +181,8 @@ const Transfer = (props) => {
                                                             tableName="Product Transfer Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                                                            columns={["Product", "Unit", "Transfer Quantity", "Rate", "Amount", "Actions"]}
-                                                            fields={["productId", "unitName", "quantity", "rate", "amount"]}
+                                                            columns={["Product", "Unit", "stock", "Transfer Quantity", "Rate", "Amount", "Actions"]}
+                                                            fields={["productId", "unitName", "stock", "quantity", "rate", "amount"]}
                                                             readOnlyArr={["unitName", "amount"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
@@ -198,20 +199,22 @@ const Transfer = (props) => {
                                                                         }
                                                                     }),
                                                                     onOptionChangeHandler: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                        axios.fetchGetData(`api/Product/${e.target.value}`, unitName, setUnitname, (response) => {
-                                                                            console.log(response.data.unitName);
-                                                                            let newArr = [...dataArr];
-                                                                            var selectedObj = { ...newArr[indexI] };
-                                                                            selectedObj['unitName'] = response.data.unitName;
-                                                                            newArr[indexI] = selectedObj;
-                                                                            console.log(newArr);
-                                                                            onSetDataArray(newArr);
-                                                                            setUnitname(response.data.unitName);
+                                                                        var unitName = "";
+                                                                        axios.fetchGetData(`api/Product/${e.target.value}`, undefined, undefined, (response) => {
+                                                                            axios.fetchGetData(`api/Stock/GetStock/${e.target.value}`, undefined, undefined, (stock) => {
+                                                                                let newArr = [...dataArr];
+                                                                                var selectedObj = { ...newArr[indexI] };
+                                                                                selectedObj['unitName'] = response.data.unitName;
+                                                                                selectedObj['stock'] = stock.data;
+                                                                                newArr[indexI] = selectedObj;
+                                                                                console.log(newArr);
+                                                                                onSetDataArray(newArr);
+                                                                            })
                                                                         });
                                                                     }
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '10%', textAlign:'center' },
+                                                                    thStyle: { width: '10%', textAlign: 'center' },
                                                                     fieldName: 'unitName',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'text',
@@ -257,7 +260,7 @@ const Transfer = (props) => {
                                                                     }
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '20%' },
+                                                                    thStyle: { width: '10%' },
                                                                     fieldName: 'amount',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
@@ -338,7 +341,6 @@ const Transfer = (props) => {
                                                         }
                                                     });
                                                     transferChallan.setData({ data: item.transferChallan });
-                                                    setUnitname(unitName);
                                                     setIsAdd(false);
                                                     onSetDataArray(item.transferDetails);
                                                 }}
