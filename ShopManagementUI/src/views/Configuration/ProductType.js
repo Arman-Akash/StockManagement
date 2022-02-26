@@ -15,7 +15,6 @@ import {
     CDataTable
 } from '@coreui/react'
 import SAInput from '../FormLib/saInput';
-import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
@@ -35,17 +34,12 @@ const ProductType = () => {
     const [isAdd, setIsAdd] = useState(false);
     let data = {
         id: 0,
-        type: '',
-        productSubTypeId: 0
+        type: ''
     }
-    let [productTypeObj, setProductTypeObj] = useState(data);
+    let [productTypeObj, productSubTypeObj] = useState(data);
 
-    const fields = [
-        { key: 'productSubTypeName', label: 'Product Sub Type' },
-        { key: 'type', label: 'Product Type' },
-        'actions'];
+    const fields = [{ key: 'type', label: 'Product Type' }, 'actions'];
     let productTypes = dataApi.useDataApi(`api/ProductType`, initialState.initialCollections);
-    let productSubTypes = dataApi.useDataApi(`api/ProductSubType`, initialState.initialCollections);
 
     return (
         <CCard>
@@ -54,7 +48,7 @@ const ProductType = () => {
                     onClick={() => {
                         toggleModal(!isOpen);
                         setIsAdd(true);
-                        setProductTypeObj(data);
+                        productSubTypeObj(data);
                     }}
                 />
 
@@ -73,7 +67,7 @@ const ProductType = () => {
                                 <td>
                                     <EditIcon
                                         onClick={() => {
-                                            setProductTypeObj(item);
+                                            productSubTypeObj(item);
                                             setIsAdd(false);
                                             toggleModal(!isOpen);
                                         }}
@@ -81,7 +75,7 @@ const ProductType = () => {
 
                                     <DeleteIcon
                                         onClick={() => {
-                                            setProductTypeObj(item);
+                                            productSubTypeObj(item);
                                             toggleDeleteModal(true);
                                         }}
                                     />
@@ -97,25 +91,21 @@ const ProductType = () => {
                 <CModal
                     show={isOpen}
                     onClose={() => toggleModal(!isOpen)}
+                    style={{marginLeft:"0px"}}
                     color="primary"
                 >
                     <Formik
                         enableReinitialize
                         initialValues={productTypeObj}
                         validationSchema={
-
                             Yup.object({
                                 type: Yup.string()
-                                    .min(3, "Product Type should be min 03 Letters")
                                     .max(100, "Product Type should be in 100 Letters")
-                                    .required("Required"),
-
-                                productSubTypeId: Yup.number().min(1, "please select sub type")
                                     .required("Required")
                             })
                         }
                         onSubmit={(values, { resetForm }) => {
-                            console.log('Inside submit');
+                            // console.log('Inside submit');
                             if (isAdd) {
                                 axios.fetchPostData('api/ProductType', values, () => {
                                     productTypes.refresh()
@@ -139,31 +129,15 @@ const ProductType = () => {
                                         <Form>
                                             <CModalBody>
                                                 {/* Provide country name*/}
-
-                                                <CCol md='12' style={{ marginBottom: '5px' }}>
-                                                    <SAReactAutoSelect
-                                                        name="productSubTypeId"
-                                                        label="Product Sub Type"
-                                                        isRequired="true"
-                                                        isInline="true"
-                                                        lSize="3"
-                                                        rSize="9"
-                                                        labelClassName="float-right"
-                                                        formProps={formProps}
-                                                        options={productSubTypes.data.data.map(item => {
-                                                            return { label: item.subType, value: item.id }
-                                                        })}
-                                                    />
-                                                </CCol>
                                                 <CCol md="12">
                                                     <SAInput
                                                         id="type"
                                                         name="type"
                                                         type="text"
-                                                        label="Product Type"
+                                                        label="Type"
                                                         isInline="true"
-                                                        lSize="3"
-                                                        rSize="9"
+                                                        lSize="4"
+                                                        rSize="7"
                                                         labelClassName="float-right"
                                                         isRequired="true"
                                                     />

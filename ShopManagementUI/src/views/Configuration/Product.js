@@ -36,7 +36,7 @@ const Product = () => {
     const [isAdd, setIsAdd] = useState(false);
     let data = {
         id: 0,
-        productTypeId: 0,
+        productSubTypeId: 0,
         unitId: 0,
         productCode: '',
         productName: '',
@@ -52,7 +52,7 @@ const Product = () => {
     let [productObj, setProductObj] = useState(data);
 
     const fields = [
-        { key: 'productTypeName', label: 'Product Type' },
+        { key: 'productSubTypeName', label: 'Product Sub Type' },
         { key: 'productCode', label: 'Product Code' },
         { key: 'productName', label: 'Product Name' },
         { key: 'origin', label: 'Origin' },
@@ -63,7 +63,7 @@ const Product = () => {
         // { key: 'expireDate', label: 'Expire Date' },
         // { key: 'shelfNo', label: 'Shelf No' },
         'actions'];
-    let productTypes = dataApi.useDataApi(`api/ProductType`, initialState.initialCollections);
+    let productSubTypes = dataApi.useDataApi(`api/ProductSubType`, initialState.initialCollections);
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let units = dataApi.useDataApi(`api/Unit`, initialState.initialCollections);
 
@@ -136,7 +136,7 @@ const Product = () => {
                                     .max(100, "Product Name should be in 100 Letters")
                                     .required("Required"),
 
-                                productTypeId: Yup.number().min(1, "please select product type")
+                                productSubTypeId: Yup.number().min(1, "please select product sub type")
                                     .required("Required"),
 
                                 unitId: Yup.number().min(1, "please select unit")
@@ -170,16 +170,16 @@ const Product = () => {
                                                 <CRow>
                                                     <CCol md='6' style={{ marginBottom: '5px' }}>
                                                         <SAReactAutoSelect
-                                                            name="productTypeId"
-                                                            label="Product Type"
+                                                            name="productSubTypeId"
+                                                            label="Product Sub Type"
                                                             isRequired="true"
                                                             isInline="true"
                                                             lSize="4"
                                                             rSize="8"
                                                             labelClassName="float-right"
                                                             formProps={formProps}
-                                                            options={productTypes.data.data.map(item => {
-                                                                return { label: item.type, value: item.id }
+                                                            options={productSubTypes.data.data.map(item => {
+                                                                return { label: item.subType, value: item.id }
                                                             })}
                                                         />
                                                     </CCol>

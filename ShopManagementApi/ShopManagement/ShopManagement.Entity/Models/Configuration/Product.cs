@@ -7,8 +7,8 @@ namespace ShopManagement.Entity.Models
 {
     public class Product : BaseModel
     {
-        public int ProductTypeId { get; set; }
-        public ProductType ProductType { get; set; }
+        public int ProductSubTypeId { get; set; }
+        public ProductSubType ProductSubType { get; set; }
         public int UnitId { get; set; }
         public Unit Unit { get; set; }
         public string ProductCode { get; set; }
@@ -19,11 +19,11 @@ namespace ShopManagement.Entity.Models
         public string Details { get; set; }
 
         [NotMapped]
-        public string ProductTypeName
+        public string ProductSubTypeName
         {
             get
             {
-                return ProductType?.Type;
+                return ProductSubType?.SubType;
             }
         }
 

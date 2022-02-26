@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ShopManagement.Entity.Models
 {
-    public class Transfer : BaseModel
+    public partial class Transfer : BaseModel
     {
         public Transfer()
         {
@@ -23,17 +23,5 @@ namespace ShopManagement.Entity.Models
         public User User { get; set; }
         public bool RcvFlg { get; set; }
         public ICollection<TransferDetail> TransferDetails { get; set; }
-
-        //[NotMapped]
-        //public string BranchName
-        //{
-        //    get { return Branch.Name; }
-        //}
-
-        [NotMapped]
-        public string UserName
-        {
-            get { return User?.Username; }
-        }
     }
 }

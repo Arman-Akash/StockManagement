@@ -1157,3 +1157,23 @@ a {
   width: 55px;
   opacity: 1;
 }
+
+@media only screen and (max-width: 500px) {
+  .mob-logo {
+    width: 240px;
+    height: 25px;
+  }
+
+  .dashboard .mob-dashboard-img {
+    width: 50px !important;
+    height: 50px !important;
+    padding-bottom: 3px;
+    transition: 0.5s;
+}
+
+.oms-icon h6{
+  color: black;
+    font-weight: bold;
+    width: 76px;
+}
+}

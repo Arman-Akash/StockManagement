@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShopManagement.Entity.ViewModels
 {
-    public class PurchaseVM
+    public class TransferVM
     {
         public DateTime TransferDate { get; set; }
         public string ReceiptNo { get; set; }

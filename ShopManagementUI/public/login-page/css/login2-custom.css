@@ -20,10 +20,10 @@
 	   url('../fonts/Futura-CondensedMedium.woff') format('woff');
 }
 .login2-box-body {
-	width: 420px;
-	float: right;
+	/* width: 420px; */
+	/* float: left; */
 	/*margin: 150px 100px 0 0;*/
-	position: fixed;
+	/* position: fixed; */
 	bottom: 30%;
 	right: 100px;
 	z-index: 101;
@@ -76,7 +76,9 @@
 .logo-holder img {
 	display: block;
 	width: 100px;
+	height: 100px;
 	margin: 0 auto;
+	padding-top: 154px;
 }
 .form-group.form-md-line-input {
 	margin-bottom: 20px;

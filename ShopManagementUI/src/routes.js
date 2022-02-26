@@ -11,7 +11,6 @@ const Sale = React.lazy(() => import('./views/Sale/Sale'));
 const Transfer = React.lazy(() => import('./views/Transfer/Transfer'));
 const Receive = React.lazy(() => import('./views/Transfer/Receive'));
 const Product = React.lazy(() => import('./views/Configuration/Product'));
-const SubCategory = React.lazy(() => import('./views/Configuration/SubCategory'));
 const OpeningStockEntry = React.lazy(() => import('./views/Configuration/OpeningStockEntry'));
 const ChangePassword = React.lazy(() => import('./views/users/ChangePassword'))
 const Users = React.lazy(() => import('./views/users/Users'))
@@ -34,7 +33,6 @@ export const warehouse = [
   { path: '/product-sub-type', name: 'Product Sub Type', component: ProductSubType },
   { path: '/product', name: 'Product', component: Product },
   { path: '/unit', name: 'Unit', component: Unit },
-  { path: '/sub-category', name: 'Sub Category', component: SubCategory }
 ]
 
 const routes = [

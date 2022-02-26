@@ -210,20 +210,16 @@ const Transfer = (props) => {
                                                                         });
                                                                     }
                                                                 },
-                                                                // {
-                                                                //     thStyle: { width: '10%' },
-                                                                //     fieldName: 'unitId',
-                                                                //     fieldType: 'REACT-SELECT',
-                                                                //     options: units.data.data?.map(unit => {
-                                                                //         return {
-                                                                //             name: unit.name,
-                                                                //             value: unit.id
-                                                                //         }
-                                                                //     })
-                                                                // },
+                                                                {
+                                                                    thStyle: { width: '10%', textAlign:'center' },
+                                                                    fieldName: 'unitName',
+                                                                    fieldStyle: { textAlign: 'center' },
+                                                                    fieldType: 'text',
+                                                                },
                                                                 {
                                                                     thStyle: { width: '15%' },
                                                                     fieldName: 'quantity',
+                                                                    fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
                                                                     min: 0,
                                                                     onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
@@ -243,6 +239,7 @@ const Transfer = (props) => {
                                                                 {
                                                                     thStyle: { width: '15%' },
                                                                     fieldName: 'rate',
+                                                                    fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
                                                                     min: 0,
                                                                     onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
@@ -262,6 +259,7 @@ const Transfer = (props) => {
                                                                 {
                                                                     thStyle: { width: '20%' },
                                                                     fieldName: 'amount',
+                                                                    fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
                                                                     min: 0
                                                                 }

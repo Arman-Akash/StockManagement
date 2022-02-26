@@ -18,8 +18,8 @@ const TheHeader = () => {
 
   return (
     <CHeader withSubheader>
-      <CHeaderBrand className="mx-auto d-lg-none" to="/">
-        <CIcon src={logo} height="48px" alt="Logo" />
+      <CHeaderBrand className="mx-auto d-lg-none" to="/dashboard">
+        <CIcon className='mob-logo' src={logo} height="48px" alt="Logo" />
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">

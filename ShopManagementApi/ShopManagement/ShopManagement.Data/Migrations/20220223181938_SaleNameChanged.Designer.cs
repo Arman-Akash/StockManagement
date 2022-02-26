@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagement.Data;
 
 namespace ShopManagement.Data.Migrations
 {
     [DbContext(typeof(ShopManagementDbContext))]
-    partial class ShopManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220223181938_SaleNameChanged")]
+    partial class SaleNameChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,7 +233,7 @@ namespace ShopManagement.Data.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("ProductSubTypeId")
+                    b.Property<int>("ProductTypeId")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("ReOrderLebel")
@@ -250,7 +252,7 @@ namespace ShopManagement.Data.Migrations
                     b.HasIndex("ProductCode")
                         .IsUnique();
 
-                    b.HasIndex("ProductSubTypeId");
+                    b.HasIndex("ProductTypeId");
 
                     b.HasIndex("UnitId");
 
@@ -270,9 +272,6 @@ namespace ShopManagement.Data.Migrations
                     b.Property<int?>("ModifierId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductTypeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SubType")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(100)")
@@ -286,9 +285,7 @@ namespace ShopManagement.Data.Migrations
 
                     b.HasIndex("ModifierId");
 
-                    b.HasIndex("ProductTypeId");
-
-                    b.ToTable("ProductTypes");
+                    b.ToTable("ProductSubTypes");
                 });
 
             modelBuilder.Entity("ShopManagement.Entity.Models.ProductType", b =>
@@ -304,6 +301,9 @@ namespace ShopManagement.Data.Migrations
                     b.Property<int?>("ModifierId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProductSubTypeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Type")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(100)")
@@ -317,7 +317,9 @@ namespace ShopManagement.Data.Migrations
 
                     b.HasIndex("ModifierId");
 
-                    b.ToTable("ProductSubTypes");
+                    b.HasIndex("ProductSubTypeId");
+
+                    b.ToTable("ProductTypes");
                 });
 
             modelBuilder.Entity("ShopManagement.Entity.Models.Receive", b =>
@@ -806,9 +808,9 @@ namespace ShopManagement.Data.Migrations
                         .HasForeignKey("ModifierId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("ShopManagement.Entity.Models.ProductSubType", "ProductSubType")
+                    b.HasOne("ShopManagement.Entity.Models.ProductType", "ProductType")
                         .WithMany()
-                        .HasForeignKey("ProductSubTypeId")
+                        .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -825,12 +827,6 @@ namespace ShopManagement.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ModifierId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ShopManagement.Entity.Models.ProductType", "ProductType")
-                        .WithMany()
-                        .HasForeignKey("ProductTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ShopManagement.Entity.Models.ProductType", b =>
@@ -839,6 +835,12 @@ namespace ShopManagement.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ModifierId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ShopManagement.Entity.Models.ProductSubType", "ProductSubType")
+                        .WithMany()
+                        .HasForeignKey("ProductSubTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ShopManagement.Entity.Models.Receive", b =>

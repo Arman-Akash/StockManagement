@@ -97,7 +97,7 @@ const Supplier = () => {
                     show={isOpen}
                     onClose={() => toggleModal(!isOpen)}
                     color="primary"
-                    style={{ marginLeft: '0px', marginLeft: '0px' }}
+                    style={{ marginLeft: '0px' }}
                 >
                     <Formik
                         enableReinitialize

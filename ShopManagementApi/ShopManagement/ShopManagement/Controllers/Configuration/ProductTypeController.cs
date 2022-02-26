@@ -33,7 +33,6 @@ namespace ShopManagement.WebApi.Controllers
             var result = new ListResult<ProductType>()
             {
                 Data = await _repository.Get()
-                .Include(e => e.ProductSubType)
                 .ToListAsync()
             };
 
@@ -46,7 +45,6 @@ namespace ShopManagement.WebApi.Controllers
             var result = new Result<ProductType>();
             var item = await _repository.Get()
                 .Where(e => e.Id == id)
-                .Include(e => e.ProductSubType)
                 .FirstOrDefaultAsync();
             if (item == null)
             {
@@ -58,7 +56,7 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Result<ProductType>> Post(ProductType supplier)
+        public async Task<Result<ProductType>> Post(ProductType productType)
         {
             var result = new Result<ProductType>();
 
@@ -71,8 +69,8 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
-                await _repository.InsertAsync(supplier);
-                result.Data = supplier;
+                await _repository.InsertAsync(productType);
+                result.Data = productType;
                 result.Message = ResponseMessage.SUCCESSFULLY_CREATED;
                 return result;
             }
@@ -88,11 +86,11 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<Result<ProductType>> Put(int id, ProductType supplier)
+        public async Task<Result<ProductType>> Put(int id, ProductType productType)
         {
             var result = new Result<ProductType>();
 
-            if (id != supplier.Id || !ModelState.IsValid)
+            if (id != productType.Id || !ModelState.IsValid)
             {
                 result.Success = false;
                 result.Message = ResponseMessage.BAD_REQUEST;
@@ -100,8 +98,8 @@ namespace ShopManagement.WebApi.Controllers
             }
             try
             {
-                await _repository.UpdateAsync(supplier);
-                result.Data = supplier;
+                await _repository.UpdateAsync(productType);
+                result.Data = productType;
                 result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;
                 return result;
             }
@@ -121,8 +119,8 @@ namespace ShopManagement.WebApi.Controllers
         {
             var result = new Result();
 
-            var supplier = await _repository.FindAsync(id);
-            if (supplier == null)
+            var productType = await _repository.FindAsync(id);
+            if (productType == null)
             {
                 result.Success = false;
                 result.Message = ResponseMessage.NOT_FOUND;
@@ -131,7 +129,7 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
-                await _repository.DeleteAsync(supplier);
+                await _repository.DeleteAsync(productType);
                 result.Message = ResponseMessage.SUCCESSFULLY_DELETED;
                 return result;
             }

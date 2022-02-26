@@ -15,6 +15,7 @@ import {
     CDataTable
 } from '@coreui/react'
 import SAInput from '../FormLib/saInput';
+import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
@@ -34,12 +35,17 @@ const ProductSubType = () => {
     const [isAdd, setIsAdd] = useState(false);
     let data = {
         id: 0,
-        subType: ''
+        subType: '',
+        productTypeId: 0
     }
-    let [productSubTypeObj, setProductSubTypeObj] = useState(data);
+    let [productSubTypeObj, setSubProductTypeObj] = useState(data);
 
-    const fields = [{ key: 'subType', label: 'Product Sub Type' }, 'actions'];
+    const fields = [
+        { key: 'productTypeName', label: 'Product Type Name' },
+        { key: 'subType', label: 'Product Sub Type' },
+        'actions'];
     let productSubTypes = dataApi.useDataApi(`api/ProductSubType`, initialState.initialCollections);
+    let productTypes = dataApi.useDataApi(`api/ProductType`, initialState.initialCollections);
 
     return (
         <CCard>
@@ -48,7 +54,7 @@ const ProductSubType = () => {
                     onClick={() => {
                         toggleModal(!isOpen);
                         setIsAdd(true);
-                        setProductSubTypeObj(data);
+                        setSubProductTypeObj(data);
                     }}
                 />
 
@@ -67,7 +73,7 @@ const ProductSubType = () => {
                                 <td>
                                     <EditIcon
                                         onClick={() => {
-                                            setProductSubTypeObj(item);
+                                            setSubProductTypeObj(item);
                                             setIsAdd(false);
                                             toggleModal(!isOpen);
                                         }}
@@ -75,7 +81,7 @@ const ProductSubType = () => {
 
                                     <DeleteIcon
                                         onClick={() => {
-                                            setProductSubTypeObj(item);
+                                            setSubProductTypeObj(item);
                                             toggleDeleteModal(true);
                                         }}
                                     />
@@ -92,19 +98,25 @@ const ProductSubType = () => {
                     show={isOpen}
                     onClose={() => toggleModal(!isOpen)}
                     color="primary"
+                    style={{marginLeft:"0px"}}
                 >
                     <Formik
                         enableReinitialize
                         initialValues={productSubTypeObj}
                         validationSchema={
+
                             Yup.object({
                                 subType: Yup.string()
+                                    .min(3, "Product Sub Type should be min 03 Letters")
                                     .max(100, "Product Sub Type should be in 100 Letters")
+                                    .required("Required"),
+
+                                productTypeId: Yup.number().min(1, "please select product type")
                                     .required("Required")
                             })
                         }
                         onSubmit={(values, { resetForm }) => {
-                            // console.log('Inside submit');
+                            console.log('Inside submit');
                             if (isAdd) {
                                 axios.fetchPostData('api/ProductSubType', values, () => {
                                     productSubTypes.refresh()
@@ -123,20 +135,36 @@ const ProductSubType = () => {
                                 return (
                                     <>
                                         <CModalHeader closeButton>
-                                            <CModalTitle>Product SubType Information</CModalTitle>
+                                            <CModalTitle>Product Sub Type Information</CModalTitle>
                                         </CModalHeader>
                                         <Form>
                                             <CModalBody>
                                                 {/* Provide country name*/}
+
+                                                <CCol md='12' style={{ marginBottom: '5px' }}>
+                                                    <SAReactAutoSelect
+                                                        name="productTypeId"
+                                                        label="Product Type"
+                                                        isRequired="true"
+                                                        isInline="true"
+                                                        lSize="3"
+                                                        rSize="9"
+                                                        labelClassName="float-right"
+                                                        formProps={formProps}
+                                                        options={productTypes.data.data.map(item => {
+                                                            return { label: item.type, value: item.id }
+                                                        })}
+                                                    />
+                                                </CCol>
                                                 <CCol md="12">
                                                     <SAInput
                                                         id="subType"
                                                         name="subType"
                                                         type="text"
-                                                        label="Sub Type"
+                                                        label="Product Sub Type"
                                                         isInline="true"
-                                                        lSize="4"
-                                                        rSize="7"
+                                                        lSize="3"
+                                                        rSize="9"
                                                         labelClassName="float-right"
                                                         isRequired="true"
                                                     />
