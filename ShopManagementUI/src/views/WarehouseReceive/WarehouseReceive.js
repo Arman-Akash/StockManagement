@@ -167,8 +167,8 @@ const WarehouseReceive = (props) => {
                                                             tableName="Product Receive Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                                                            columns={["Product", "Unit", "Quantity", "Rate", "Mnf. Date", "Amount", "Exp. Date", "Actions"]}
-                                                            fields={["productId", "unitName", "quantity", "rate", "manufactureDate", "amount", "expireDate"]}
+                                                            columns={["Product", "Unit", "Quantity", "Rate","Amount", "Mnf. Date", "Exp. Date", "Actions"]}
+                                                            fields={["productId", "unitName", "quantity", "rate","amount", "manufactureDate", "expireDate"]}
                                                             readOnlyArr={["amount", "unitName"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
@@ -199,7 +199,7 @@ const WarehouseReceive = (props) => {
                                                                     }
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '10%', textAlign:'center' },
+                                                                    thStyle: { width: '10%', textAlign: 'center' },
                                                                     fieldName: 'unitName',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'text',
@@ -247,6 +247,7 @@ const WarehouseReceive = (props) => {
                                                                 {
                                                                     thStyle: { width: '10%' },
                                                                     fieldName: 'manufactureDate',
+                                                                    dateFormat: 'dd/MM/yyyy',
                                                                     fieldType: 'REACT-DATEPICKER'
                                                                 },
                                                                 {
@@ -259,6 +260,7 @@ const WarehouseReceive = (props) => {
                                                                 {
                                                                     thStyle: { width: '10%' },
                                                                     fieldName: 'expireDate',
+                                                                    dateFormat: 'dd/MM/yyyy',
                                                                     fieldType: 'REACT-DATEPICKER',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                 }

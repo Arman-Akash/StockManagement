@@ -412,6 +412,7 @@ thead {
     background: transparent;
     border: 0px;
     border-radius: 0px;
+    text-align: center;
   }
 }
 
@@ -481,7 +482,10 @@ select {
   display: inline-flex;
   align-items: center;
 }
-
+.deleteIconButton {
+  cursor: pointer;
+  color: rgb(252, 42, 0);
+}
 .btn-circle.btn-xl {
   width: 70px;
   height: 70px;
@@ -1176,4 +1180,8 @@ a {
     font-weight: bold;
     width: 76px;
 }
+}
+
+td .form-group{
+  margin-bottom: 0px;
 }
