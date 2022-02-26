@@ -60,7 +60,7 @@ namespace ShopManagement
             services.AddScoped<IReceiveRepository, ReceiveRepository>();
             services.AddScoped<ITransferRepository, TransferRepository>();
             services.AddScoped<ISaleRepository, SaleRepository>();
-
+            services.AddScoped<IStockRepository, StockRepository>();
 
             var authConfiguration = Configuration.GetSection("AuthConfiguration");
 

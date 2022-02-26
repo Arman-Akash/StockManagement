@@ -107,7 +107,7 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
-                transfer.TransferedBranchId = User.GetBranchId();
+                transfer.BranchId = User.GetBranchId();
                 transfer.UserId = User.GetUserId();
                 await _repository.InsertAsync(transfer);
                 result.Data = transfer;

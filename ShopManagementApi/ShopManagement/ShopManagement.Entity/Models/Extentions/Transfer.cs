@@ -8,11 +8,11 @@ namespace ShopManagement.Entity.Models
     {
         public string BranchName
         {
-            get { return Branch.Name; }
+            get { return Branch?.Name; }
         }
         public string TransferBranchName
         {
-            get { return Branch.Name; }
+            get { return TransferedBranch?.Name; }
         }
 
         public string UserName
