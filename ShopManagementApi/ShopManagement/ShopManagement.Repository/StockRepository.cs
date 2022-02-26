@@ -34,7 +34,7 @@ namespace ShopManagement.Repository
 
 
             var transferRcv = await _context.TransferDetails
-                .Where(e => e.Transfer.TransferedBranchId == branchId)
+                .Where(e => e.Transfer.TransferedBranchId == branchId && e.Transfer.RcvFlg)
                 .SumAsync(e => e.Quantity);
 
             var transfer = await _context.TransferDetails
