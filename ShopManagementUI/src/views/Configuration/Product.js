@@ -228,7 +228,7 @@ const Product = () => {
                                                         <SAInput
                                                             id="packSize"
                                                             name="packSize"
-                                                            type="number"
+                                                            type="text"
                                                             label="Pack Size"
                                                             isInline="true"
                                                             lSize="4"

@@ -15,7 +15,7 @@ namespace ShopManagement.Entity.Models
         public string ProductName { get; set; }
         public string Origin { get; set; }
         public decimal? ReOrderLebel { get; set; }
-        public decimal? PackSize { get; set; }
+        public string PackSize { get; set; }
         public string Details { get; set; }
 
         [NotMapped]

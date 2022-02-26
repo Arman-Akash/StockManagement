@@ -166,7 +166,10 @@ namespace ShopManagement.Data
 				entity.Property(e => e.Origin)
                    .HasMaxLength(100);
 
-                entity.Property(e => e.Details)
+				entity.Property(e => e.PackSize)
+			       .HasMaxLength(100);
+
+				entity.Property(e => e.Details)
                    .HasMaxLength(500);
 
 				entity.HasOne(e => e.Unit)
@@ -179,9 +182,6 @@ namespace ShopManagement.Data
 
 				entity.Property(e => e.ReOrderLebel)
 				    .HasColumnType("decimal(15, 2)");
-
-				entity.Property(e => e.PackSize)
-					.HasColumnType("decimal(15, 2)");
             });
 
             #endregion

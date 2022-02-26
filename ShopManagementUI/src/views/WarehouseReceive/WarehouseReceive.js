@@ -167,7 +167,7 @@ const WarehouseReceive = (props) => {
                                                             tableName="Product Receive Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                                                            columns={["Product", "Unit", "Quantity", "Rate","Amount", "Mnf. Date", "Exp. Date", "Actions"]}
+                                                            columns={["Product", "Unit", "Quantity", "Rate","Amount", "MFG. Date", "EXP. Date", "Actions"]}
                                                             fields={["productId", "unitName", "quantity", "rate","amount", "manufactureDate", "expireDate"]}
                                                             readOnlyArr={["amount", "unitName"]}
                                                             dataArr={dataArr}
