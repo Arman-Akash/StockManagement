@@ -17,6 +17,7 @@ using ShopManagement.Repository;
 using ShopManagement.Entity.ServiceModels;
 using ShopManagement.Entity.Models;
 using ShopManagement.Entity.ViewModels;
+using System.Net;
 
 namespace ShopManagement.WebApi.Controllers
 {
@@ -47,11 +48,30 @@ namespace ShopManagement.WebApi.Controllers
             var result = new ListResult<User>
             {
                 Data = await _repository.Get()
+                    .Include(e => e.Branch)
                     .Include(e => e.Roles)
                     .ThenInclude(e => e.Role)
                     .ToListAsync()
             };
 
+            return result;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<Result<User>> Get(int id)
+        {
+            var result = new Result<User>();
+            var item = await _repository.Get()
+                .Where(e => e.Id == id)
+                .Include(e => e.Branch)
+                .Include(e => e.Roles)
+                .FirstOrDefaultAsync();
+            if (item == null)
+            {
+                result.StatusCode = HttpStatusCode.NotFound;
+                result.Message = ResponseMessage.NOT_FOUND;
+            }
+            result.Data = item;
             return result;
         }
 
@@ -96,6 +116,7 @@ namespace ShopManagement.WebApi.Controllers
             try
             {
                 var user = _repository.Get(e => e.Id == updatedUser.Id)
+                    .Include(e => e.Branch)
                     .Include(e => e.Roles)
                     .FirstOrDefault();
 
@@ -112,6 +133,8 @@ namespace ShopManagement.WebApi.Controllers
                 }
 
                 user.Username = updatedUser.Username;
+                user.Permissions = updatedUser.Permissions;
+                user.BranchId = updatedUser.BranchId;
                 await _userRoleRepository.DeleteRangeAsync(user.Roles.ToList());
                 user.Roles = updatedUser.Roles;
                 user.IsActive = updatedUser.IsActive;

@@ -119,7 +119,7 @@ const ProductSubType = () => {
                             console.log('Inside submit');
                             if (isAdd) {
                                 axios.fetchPostData('api/ProductSubType', values, () => {
-                                    productSubTypes.refresh()
+                                    productSubTypes.refresh();
                                 })
                             } else {
                                 axios.fetchPutData(`api/ProductSubType/${values.id}`, values, () => {

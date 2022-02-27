@@ -40,5 +40,14 @@ namespace ShopManagement.Entity.Models
 
 		[NotMapped]
 		public string Password { get; set; }
+
+		[NotMapped]
+		public string BranchName
+		{
+			get
+			{
+				return Branch?.Name;
+			}
+		}
 	}
 }

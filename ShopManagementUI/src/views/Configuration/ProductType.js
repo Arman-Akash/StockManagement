@@ -43,128 +43,132 @@ const ProductType = () => {
 
     return (
         <CCard>
-            <CCardBody>
-                <AddButton
-                    onClick={() => {
-                        toggleModal(!isOpen);
-                        setIsAdd(true);
-                        productSubTypeObj(data);
-                    }}
-                />
+            <CRow>
+                <CCol md="6">
+                    <CCardBody>
+                        <AddButton
+                            onClick={() => {
+                                toggleModal(!isOpen);
+                                setIsAdd(true);
+                                productSubTypeObj(data);
+                            }}
+                        />
 
-                {/*Datatable*/}
-                <CDataTable
-                    items={productTypes.data.data}
-                    fields={fields}
-                    tableFilter
-                    border
-                    striped
-                    pagination
-                    // sorter
-                    scopedSlots={{
-                        'actions':
-                            (item) => (
-                                <td>
-                                    <EditIcon
-                                        onClick={() => {
-                                            productSubTypeObj(item);
-                                            setIsAdd(false);
-                                            toggleModal(!isOpen);
-                                        }}
-                                    />
+                        {/*Datatable*/}
+                        <CDataTable
+                            items={productTypes.data.data}
+                            fields={fields}
+                            tableFilter
+                            border
+                            striped
+                            pagination
+                            // sorter
+                            scopedSlots={{
+                                'actions':
+                                    (item) => (
+                                        <td>
+                                            <EditIcon
+                                                onClick={() => {
+                                                    productSubTypeObj(item);
+                                                    setIsAdd(false);
+                                                    toggleModal(!isOpen);
+                                                }}
+                                            />
 
-                                    <DeleteIcon
-                                        onClick={() => {
-                                            productSubTypeObj(item);
-                                            toggleDeleteModal(true);
-                                        }}
-                                    />
-                                </td>
-                            )
-                    }}
-                />
-                <CRow>
-                    <CCol md="4">
-                        <CLabel>Total Number of Product Types: {productTypes.data != undefined && productTypes.data.data != undefined ? productTypes.data.data.length : 0}</CLabel>
-                    </CCol>
-                </CRow>
-                <CModal
-                    show={isOpen}
-                    onClose={() => toggleModal(!isOpen)}
-                    style={{marginLeft:"0px"}}
-                    color="primary"
-                >
-                    <Formik
-                        enableReinitialize
-                        initialValues={productTypeObj}
-                        validationSchema={
-                            Yup.object({
-                                type: Yup.string()
-                                    .max(100, "Product Type should be in 100 Letters")
-                                    .required("Required")
-                            })
-                        }
-                        onSubmit={(values, { resetForm }) => {
-                            // console.log('Inside submit');
-                            if (isAdd) {
-                                axios.fetchPostData('api/ProductType', values, () => {
-                                    productTypes.refresh()
-                                })
-                            } else {
-                                axios.fetchPutData(`api/ProductType/${values.id}`, values, () => {
+                                            <DeleteIcon
+                                                onClick={() => {
+                                                    productSubTypeObj(item);
+                                                    toggleDeleteModal(true);
+                                                }}
+                                            />
+                                        </td>
+                                    )
+                            }}
+                        />
+                        <CRow>
+                            <CCol md="4">
+                                <CLabel>Total Number of Product Types: {productTypes.data != undefined && productTypes.data.data != undefined ? productTypes.data.data.length : 0}</CLabel>
+                            </CCol>
+                        </CRow>
+                        <CModal
+                            show={isOpen}
+                            onClose={() => toggleModal(!isOpen)}
+                            style={{ marginLeft: "0px" }}
+                            color="primary"
+                        >
+                            <Formik
+                                enableReinitialize
+                                initialValues={productTypeObj}
+                                validationSchema={
+                                    Yup.object({
+                                        type: Yup.string()
+                                            .max(100, "Product Type should be in 100 Letters")
+                                            .required("Required")
+                                    })
+                                }
+                                onSubmit={(values, { resetForm }) => {
+                                    // console.log('Inside submit');
+                                    if (isAdd) {
+                                        axios.fetchPostData('api/ProductType', values, () => {
+                                            productTypes.refresh()
+                                        })
+                                    } else {
+                                        axios.fetchPutData(`api/ProductType/${values.id}`, values, () => {
+                                            productTypes.refresh();
+                                        })
+                                    }
+                                    resetForm();
+                                    toggleModal(false);
+                                }}
+                            >
+                                {
+                                    formProps => {
+                                        return (
+                                            <>
+                                                <CModalHeader closeButton>
+                                                    <CModalTitle>Product Type Information</CModalTitle>
+                                                </CModalHeader>
+                                                <Form>
+                                                    <CModalBody>
+                                                        {/* Provide country name*/}
+                                                        <CCol md="12">
+                                                            <SAInput
+                                                                id="type"
+                                                                name="type"
+                                                                type="text"
+                                                                label="Type"
+                                                                isInline="true"
+                                                                lSize="4"
+                                                                rSize="7"
+                                                                labelClassName="float-right"
+                                                                isRequired="true"
+                                                            />
+                                                        </CCol>
+                                                    </CModalBody>
+                                                    <CModalFooter>
+                                                        <CButton type="submit" color="success" size="sm"><FontAwesomeIcon icon={faSave} /> Save</CButton>
+                                                        <CButton color="secondary" size="sm" onClick={() => { toggleModal(!isOpen) }}><FontAwesomeIcon icon={faTimes} /> Cancel</CButton>
+                                                    </CModalFooter>
+                                                </Form>
+                                            </>
+                                        );
+                                    }
+                                }
+                            </Formik>
+                        </CModal>
+                        {/*Delete Modal section*/}
+                        <DeleteModal
+                            isDelete={isDelete}
+                            toggleDeleteModal={toggleDeleteModal}
+                            deleteOpp={() => {
+                                axios.fetchDeleteData(`api/ProductType/${productTypeObj.id}`, () => {
                                     productTypes.refresh();
-                                })
-                            }
-                            resetForm();
-                            toggleModal(false);
-                        }}
-                    >
-                        {
-                            formProps => {
-                                return (
-                                    <>
-                                        <CModalHeader closeButton>
-                                            <CModalTitle>Product Type Information</CModalTitle>
-                                        </CModalHeader>
-                                        <Form>
-                                            <CModalBody>
-                                                {/* Provide country name*/}
-                                                <CCol md="12">
-                                                    <SAInput
-                                                        id="type"
-                                                        name="type"
-                                                        type="text"
-                                                        label="Type"
-                                                        isInline="true"
-                                                        lSize="4"
-                                                        rSize="7"
-                                                        labelClassName="float-right"
-                                                        isRequired="true"
-                                                    />
-                                                </CCol>
-                                            </CModalBody>
-                                            <CModalFooter>
-                                                <CButton type="submit" color="success" size="sm"><FontAwesomeIcon icon={faSave} /> Save</CButton>
-                                                <CButton color="secondary" size="sm" onClick={() => { toggleModal(!isOpen) }}><FontAwesomeIcon icon={faTimes} /> Cancel</CButton>
-                                            </CModalFooter>
-                                        </Form>
-                                    </>
-                                );
-                            }
-                        }
-                    </Formik>
-                </CModal>
-                {/*Delete Modal section*/}
-                <DeleteModal
-                    isDelete={isDelete}
-                    toggleDeleteModal={toggleDeleteModal}
-                    deleteOpp={() => {
-                        axios.fetchDeleteData(`api/ProductType/${productTypeObj.id}`, () => {
-                            productTypes.refresh();
-                        });
-                    }}
-                />
-            </CCardBody>
+                                });
+                            }}
+                        />
+                    </CCardBody>
+                </CCol>
+            </CRow>
         </CCard>
     )
 }

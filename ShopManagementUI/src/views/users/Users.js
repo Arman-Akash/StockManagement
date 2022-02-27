@@ -47,7 +47,7 @@ const Users = () => {
         }
     });
 
-    const fields = ['username', { label: 'Role', key: 'permissions' }, 'actions'];
+    const fields = ['username','branchName', { label: 'Role', key: 'permissions' }, 'actions'];
     let users = dataApi.useDataApi(`api/Account`, initialState.initialCollections);
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
 
@@ -100,6 +100,8 @@ const Users = () => {
                                                     data: {
                                                         id: item.id,
                                                         username: item.username,
+                                                        permissions: item.permissions,
+                                                        branchId : item.branchId,
                                                         password: '',
                                                         confrimPassword: '',
                                                         roleId: roleIds,
@@ -276,10 +278,12 @@ const Users = () => {
                             Yup.object({
                                 username: Yup.string()
                                     .required("Required"),
+                                // password: Yup.string()
+                                //     .required("required"),
+                                // confrimPassword: Yup.string()
+                                //     .oneOf([Yup.ref('password'), null], 'Password did not match'),
                                 isActive: Yup.string()
-                                    .required(),
-                                confrimPassword: Yup.string()
-                                    .oneOf([Yup.ref('password'), null], 'Password did not match')
+                                    .required()
                             })
                         }
                         onSubmit={(values, { resetForm }) => {
@@ -319,22 +323,38 @@ const Users = () => {
                                                             isRequired="true"
                                                         />
                                                     </CCol>
-                                                    {/* <CCol md="12">
-                                                            <SAReactAutoSelect
-                                                                id="roleId"
-                                                                name="roleId"
-                                                                label="Role"
-                                                                isInline="true"
-                                                                lSize="4"
-                                                                rSize="7"
-                                                                labelClassName="float-right"
-                                                                formProps={formProps}
-                                                                isMulti={true}
-                                                                options={Roles.data.data.map(role => {
-                                                                    return { label: role.name, value: role.id }
-                                                                })}
-                                                            />
-                                                        </CCol> */}
+                                                    <CCol md="12">
+                                                        <SAReactAutoSelect
+                                                            id="branchId"
+                                                            name="branchId"
+                                                            label="Branch"
+                                                            isInline="true"
+                                                            lSize="4"
+                                                            rSize="7"
+                                                            labelClassName="float-right"
+                                                            formProps={formProps}
+                                                            options={branches.data?.data?.map(e => {
+                                                                return { label: e.name, value: e.id }
+                                                            })}
+                                                        />
+                                                    </CCol>
+                                                    <CCol md="12">
+                                                        <SAReactAutoSelect
+                                                            id="permissions"
+                                                            name="permissions"
+                                                            label="Role"
+                                                            isInline="true"
+                                                            lSize="4"
+                                                            rSize="7"
+                                                            labelClassName="float-right"
+                                                            formProps={formProps}
+                                                            options={[
+                                                                { label: Roles.Admin, value: Roles.Admin },
+                                                                { label: Roles.Warehouse, value: Roles.Warehouse },
+                                                                { label: Roles.Outlet, value: Roles.Outlet }
+                                                            ]}
+                                                        />
+                                                    </CCol>
                                                     <CCol md="12">
                                                         <SACheckBox
                                                             id="isActive"
