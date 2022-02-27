@@ -11,10 +11,10 @@ import {
     CCard,
     CCardBody
 } from '@coreui/react'
-import Excercise from './Excercise'
-import ExcerciseReport from './ExcerciseReport'
+import CustomerDue from './CustomerDue'
+import CustomerDueReport from './CustomerDueReport'
 
-const ExcerciseContainer = () => {
+const CustomerDueContainer = () => {
     const [active, setActive] = useState(0)
 
     return (
@@ -25,7 +25,7 @@ const ExcerciseContainer = () => {
                         <CCol md="2">
                             <CNav vertical className="vertical-nav">
                                 <CNavItem>
-                                    <CNavLink>Exercise</CNavLink>
+                                    <CNavLink>Customer Dues</CNavLink>
                                 </CNavItem>
 
                                 <CNavItem>
@@ -36,10 +36,10 @@ const ExcerciseContainer = () => {
                         <CCol md="10">
                             <CTabContent className="mt-3">
                                 <CTabPane>
-                                    <Excercise />
+                                    <CustomerDue />
                                 </CTabPane>
                                 <CTabPane>
-                                    <ExcerciseReport />
+                                    <CustomerDueReport />
                                 </CTabPane>
                             </CTabContent>
                         </CCol>
@@ -50,5 +50,5 @@ const ExcerciseContainer = () => {
     )
 }
 
-export default ExcerciseContainer
+export default CustomerDueContainer
 

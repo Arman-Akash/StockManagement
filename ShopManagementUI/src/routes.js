@@ -14,6 +14,7 @@ const Product = React.lazy(() => import('./views/Configuration/Product'));
 const OpeningStockEntry = React.lazy(() => import('./views/Configuration/OpeningStockEntry'));
 const ChangePassword = React.lazy(() => import('./views/users/ChangePassword'))
 const Users = React.lazy(() => import('./views/users/Users'))
+const CustomerDueContainer = React.lazy(() => import('./views/CustomerDue/CustomerDueContainer'))
 
 export const outlet = [
   { path: '/', exact: true, name: 'Home' },
@@ -22,7 +23,8 @@ export const outlet = [
   { path: '/transfer', name: 'Transfer', component: Transfer },
   { path: '/receive', name: 'Product Receive', component: Receive },
   { path: '/customer', name: 'Customer', component: Customer },
-  { path: '/opening-stock-entry', name: 'Opening Stock Entry', component: OpeningStockEntry }
+  { path: '/opening-stock-entry', name: 'Opening Stock Entry', component: OpeningStockEntry },
+  { path: '/customer-dues', name: 'Customer Dues', component: CustomerDueContainer }
 ]
 
 export const warehouse = [
@@ -39,7 +41,6 @@ const routes = [
   ...warehouse,
   { path: '/branch', name: 'Branch Information', component: Branch },
   { path: '/purchase-report', name: 'Purchase Report', component: PurchaseReport },
-
   { path: '/users/create-user', exact: true, name: 'Users', component: Users },
   { path: '/user/change-password', exact: true, name: 'Access Control', component: ChangePassword },
 ];

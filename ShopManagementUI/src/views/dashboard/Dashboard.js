@@ -20,7 +20,8 @@ import iProduct from '../../assets/images/products.png';
 import iUnit from '../../assets/images/unit.png';
 import iOrder from '../../assets/images/order.png';
 import iBusinessUnit from '../../assets/images/businessunit.png';
-import iOpeningStock from '../../assets/images/stock.png';
+import iCustomrDues from '../../assets/images/credit.png';
+import iReceive from '../../assets/images/openingstock.png';
 import iReport from '../../assets/images/report.png';
 
 const Dashboard = () => {
@@ -69,7 +70,7 @@ const Dashboard = () => {
         </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
           <CLink to="/opening-stock-entry">
-            <CIcon className='mob-dashboard-img' src={iOpeningStock} />
+            <CIcon className='mob-dashboard-img' src={iReceive} />
             <h6>Opening Stock Entry</h6>
           </CLink>
         </CCol>
@@ -91,12 +92,21 @@ const Dashboard = () => {
             <h6>Receive</h6>
           </CLink>
         </CCol>
+
         <CCol xs="2" sm="2" className="text-center oms-icon">
           <CLink to="/sale">
             <CIcon className='mob-dashboard-img' src={iSell} />
             <h6>Sale</h6>
           </CLink>
         </CCol>
+
+        <CCol xs="2" sm="2" className="text-center oms-icon">
+        <CLink to="/customer-dues">
+          <CIcon className='mob-dashboard-img' src={iCustomrDues} />
+          <h6>Customer Dues</h6>
+        </CLink>
+      </CCol>
+
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/purchase-report">
               <CIcon className='mob-dashboard-img' src={iReport} />
