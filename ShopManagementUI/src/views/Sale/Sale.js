@@ -29,7 +29,7 @@ const Sale = (props) => {
     var data = {
         id: 0,
         saleDate: new Date(),
-        customerId: 0,
+        customerId: null,
         challanNo: '',
         saleDetails: []
     }
@@ -41,7 +41,8 @@ const Sale = (props) => {
         productId: 0,
         quantity: '',
         rate: '',
-        amount: ''
+        amount: '',
+        customerId: null
     };
 
     let [dataArr, onSetDataArray] = useState([]);
@@ -141,6 +142,7 @@ const Sale = (props) => {
                                                                 rSize="8"
                                                                 labelClassName="float-right"
                                                                 formProps={formProps}
+                                                                nullValue={true}
                                                                 options={customers.data.data.map(item => {
                                                                     return { label: item.name, value: item.id }
                                                                 })}

@@ -11,8 +11,8 @@ namespace ShopManagement.Entity.Models
         public Sale Sale { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }
-        public decimal? Quantity { get; set; }
-        public decimal? Rate { get; set; }
-        public decimal? Amount { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal Rate { get; set; }
+        public decimal Amount { get; set; }
     }
 }

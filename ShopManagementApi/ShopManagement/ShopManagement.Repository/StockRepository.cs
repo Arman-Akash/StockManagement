@@ -32,7 +32,6 @@ namespace ShopManagement.Repository
                     .SumAsync(e => e.Quantity);
             }
 
-
             var transferRcv = await _context.TransferDetails
                 .Where(e => e.Transfer.TransferedBranchId == branchId && e.Transfer.RcvFlg)
                 .SumAsync(e => e.Quantity);
@@ -41,7 +40,11 @@ namespace ShopManagement.Repository
                 .Where(e => e.Transfer.BranchId == branchId)
                 .SumAsync(e => e.Quantity);
 
-            stock += transferRcv - transfer;
+            var sold = await _context.SaleDetails
+                .Where(e => e.ProductId == productId && e.Sale.BranchId == branchId)
+                .SumAsync(e => e.Quantity);
+
+            stock += transferRcv - transfer - sold;
 
             return stock;
         }
