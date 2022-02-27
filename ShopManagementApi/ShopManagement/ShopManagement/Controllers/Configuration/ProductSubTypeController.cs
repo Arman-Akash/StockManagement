@@ -57,6 +57,23 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
+        [HttpGet("GetByProductType/{productTypeId}")]
+        public async Task<ListResult<ProductSubType>> GetByProductType(int productTypeId)
+        {
+            return new ListResult<ProductSubType>
+            {
+                Data = await _repository.Get()
+                .Where(e => e.ProductTypeId == productTypeId)
+                .Select(e => new ProductSubType
+                {
+                    Id = e.Id,
+                    ProductTypeId = e.ProductTypeId,
+                    SubType = e.SubType
+                })
+                .ToListAsync()
+            };
+        }
+
         [HttpPost]
         public async Task<Result<ProductSubType>> Post(ProductSubType productSubType)
         {

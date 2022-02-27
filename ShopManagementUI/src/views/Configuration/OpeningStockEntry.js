@@ -1,82 +1,157 @@
 import {
-    CButton,
-    CCard,
-    CCardBody,
-    CCol,
-    CDataTable,
-  } from '@coreui/react';
-  import { faSave } from '@fortawesome/free-solid-svg-icons';
-  ///Font Awesome
-  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-  import React, { useEffect, useState } from 'react';
-  import * as axios from '../../axios/axiosLib';
-  //Custom hook and state
-  import * as dataApi from '../../customHooks/UseDataApi';
-  import * as initialState from '../../functionalLib/initialState';
-  
-  
-  const OpeningStockEntry = () => {
-    var fields = [
-      { key: "productCodeName", label: "Product" },
-      { key: "unitName", label: 'Unit' },
-      'quantity']
-  
-    let productList = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
-  
-    const [products, setProducts] = useState([]);
-  
-    useEffect(() => {
-      setProducts(productList.data.data)
-    }, [productList])
-  
-    return (
-      <CCard>
-        <CCardBody>
-          <CDataTable
-            items={products}
-            fields={fields}
-            tableFilter
-            border
-            striped
-            pagination
-            scopedSlots={{
-              'quantity':
-                (item, index) => (
-                  <td>
-                    <input
-                      id="quanity"
-                      name="quantity"
-                      type="number"
-                      // label="Concern Name"
-                      isInline="true"
-                      lSize="3"
-                      rSize="9"
-                      isRequired="true"
-                      labelClassName="float-right"
-                      value={item.quantity}
-                      onChange={(e) => {
-                        setProducts(previousproducts => {
-                          previousproducts[index].quantity = parseInt(e.target.value)
-                        });
-                      }}
-                    />
-                  </td>
-                )
-            }}
-          />
-  
-          <CCol md="6" className="text-right mt-2">
-            <CButton color="success" size="md"
-              onClick={() => {
-                axios.fetchPostData('api/OpeningStock/StockUpdate', products)
+  CButton,
+  CCard,
+  CCardBody,
+  CCol,
+  CRow,
+  CDataTable,
+} from '@coreui/react';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
+///Font Awesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react';
+import * as axios from '../../axios/axiosLib';
+import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
+//Custom hook and state
+import { Form, Formik } from "formik";
+import * as dataApi from '../../customHooks/UseDataApi';
+import * as initialState from '../../functionalLib/initialState';
+
+
+const OpeningStockEntry = () => {
+  var fields = [
+    { key: "productName", label: "Product" },
+    { key: "unitName", label: 'Unit' },
+    'quantity']
+
+  let productTypes = dataApi.useDataApi(`api/ProductType`, initialState.initialCollections);
+
+  const [products, setProducts] = useState([]);
+  const [productSubTypes, setProductSubTypes] = useState([]);
+
+  // useEffect(() => {
+  //   setProducts(productList.data.data);
+  // }, [productList])
+
+  return (
+    <CCard>
+      <CCardBody>
+        <CRow>
+          <CCol md="12">
+            <Formik
+              enableReinitialize
+              initialValues={{
               }}
-            ><FontAwesomeIcon icon={faSave} className="ml-1" /> Save
-            </CButton>
+
+              onSubmit={(values, { resetForm }) => {
+
+              }}
+            >
+              {
+                formProps => {
+                  return (
+                    <Form>
+                      <h5 style={{ marginBottom: "10px" }} className='page-title'>Opening Stock</h5>
+                      <CRow>
+                        <CCol md="2">
+                        </CCol>
+                        <CCol md="4">
+                          <SAReactAutoSelect
+                            id="productTypeId"
+                            name="productTypeId"
+                            label="Product Type"
+                            isInline="true"
+                            lSize="4"
+                            rSize="8"
+                            labelClassName="float-right"
+                            formProps={formProps}
+                            options={productTypes.data.data.map(item => {
+                              return { label: item.type, value: item.id }
+                            })}
+                            onChangeHandle={(name, value) => {
+                              axios.fetchGetData(`api/ProductSubType/GetByProductType/${value}`, undefined, undefined, (response) => {
+                                console.log(response.data)
+                                // formProps.setFieldValue('productSubType', value);
+                                setProductSubTypes(response.data);
+                            })
+                            }}
+                          />
+                        </CCol>
+                        <CCol md="4">
+                          <SAReactAutoSelect
+                            id="productSubTypeId"
+                            name="productSubTypeId"
+                            label="Product Sub Type"
+                            isInline="true"
+                            lSize="4"
+                            rSize="8"
+                            labelClassName="float-right"
+                            formProps={formProps}
+                            options={productSubTypes.map(item => {
+                              return { label: item.subType, value: item.id }
+                            })}
+                            onChangeHandle={(name, value) => {
+                              axios.fetchGetData(`api/Product/GetByProductSubType/${value}`, undefined, undefined, (response) => {
+                                console.log(response.data)
+                                // formProps.setFieldValue('productSubType', value);
+                                setProducts(response.data);
+                            })
+                            }}
+                          />
+                        </CCol>
+                      </CRow>
+                    </Form>
+                  );
+                }
+              }
+            </Formik>
           </CCol>
-  
-        </CCardBody>
-      </CCard>
-    )
-  }
-  
-  export default OpeningStockEntry  
+        </CRow>
+        <CDataTable
+          items={products}
+          fields={fields}
+          tableFilter
+          border
+          striped
+          pagination
+          scopedSlots={{
+            'quantity':
+              (item, index) => (
+                <td>
+                  <input
+                    id="quanity"
+                    name="quantity"
+                    type="number"
+                    // label="Concern Name"
+                    isInline="true"
+                    lSize="3"
+                    rSize="9"
+                    isRequired="true"
+                    labelClassName="float-right"
+                    value={item.quantity}
+                    onChange={(e) => {
+                      setProducts(previousproducts => {
+                        previousproducts[index].quantity = parseInt(e.target.value)
+                      });
+                    }}
+                  />
+                </td>
+              )
+          }}
+        />
+
+        <CCol md="6" className="text-right mt-2">
+          <CButton color="success" size="md"
+            onClick={() => {
+              axios.fetchPostData('api/OpeningStock', products)
+            }}
+          ><FontAwesomeIcon icon={faSave} className="ml-1" /> Save
+          </CButton>
+        </CCol>
+
+      </CCardBody>
+    </CCard>
+  )
+}
+
+export default OpeningStockEntry  

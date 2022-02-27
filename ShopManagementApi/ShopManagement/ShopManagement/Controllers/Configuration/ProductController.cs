@@ -10,6 +10,7 @@ using ShopManagement.Utility;
 using ShopManagement.Utility.StaticData;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using ShopManagement.Entity.ViewModels;
 
 namespace ShopManagement.WebApi.Controllers
 {
@@ -59,6 +60,24 @@ namespace ShopManagement.WebApi.Controllers
             }
             result.Data = item;
             return result;
+        }
+
+        [HttpGet("GetByProductSubType/{productSubTypeId}")]
+        public async Task<ListResult<ProductVM>> GetByProductSubType(int productSubTypeId)
+        {
+            return new ListResult<ProductVM>
+            {
+                Data = await _repository.Get()
+                .Where(e => e.ProductSubTypeId == productSubTypeId)
+                .Select(e => new ProductVM
+                {
+                    ProductId = e.Id,
+                    ProductName = e.ProductCode+""+e.ProductName,
+                    UnitId = e.UnitId,
+                    UnitName = e.Unit.Name
+                })
+                .ToListAsync()
+            };
         }
 
         [HttpPost]
