@@ -27,6 +27,7 @@ const OpeningStockEntry = () => {
   let productTypes = dataApi.useDataApi(`api/ProductType`, initialState.initialCollections);
 
   const [products, setProducts] = useState([]);
+  
   const [productSubTypes, setProductSubTypes] = useState([]);
 
   // useEffect(() => {
@@ -122,12 +123,6 @@ const OpeningStockEntry = () => {
                     id="quanity"
                     name="quantity"
                     type="number"
-                    // label="Concern Name"
-                    isInline="true"
-                    lSize="3"
-                    rSize="9"
-                    isRequired="true"
-                    labelClassName="float-right"
                     value={item.quantity}
                     onChange={(e) => {
                       setProducts(previousproducts => {
@@ -144,6 +139,7 @@ const OpeningStockEntry = () => {
           <CButton color="success" size="md"
             onClick={() => {
               axios.fetchPostData('api/OpeningStock', products)
+              console.log(products);
             }}
           ><FontAwesomeIcon icon={faSave} className="ml-1" /> Save
           </CButton>
