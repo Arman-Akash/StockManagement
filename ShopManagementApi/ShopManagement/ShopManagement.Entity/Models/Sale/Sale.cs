@@ -16,6 +16,8 @@ namespace ShopManagement.Entity.Models
         //public string BuyerName { get; set; }
         //public string BuyerAddress { get; set; }
         //public string BuyerPhnNo { get; set; }
+        public int BranchId { get; set; }
+        public Branch Branch { get; set; }
         public int? CustomerId { get; set; }
         public Customer Customer { get; set; }
         public string ChallanNo { get; set; }

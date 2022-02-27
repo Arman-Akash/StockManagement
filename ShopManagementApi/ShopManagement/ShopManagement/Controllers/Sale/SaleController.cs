@@ -131,6 +131,7 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
+                sell.BranchId = User.GetBranchId();
                 await _repository.InsertAsync(sell);
                 result.Data = sell;
                 result.Message = ResponseMessage.SUCCESSFULLY_CREATED;

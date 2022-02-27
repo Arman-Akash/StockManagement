@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagement.Data;
 
 namespace ShopManagement.Data.Migrations
 {
     [DbContext(typeof(ShopManagementDbContext))]
-    partial class ShopManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220227180528_addBranchIdToSell")]
+    partial class addBranchIdToSell
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -506,7 +508,7 @@ namespace ShopManagement.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Amount")
+                    b.Property<decimal?>("Amount")
                         .HasColumnType("decimal(15, 2)");
 
                     b.Property<DateTime?>("CreatedTime")
@@ -518,10 +520,10 @@ namespace ShopManagement.Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Quantity")
+                    b.Property<decimal?>("Quantity")
                         .HasColumnType("decimal(15, 2)");
 
-                    b.Property<decimal>("Rate")
+                    b.Property<decimal?>("Rate")
                         .HasColumnType("decimal(15, 2)");
 
                     b.Property<int>("SaleId")
