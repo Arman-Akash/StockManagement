@@ -12,6 +12,7 @@ namespace ShopManagement.Data
 		#region Configuration
 		public DbSet<Branch> Branches { get; set; }
 		public DbSet<Customer> Customers { get; set; }
+		public DbSet<CustomerDue> CustomerDues { get; set; }
 		public DbSet<Unit> Units { get; set; }
 		public DbSet<ProductSubType> ProductTypes { get; set; }
 		public DbSet<OpeningStock> OpeningStocks { get; set; }
@@ -86,7 +87,6 @@ namespace ShopManagement.Data
 					.WithOne(e => e.User)
 					.HasForeignKey(e => e.UserId);
 			});
-
 			#region Configuration
 
 			builder.Entity<Branch>(entity =>
@@ -187,11 +187,35 @@ namespace ShopManagement.Data
 				    .HasColumnType("decimal(15, 2)");
             });
 
-            #endregion
+			builder.Entity<CustomerDue>(entity =>
+			{
+				entity.Property(e => e.ChallanNo)
+				   .IsRequired()
+				   .HasMaxLength(100);
 
-            #region ProductReceive
+				entity.Property(e => e.Type)
+				   .HasMaxLength(100);
 
-            builder.Entity<Receive>(entity =>
+				entity.HasOne(e => e.Customer)
+					.WithMany()
+					.HasForeignKey(e => e.CustomerId);
+
+				entity.HasOne(e => e.Branch)
+					.WithMany()
+					.HasForeignKey(e => e.BranchId);
+
+				entity.Property(e => e.Amount)
+					.HasColumnType("decimal(15, 2)");
+
+				entity.Property(e => e.CreditDate)
+					.HasDefaultValueSql("getdate()");
+			});
+
+			#endregion
+
+			#region ProductReceive
+
+			builder.Entity<Receive>(entity =>
             {
 				entity.Property(e => e.RcvDate)
 					.HasDefaultValueSql("getdate()");
@@ -242,6 +266,9 @@ namespace ShopManagement.Data
 					.IsRequired()
 					.HasMaxLength(100);
 
+				entity.Property(e => e.Status)
+					.HasMaxLength(100);
+
 				entity.HasOne(e => e.Branch)
 					.WithMany()
 					.HasForeignKey(e => e.BranchId);
@@ -249,6 +276,10 @@ namespace ShopManagement.Data
 				entity.HasOne(e => e.User)
 					.WithMany()
 					.HasForeignKey(e => e.UserId);
+
+				entity.HasOne(e => e.ReceivedUser)
+					.WithMany()
+					.HasForeignKey(e => e.ReceivedUserId);
 			});
 
 			builder.Entity<TransferDetail>(entity =>

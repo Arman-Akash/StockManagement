@@ -32,13 +32,17 @@ const Transfer = (props) => {
         transferChallan: '',
         vehicleNo: '',
         details: '',
-        branchId: 0,
+        transferedBranchId: 0,
         rcvFlg: false,
+        status: '',
         transferDetails: []
     }
     let [transferObj, setTransferObj] = useState({ data: data });
 
-    const fields = ['transferDate', 'branchName', 'userName', 'vehicleNo', 'details', 'actions'];
+    const fields = ['transferDate', 
+    {key:'branchName', label:'From Branch'},
+    {key:'transferedBranchId', label:'To Branch'},
+     'vehicleNo', 'details','status', 'actions'];
 
     let dataObj = {
         productId: 0,
@@ -80,14 +84,14 @@ const Transfer = (props) => {
                                     else {
                                         if (isAdd) {
                                             axios.fetchPostData('api/Transfer', values, undefined, (response) => {
-                                                if (response.success) {
                                                     transfers.refresh();
-                                                    onSetDataArray([]);
-                                                }
+                                                    transferChallan.refresh();
                                             });
+                                            onSetDataArray([]);
                                         } else {
                                             axios.fetchPutData(`api/Transfer/${values.id}`, values, () => {
                                                 transfers.refresh();
+                                                transferChallan.refresh();
                                             })
                                             onSetDataArray([]);
                                         }
@@ -137,7 +141,7 @@ const Transfer = (props) => {
                                                         <CCol md='4'>
                                                             <SAReactAutoSelect
                                                                 name="transferedBranchId"
-                                                                label="Branch"
+                                                                label="To Branch"
                                                                 isRequired="true"
                                                                 isInline="true"
                                                                 lSize="4"
@@ -334,7 +338,7 @@ const Transfer = (props) => {
                                                         data: {
                                                             id: item.id,
                                                             transferDate: item.transferDate,
-                                                            branchId: item.branchId,
+                                                            transferedBranchId: item.transferedBranchId,
                                                             vehicleNo: item.vehicleNo,
                                                             details: item.details,
                                                             rcvFlg: false

@@ -47,6 +47,23 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
+        [HttpGet("RevPendingByTransferredId")]
+        public async Task<ListResult<Transfer>> RevPendingByTransferredId()
+        {
+            var loggedInBraanch = User.GetBranchId();
+            var result = new ListResult<Transfer>()
+            {
+                Data = await _repository.Get()
+                .Where(e => e.TransferedBranchId == loggedInBraanch)
+                .Include(e => e.TransferDetails)
+                .Include(e => e.Branch)
+                .Include(e => e.User)
+                .ToListAsync()
+            };
+
+            return result;
+        }
+
         [HttpGet("{id}")]
         public async Task<Result<Transfer>> Get(int id)
         {
@@ -109,6 +126,7 @@ namespace ShopManagement.WebApi.Controllers
             {
                 transfer.BranchId = User.GetBranchId();
                 transfer.UserId = User.GetUserId();
+                transfer.Status = "Pending";
                 await _repository.InsertAsync(transfer);
                 result.Data = transfer;
                 result.Message = ResponseMessage.SUCCESSFULLY_CREATED;
@@ -180,6 +198,39 @@ namespace ShopManagement.WebApi.Controllers
             }
             try
             {
+                await _transferRepository.UpdateAsync(transfer);
+                result.Data = transfer;
+                result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;
+                return result;
+            }
+            catch (Exception exp)
+            {
+                // keep log
+                _logError.Error(exp);
+                result.Message = ResponseMessage.Get(exp);
+                result.Success = false;
+
+                return result;
+            }
+        }
+
+        [HttpPut("Receive/{id}")]
+        public async Task<Result<Transfer>> Receive(int id, Transfer transfer)
+        {
+            var result = new Result<Transfer>();
+
+            if (id != transfer.Id || !ModelState.IsValid)
+            {
+                result.Success = false;
+                result.Message = ResponseMessage.BAD_REQUEST;
+                return result;
+            }
+            try
+            {
+                transfer.TransferedBranchId = User.GetBranchId();
+                transfer.ReceivedUserId = User.GetUserId();
+                transfer.Status = "Received";
+                transfer.RcvFlg = true;
                 await _transferRepository.UpdateAsync(transfer);
                 result.Data = transfer;
                 result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;

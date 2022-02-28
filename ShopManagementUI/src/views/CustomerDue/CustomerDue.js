@@ -39,8 +39,8 @@ const CustomerDue = (props) => {
         'actions'
     ];
     const Type = [
-        { label: "Cash", value: 1 },
-        { label: "Credit", value: 2 }
+        { label: "Cash", value: "Cash" },
+        { label: "Credit", value: "Credit" }
     ]
     let customers = dataApi.useDataApi(`api/Customer`, initialState.initialCollections);
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
@@ -111,8 +111,8 @@ const CustomerDue = (props) => {
                                                 lSize="4"
                                                 rSize="8"
                                                 formProps={formProps}
-                                                dateFormat="dd/MM/yyyy"
-                                                placeholderText="dd/MM/yyyy"
+                                                // dateFormat="dd/MM/yyyy"
+                                                // placeholderText="dd/MM/yyyy"
                                             />
                                         </CCol>
                                         <CCol md="4">
@@ -218,15 +218,12 @@ const CustomerDue = (props) => {
                                             ...customerDueObj,
                                             data: {
                                                 id: item.id,
-                                                name: item.name,
-                                                hSCode: item.hsCode,
-                                                description: item.description,
-                                                specification: item.specification,
-                                                valid: item.valid,
-                                                importType: item.importType,
-                                                reOrderLevel: item.reOrderLevel,
-                                                subTypeId: item.subTypeId == null ? 0 : item.subTypeId,
-                                                unitId: item.unitId == null ? 0 : item.unitId,
+                                                type: item.type,
+                                                challanNo: item.challanNo,
+                                                creditDate: item.creditDate,
+                                                branchId: item.branchId,
+                                                customerId: item.customerId,
+                                                amount: item.amount
                                             }
                                         });
                                         // itemId.setData({ data: item.itemId });

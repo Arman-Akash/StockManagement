@@ -20,7 +20,7 @@ namespace ShopManagement.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Sales_BranchId",
                 table: "Sales",
-                column: "BranchId");
+                column: "BranchId"); 
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Sales_Branches_BranchId",

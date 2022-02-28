@@ -21,7 +21,10 @@ namespace ShopManagement.Entity.Models
         public Branch TransferedBranch { get; set; }
         public int? UserId { get; set; }
         public User User { get; set; }
+        public int? ReceivedUserId { get; set; }
+        public User ReceivedUser { get; set; }
         public bool RcvFlg { get; set; }
+        public string Status { get; set; }
         public ICollection<TransferDetail> TransferDetails { get; set; }
     }
 }

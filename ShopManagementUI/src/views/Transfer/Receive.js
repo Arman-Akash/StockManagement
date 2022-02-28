@@ -36,11 +36,16 @@ const Receive = (props) => {
         branchId: 0,
         userId: 0,
         rcvFlg: false,
+        status: '',
         transferDetails: []
     }
     let [receiveObj, setReceiveObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
-    const fields = ['transferDate', 'branchName', 'userName', 'vehicleNo', 'details', 'actions'];
+    const fields = ['transferDate',
+        { key: 'branchName', label: "From Branch" },
+        { key: 'userName', label: "From User" },
+        { key: 'receivedUserId', label: "Received By" },
+        'vehicleNo', 'details','status', 'actions'];
 
     let dataObj = {
         productId: 0,
@@ -55,7 +60,7 @@ const Receive = (props) => {
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
     let users = dataApi.useDataApi(`api/Account`, initialState.initialCollections);
-    let receives = dataApi.useDataApi(`api/Transfer`, initialState.initialCollections);
+    let receives = dataApi.useDataApi(`api/Transfer/RevPendingByTransferredId`, initialState.initialCollections);
     let transferChallan = dataApi.useDataApi(`api/Transfer/TransferChallan`, initialState.initialCollections);
 
     return (
@@ -89,7 +94,7 @@ const Receive = (props) => {
                                             });
                                             onSetDataArray([]);
                                         } else {
-                                            axios.fetchPutData(`api/Transfer/${values.id}`, values, () => {
+                                            axios.fetchPutData(`api/Transfer/Receive/${values.id}`, values, () => {
                                                 receives.refresh();
                                             })
                                             onSetDataArray([]);
@@ -115,7 +120,6 @@ const Receive = (props) => {
                                                                 type="text"
                                                                 label="Transfer Challan"
                                                                 isInline="true"
-                                                                isRequired="true"
                                                                 lSize="4"
                                                                 rSize="8"
                                                                 labelClassName="float-right"
@@ -129,7 +133,6 @@ const Receive = (props) => {
                                                                 label="Transfer Date"
                                                                 labelClassName="float-right"
                                                                 isInline="true"
-                                                                isRequired="true"
                                                                 lSize="4"
                                                                 rSize="8"
                                                                 readOnly={true}
@@ -141,8 +144,7 @@ const Receive = (props) => {
                                                         <CCol md='4'>
                                                             <SAReactAutoSelect
                                                                 name="branchId"
-                                                                label="Branch"
-                                                                isRequired="true"
+                                                                label="From Branch"
                                                                 isInline="true"
                                                                 lSize="4"
                                                                 rSize="8"
@@ -157,8 +159,7 @@ const Receive = (props) => {
                                                         <CCol md='4'>
                                                             <SAReactAutoSelect
                                                                 name="userId"
-                                                                label="User"
-                                                                isRequired="true"
+                                                                label="From User"
                                                                 isInline="true"
                                                                 lSize="4"
                                                                 rSize="8"
@@ -216,6 +217,7 @@ const Receive = (props) => {
                                                                     thStyle: { width: '30%' },
                                                                     fieldName: 'productId',
                                                                     fieldType: 'REACT-SELECT',
+                                                                    isDisabled: true,
                                                                     options: products.data.data?.map(product => {
                                                                         return {
                                                                             name: product.productCode + " " + product.productName,

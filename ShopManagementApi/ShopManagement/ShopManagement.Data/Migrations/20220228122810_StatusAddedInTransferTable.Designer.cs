@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagement.Data;
 
 namespace ShopManagement.Data.Migrations
 {
     [DbContext(typeof(ShopManagementDbContext))]
-    partial class ShopManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220228122810_StatusAddedInTransferTable")]
+    partial class StatusAddedInTransferTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -613,9 +615,6 @@ namespace ShopManagement.Data.Migrations
                     b.Property<bool>("RcvFlg")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ReceivedUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
@@ -645,8 +644,6 @@ namespace ShopManagement.Data.Migrations
                     b.HasIndex("BranchId");
 
                     b.HasIndex("ModifierId");
-
-                    b.HasIndex("ReceivedUserId");
 
                     b.HasIndex("TransferChallan")
                         .IsUnique();
@@ -1017,11 +1014,6 @@ namespace ShopManagement.Data.Migrations
                     b.HasOne("ShopManagement.Entity.Models.User", "ModifiedBy")
                         .WithMany()
                         .HasForeignKey("ModifierId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ShopManagement.Entity.Models.User", "ReceivedUser")
-                        .WithMany()
-                        .HasForeignKey("ReceivedUserId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ShopManagement.Entity.Models.Branch", "TransferedBranch")

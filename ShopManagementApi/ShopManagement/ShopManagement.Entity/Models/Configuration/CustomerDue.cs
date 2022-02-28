@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopManagement.Entity.Models.Configuration
+namespace ShopManagement.Entity.Models
 {
     public class CustomerDue : BaseModel
     {
