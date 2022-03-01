@@ -44,7 +44,7 @@ const Receive = (props) => {
     const fields = ['transferDate',
         { key: 'branchName', label: "From Branch" },
         { key: 'userName', label: "From User" },
-        { key: 'receivedUserId', label: "Received By" },
+        { key: 'receivedUserName', label: "Received By" },
         'vehicleNo', 'details','status', 'actions'];
 
     let dataObj = {

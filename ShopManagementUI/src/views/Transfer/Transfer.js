@@ -41,7 +41,7 @@ const Transfer = (props) => {
 
     const fields = ['transferDate', 
     {key:'branchName', label:'From Branch'},
-    {key:'transferedBranchId', label:'To Branch'},
+    {key:'transferBranchName', label:'To Branch'},
      'vehicleNo', 'details','status', 'actions'];
 
     let dataObj = {

@@ -12,12 +12,17 @@ namespace ShopManagement.Entity.Models
         }
         public string TransferBranchName
         {
-            get { return Branch?.Name; }
+            get { return TransferedBranch?.Name; }
         }
 
         public string UserName
         {
             get { return User?.Username; }
+        }
+
+        public string ReceivedUserName
+        {
+            get { return ReceivedUser?.Username; }
         }
     }
 }
