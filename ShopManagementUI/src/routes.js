@@ -40,7 +40,7 @@ export const warehouse = [
 const routes = [
   ...warehouse,
   { path: '/branch', name: 'Branch Information', component: Branch },
-  { path: '/purchase-report', name: 'Purchase Report', component: PurchaseReport },
+  { path: '/purchase-report', name: 'Report', component: PurchaseReport },
   { path: '/users/create-user', exact: true, name: 'Users', component: Users },
   { path: '/user/change-password', exact: true, name: 'Access Control', component: ChangePassword },
 ];

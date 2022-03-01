@@ -156,9 +156,9 @@ const Sale = (props) => {
                                                             tableName="Product Sale Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                                                            columns={["Product", "Unit", "Sale Quantity", "Rate", "Amount", "Actions"]}
-                                                            fields={["productId", "unitName", "quantity", "rate", "amount"]}
-                                                            readOnlyArr={["unitName", "amount"]}
+                                                            columns={["Product", "Unit","Stock", "Sale Quantity", "Rate", "Amount", "Actions"]}
+                                                            fields={["productId", "unitName","stock", "quantity", "rate", "amount"]}
+                                                            readOnlyArr={["unitName","stock", "amount"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
                                                             onSetDataArray={onSetDataArray}
@@ -176,20 +176,27 @@ const Sale = (props) => {
                                                                     }),
                                                                     onOptionChangeHandler: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
                                                                         axios.fetchGetData(`api/Product/${e.target.value}`, unitName, setUnitname, (response) => {
-                                                                            console.log(response.data.unitName);
-                                                                            let newArr = [...dataArr];
-                                                                            var selectedObj = { ...newArr[indexI] };
-                                                                            selectedObj['unitName'] = response.data.unitName;
-                                                                            newArr[indexI] = selectedObj;
-                                                                            console.log(newArr);
-                                                                            onSetDataArray(newArr);
-                                                                            setUnitname(response.data.unitName);
+                                                                            axios.fetchGetData(`api/Stock/GetStock/${e.target.value}`, undefined, undefined, (stock) => {
+                                                                                let newArr = [...dataArr];
+                                                                                var selectedObj = { ...newArr[indexI] };
+                                                                                selectedObj['unitName'] = response.data.unitName;
+                                                                                selectedObj['stock'] = stock.data;
+                                                                                newArr[indexI] = selectedObj;
+                                                                                console.log(newArr);
+                                                                                onSetDataArray(newArr);
+                                                                            })
                                                                         });
                                                                     }
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '10%', textAlign:'center' },
+                                                                    thStyle: { width: '10%', textAlign: 'center' },
                                                                     fieldName: 'unitName',
+                                                                    fieldStyle: { textAlign: 'center' },
+                                                                    fieldType: 'text',
+                                                                },
+                                                                {
+                                                                    thStyle: { width: '10%', textAlign: 'center' },
+                                                                    fieldName: 'stock',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'text',
                                                                 },
@@ -214,7 +221,7 @@ const Sale = (props) => {
                                                                     }
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '15%' },
+                                                                    thStyle: { width: '10%' },
                                                                     fieldName: 'rate',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
@@ -234,7 +241,7 @@ const Sale = (props) => {
                                                                     }
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '20%' },
+                                                                    thStyle: { width: '15%' },
                                                                     fieldName: 'amount',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',

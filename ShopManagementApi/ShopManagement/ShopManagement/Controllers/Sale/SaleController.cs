@@ -37,6 +37,7 @@ namespace ShopManagement.WebApi.Controllers
             var result = new ListResult<Sale>()
             {
                 Data = await _repository.Get()
+                .Include(e => e.Customer)
                 .Include(e => e.SaleDetails)
                 .ThenInclude(e => e.Product)
                 .ThenInclude(e => e.Unit)
@@ -52,6 +53,7 @@ namespace ShopManagement.WebApi.Controllers
             var result = new Result<Sale>();
             var item = await _repository.Get()
                 .Where(e => e.Id == id)
+                .Include(e => e.Customer)
                 .Include(e => e.SaleDetails)
                 .ThenInclude(e => e.Product)
                 .ThenInclude(e => e.Unit)
