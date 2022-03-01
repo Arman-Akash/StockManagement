@@ -35,17 +35,43 @@ namespace ShopManagement.WebApi.Controllers
         [HttpGet]
         public async Task<ListResult<Transfer>> Get()
         {
+            var loggedInBraanch = User.GetBranchId();
             var result = new ListResult<Transfer>()
             {
                 Data = await _repository.Get()
+                .Where(e => e.BranchId == loggedInBraanch)
                 .Include(e => e.TransferDetails)
                 .Include(e => e.Branch)
+                .Include(e => e.TransferedBranch)
                 .Include(e => e.User)
+                .Include(e => e.ReceivedUser)
                 .ToListAsync()
             };
 
             return result;
         }
+
+        //[HttpGet("TransferredProduct")]
+        //public async Task<ListResult<TransferVM>> TransferredProduct()
+        //{
+        //    var loggedInBraanch = User.GetBranchId();
+        //    return new ListResult<TransferVM>
+        //    {
+        //        Data = await _repository.Get()
+        //        .Where(e => e.BranchId == loggedInBraanch)
+        //        .Include(e => e.TransferDetails)
+        //        .Include(e => e.Branch)
+        //        .Include(e => e.User)
+        //        .Select(e => new TransferVM
+        //        {
+        //            TransferedBranchId = e.TransferedBranchId,
+        //            TransferedBranch = e.Branch.Name,
+        //            BranchId = e.BranchId,
+        //            TransferBranch = e.TransferedBranch.Name
+        //        })
+        //        .ToListAsync()
+        //    };
+        //}
 
         [HttpGet("RevPendingByTransferredId")]
         public async Task<ListResult<Transfer>> RevPendingByTransferredId()
@@ -58,6 +84,7 @@ namespace ShopManagement.WebApi.Controllers
                 .Include(e => e.TransferDetails)
                 .Include(e => e.Branch)
                 .Include(e => e.User)
+                .Include(e => e.ReceivedUser)
                 .ToListAsync()
             };
 

@@ -6,12 +6,19 @@ namespace ShopManagement.Entity.ViewModels
 {
     public class TransferVM
     {
+        public string TransferChallan { get; set; }
         public DateTime TransferDate { get; set; }
-        public string ReceiptNo { get; set; }
-        public int? CustomerId { get; set; }
-        public string CustomerName { get; set; }
-        public string TransactionType { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public string VehicleNo { get; set; }
+        public string Details { get; set; }
+        public int BranchId { get; set; }
+        public string TransferBranch { get; set; }
+        public int TransferedBranchId { get; set; }
+        public string TransferedBranch { get; set; }
+        public int? UserId { get; set; }
+        public string User { get; set; }
+        public int? ReceivedUserId { get; set; }
+        public string ReceivedUser { get; set; }
+        public bool RcvFlg { get; set; }
+        public string Status { get; set; }
     }
 }

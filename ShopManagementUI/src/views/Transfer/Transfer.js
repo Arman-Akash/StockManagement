@@ -12,7 +12,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowAltCircleLeft, faSave, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleLeft, faSave, faTimes, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
 import * as axios from '../../axios/axiosLib';
 import * as initialState from '../../functionalLib/initialState';
 import * as dataApi from '../../customHooks/UseDataApi';
@@ -38,11 +38,12 @@ const Transfer = (props) => {
         transferDetails: []
     }
     let [transferObj, setTransferObj] = useState({ data: data });
+    const [saveBtn, setSaveBtn] = useState(true);
 
-    const fields = ['transferDate', 
-    {key:'branchName', label:'From Branch'},
-    {key:'transferedBranchId', label:'To Branch'},
-     'vehicleNo', 'details','status', 'actions'];
+    const fields = ['transferDate',
+        { key: 'branchName', label: 'From Branch' },
+        { key: 'transferBranchName', label: 'To Branch' },
+        'vehicleNo', 'details', 'status', 'actions'];
 
     let dataObj = {
         productId: 0,
@@ -84,8 +85,8 @@ const Transfer = (props) => {
                                     else {
                                         if (isAdd) {
                                             axios.fetchPostData('api/Transfer', values, undefined, (response) => {
-                                                    transfers.refresh();
-                                                    transferChallan.refresh();
+                                                transfers.refresh();
+                                                transferChallan.refresh();
                                             });
                                             onSetDataArray([]);
                                         } else {
@@ -298,9 +299,12 @@ const Transfer = (props) => {
                                                     </CRow>
                                                     <CRow>
                                                         <CCol md={{ size: 12 }} style={{ padding: "10px", textAlign: "center" }} >
-                                                            <CButton style={{ marginRight: "20px" }} onClick={() => {
-                                                            }} size="sm" color="success" type="submit"><FontAwesomeIcon icon={faSave} />&nbsp;Save</CButton>
-
+                                                            {
+                                                                saveBtn ? <>
+                                                                    <CButton style={{ marginRight: "20px" }} onClick={() => {
+                                                                    }} size="sm" color="success" type="submit"><FontAwesomeIcon icon={faSave} />&nbsp;Save</CButton>
+                                                                </> : null
+                                                            }
                                                             <CButton onClick={() => {
                                                                 onSetDataArray([]);
                                                                 setTransferObj({
@@ -331,35 +335,62 @@ const Transfer = (props) => {
                                 'actions':
                                     (item) => (
                                         <td>
-                                            <EditIcon
-                                                onClick={() => {
-                                                    setTransferObj({
-                                                        ...transferObj,
-                                                        data: {
-                                                            id: item.id,
-                                                            transferDate: item.transferDate,
-                                                            transferedBranchId: item.transferedBranchId,
-                                                            vehicleNo: item.vehicleNo,
-                                                            details: item.details,
-                                                            rcvFlg: false
-                                                        }
-                                                    });
-                                                    transferChallan.setData({ data: item.transferChallan });
-                                                    setIsAdd(false);
-                                                    onSetDataArray(item.transferDetails);
-                                                }}
-                                            />
-                                            <DeleteIcon
-                                                onClick={() => {
-                                                    setTransferObj({
-                                                        ...transferObj,
-                                                        data: {
-                                                            id: item.id
-                                                        }
-                                                    });
-                                                    toggleDeleteModal(true);
-                                                }}
-                                            />
+                                            {
+                                                item.status == "Pending" ? <>
+                                                    <EditIcon
+                                                        onClick={() => {
+                                                        setSaveBtn(true);
+                                                            setTransferObj({
+                                                                ...transferObj,
+                                                                data: {
+                                                                    id: item.id,
+                                                                    transferDate: item.transferDate,
+                                                                    transferedBranchId: item.transferedBranchId,
+                                                                    vehicleNo: item.vehicleNo,
+                                                                    details: item.details,
+                                                                    rcvFlg: false
+                                                                }
+                                                            });
+                                                            transferChallan.setData({ data: item.transferChallan });
+                                                            setIsAdd(false);
+                                                            onSetDataArray(item.transferDetails);
+                                                        }}
+                                                    />
+                                                    <DeleteIcon
+                                                        onClick={() => {
+                                                            setTransferObj({
+                                                                ...transferObj,
+                                                                data: {
+                                                                    id: item.id
+                                                                }
+                                                            });
+                                                            toggleDeleteModal(true);
+                                                        }}
+                                                    />
+                                                </> :
+                                                    <FontAwesomeIcon
+                                                        title="View"
+                                                        className="text-info"
+                                                        onClick={() => {
+                                                        setSaveBtn(false);
+                                                            setTransferObj({
+                                                                ...transferObj,
+                                                                data: {
+                                                                    id: item.id,
+                                                                    transferDate: item.transferDate,
+                                                                    transferedBranchId: item.transferedBranchId,
+                                                                    vehicleNo: item.vehicleNo,
+                                                                    details: item.details,
+                                                                    rcvFlg: false
+                                                                }
+                                                            });
+                                                            transferChallan.setData({ data: item.transferChallan });
+                                                            setIsAdd(false);
+                                                            onSetDataArray(item.transferDetails);
+                                                        }}
+                                                        icon={faEye}
+                                                    />
+                                            }
                                         </td>
                                     ),
                             }}
