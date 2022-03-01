@@ -21,6 +21,7 @@ import * as dataApi from '../../customHooks/UseDataApi';
 import DeleteModal from '../commonComponents/DeleteModal';
 // import DeleteIcon from '../commonComponents/DeleteIcon';
 import ViewIcon from '../commonComponents/ViewIcon';
+import ApproveIcon from '../commonComponents/ApproveIcon';
 import SADataTable from '../FormLib/saDataTable';
 
 const Receive = (props) => {
@@ -40,6 +41,8 @@ const Receive = (props) => {
         transferDetails: []
     }
     let [receiveObj, setReceiveObj] = useState({ data: data });
+    const [confirmBtn, setConfirmBtn] = useState(true);
+
     let [unitName, setUnitname] = useState('');
     const fields = ['transferDate',
         { key: 'branchName', label: "From Branch" },
@@ -207,7 +210,7 @@ const Receive = (props) => {
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
                                                             columns={["Product", "Unit", "Transfer Quantity", "Rate", "Amount"]}
                                                             fields={["productId", "unitName", "quantity", "rate", "amount"]}
-                                                            readOnlyArr={["unitName", "amount"]}
+                                                            readOnlyArr={["productId","unitName","quantity", "rate", "amount"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
                                                             onSetDataArray={onSetDataArray}
@@ -223,19 +226,7 @@ const Receive = (props) => {
                                                                             name: product.productCode + " " + product.productName,
                                                                             value: product.id
                                                                         }
-                                                                    }),
-                                                                    onOptionChangeHandler: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                        axios.fetchGetData(`api/Product/${e.target.value}`, unitName, setUnitname, (response) => {
-                                                                            console.log(response.data.unitName);
-                                                                            let newArr = [...dataArr];
-                                                                            var selectedObj = { ...newArr[indexI] };
-                                                                            selectedObj['unitName'] = response.data.unitName;
-                                                                            newArr[indexI] = selectedObj;
-                                                                            console.log(newArr);
-                                                                            onSetDataArray(newArr);
-                                                                            setUnitname(response.data.unitName);
-                                                                        });
-                                                                    }
+                                                                    })
                                                                 },
                                                                 {
                                                                     thStyle: { width: '10%', textAlign: 'center' },
@@ -246,54 +237,29 @@ const Receive = (props) => {
                                                                 {
                                                                     thStyle: { width: '15%' },
                                                                     fieldName: 'quantity',
-                                                                    fieldType: 'NUMBER',
-                                                                    min: 0,
-                                                                    onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                        let newArr = [...dataArr];
-                                                                        var selectedObj = { ...newArr[indexI] };
-                                                                        var quantity = parseFloat(e.target.value);
-                                                                        var selectedObj = newArr[indexI];
-                                                                        selectedObj['quantity'] = quantity;
-                                                                        selectedObj['rate'] = 1;
-                                                                        var rate = parseFloat(selectedObj['rate']);
-                                                                        var amount = parseFloat(quantity * rate);
-                                                                        selectedObj['amount'] = amount;
-                                                                        newArr[indexI] = selectedObj;
-                                                                        onSetDataArray(newArr);
-                                                                    }
+                                                                    fieldType: 'text'
                                                                 },
                                                                 {
                                                                     thStyle: { width: '15%' },
                                                                     fieldName: 'rate',
-                                                                    fieldType: 'NUMBER',
-                                                                    min: 0,
-                                                                    onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                        let newArr = [...dataArr];
-                                                                        var selectedObj = { ...newArr[indexI] };
-                                                                        var rate = parseFloat(e.target.value);
-                                                                        var selectedObj = newArr[indexI];
-                                                                        selectedObj['rate'] = rate;
-                                                                        // selectedObj['quantity'] = 1;
-                                                                        var quantity = parseFloat(selectedObj['quantity']);
-                                                                        var amount = parseFloat(quantity * rate);
-                                                                        selectedObj['amount'] = amount;
-                                                                        newArr[indexI] = selectedObj;
-                                                                        onSetDataArray(newArr);
-                                                                    }
+                                                                    fieldType: 'text',
                                                                 },
                                                                 {
                                                                     thStyle: { width: '20%' },
                                                                     fieldName: 'amount',
-                                                                    fieldType: 'NUMBER',
-                                                                    min: 0
+                                                                    fieldType: 'text'
                                                                 }
                                                             ]}
                                                         />
                                                     </CRow>
                                                     <CRow>
                                                         <CCol md={{ size: 12 }} style={{ padding: "10px", textAlign: "center" }} >
-                                                            <CButton style={{ marginRight: "20px" }} onClick={() => {
+                                                        {
+                                                            confirmBtn ? <>  
+                                                        <CButton style={{ marginRight: "20px" }} onClick={() => {
                                                             }} size="sm" color="info" type="submit"><FontAwesomeIcon icon={faSave} />&nbsp;Confirm</CButton>
+                                                            </> : null
+                                                        }
                                                             <CButton onClick={() => {
                                                                 onSetDataArray([]);
                                                                 setAccordion(false);
@@ -324,8 +290,11 @@ const Receive = (props) => {
                                 'actions':
                                     (item) => (
                                         <td>
-                                            <ViewIcon
+                                        {
+                                            item.status == "Pending" ? <>
+                                            <ApproveIcon
                                                 onClick={() => {
+                                                    setConfirmBtn(true);
                                                     setReceiveObj({
                                                         ...receiveObj,
                                                         data: {
@@ -346,6 +315,31 @@ const Receive = (props) => {
                                                     onSetDataArray(item.transferDetails);
                                                 }}
                                             />
+                                            </> :
+                                            <ViewIcon
+                                            onClick={() => {
+                                                setConfirmBtn(false);
+                                                setReceiveObj({
+                                                    ...receiveObj,
+                                                    data: {
+                                                        id: item.id,
+                                                        transferDate: item.transferDate,
+                                                        transferChallan: item.transferChallan,
+                                                        branchId: item.branchId,
+                                                        vehicleNo: item.vehicleNo,
+                                                        details: item.details,
+                                                        userId: item.userId,
+                                                        rcvFlg: false
+                                                    }
+                                                });
+                                                transferChallan.setData({ data: item.transferChallan });
+                                                setUnitname(unitName);
+                                                setAccordion(true);
+                                                setIsAdd(false);
+                                                onSetDataArray(item.transferDetails);
+                                            }}
+                                        />
+                                    }
                                         </td>
                                     ),
                             }}
