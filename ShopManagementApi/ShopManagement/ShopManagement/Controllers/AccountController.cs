@@ -223,7 +223,7 @@ namespace ShopManagement.WebApi.Controllers
                 catch(Exception exp)
                 {
                     _logError.Error(exp);
-                    return StatusCode(StatusCodes.Status500InternalServerError);
+                    return Content(exp.Message + exp.InnerException); //StatusCode(StatusCodes.Status500InternalServerError);
                 }
             }
 
