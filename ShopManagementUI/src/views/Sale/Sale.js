@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import {
-    CCollapse,
-    CRow, CCardBody, CTooltip,
-    CCol, CButton, CDataTable, CCard, CLink
+    CRow, CCardBody,
+    CCol, CButton, CDataTable, CCard, CLink,CTooltip
 } from '@coreui/react';
 import SAInput from '../FormLib/saInput';
 import SADatePicker from '../FormLib/saDatePicker';
@@ -13,7 +12,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowAltCircleLeft, faSave, faTrash, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleLeft, faSave, faTrash, faTimes,faPrint } from '@fortawesome/free-solid-svg-icons';
 import * as axios from '../../axios/axiosLib';
 import * as initialState from '../../functionalLib/initialState';
 import * as dataApi from '../../customHooks/UseDataApi';
@@ -21,6 +20,7 @@ import DeleteModal from '../commonComponents/DeleteModal';
 import DeleteIcon from '../commonComponents/DeleteIcon';
 import EditIcon from '../commonComponents/EditIcon';
 import SADataTable from '../FormLib/saDataTable';
+import { apiHostName } from '../../../src/config';
 
 const Sale = (props) => {
     const [isDelete, toggleDeleteModal] = useState(false);
@@ -35,7 +35,7 @@ const Sale = (props) => {
     }
     let [saleObj, setSaleObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
-    const fields = ['saleDate', 'challanNo', 'customerName', 'actions'];
+    const fields = ['saleDate', 'challanNo', 'customerName','print', 'actions'];
 
     let dataObj = {
         productId: 0,
@@ -342,6 +342,15 @@ const Sale = (props) => {
                                             />
                                         </td>
                                     ),
+                                    'print': (item) => (
+                                        <td>
+                                            <CTooltip content="Sale Print">
+                                                <CLink href={`${apiHostName}/api/Report/SaleReport/${item.id}`} target="_blank">
+                                                    <FontAwesomeIcon icon={faPrint} />
+                                                </CLink>
+                                            </CTooltip>
+                                        </td>
+                                    )
                             }}
                         />
                     </CRow>
