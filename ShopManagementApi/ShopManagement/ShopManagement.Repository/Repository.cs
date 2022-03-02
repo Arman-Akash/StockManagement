@@ -200,5 +200,11 @@ namespace ShopManagement.Repository
         {
             return await _context.SaveChangesAsync();
         }
+
+        //public Task<int> AddOrUpdate(List<TEntity> entities)
+        //{
+        //    _dbSet.UpdateRange(entities);
+        //    return _context.SaveChangesAsync();
+        //}
     }
 }
