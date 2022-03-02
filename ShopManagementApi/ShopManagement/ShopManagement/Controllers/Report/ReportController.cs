@@ -48,7 +48,11 @@ namespace ShopManagement.Web.Controllers
                 .ThenInclude(e => e.Unit)
                 .FirstOrDefault();
 
-            return new ViewAsPdf("SaleReport", sale);
+            return new ViewAsPdf("SaleReport", sale)
+                 {
+                     PageWidth = 200,
+                     PageHeight = 150
+                 };
         }
     }
 }

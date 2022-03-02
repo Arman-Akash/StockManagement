@@ -163,6 +163,7 @@ namespace ShopManagement.WebApi.Controllers
             }
             try
             {
+                sell.BranchId = User.GetBranchId();
                 await _saleRepository.UpdateAsync(sell);
                 result.Data = sell;
                 result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model ShopManagement.Entity.Models.Sale
+<!DOCTYPE html>
 <html>
 <head>
   @*<partial></partial>*@
@@ -19,16 +20,16 @@
                   </div>
                      <h6><span class="deleveryChallan">ডেলিভারী চালান</span></h6>
               <h1>রোজিনা এন্টারপ্রাইজ</h1>
-              <p style="line-height:60%">সকল প্রকার স্কিন প্রিন্টের রং সুলভ মূল্যে পাওয়া যায় ।</p>
               <div class="row">
-                  <div class="col text-left">
-                     <h6><span style="margin-left:15px;">নং-</span></h6>
+                  <div class="col-4 text-left">
+                     <h6><span style="margin-left:15px;">নং-@Model.ChallanNo</span></h6>
                   </div>
-                  <div class="col">
-                      <p class="text-left" style="line-height:60%; margin-left:-250px;">আস্থা ভবন, প্লট নং- ২০, রোড নং- ০১, ব্লক - খ, সেকশন - ৬, মিরপুর- ১০, ঢাকা-১২১৬ 
-                 </p>
+                  <div class="col-8 text-left">
+                     <p style="line-height:60%">সকল প্রকার স্কিন প্রিন্টের রং সুলভ মূল্যে পাওয়া যায় ।</p>
                   </div>
               </div>
+
+              <p class="text-center" style="line-height:60%;">আস্থা ভবন, প্লট নং- ২০, রোড নং- ০১, ব্লক - খ, সেকশন - ৬, মিরপুর- ১০, ঢাকা-১২১৬ </p>
               <p style="line-height:60%">ফোন : ৯০০৭৪৪১, মোবা: ০১৬৮৫-০৯৬৭৬৬, ০১৯৭১-০১০৫৪৬
                  </p>
               </div>
