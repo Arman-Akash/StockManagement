@@ -37,9 +37,9 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Result<OpeningStock>> Post(OpeningStock openingStock)
+        public async Task<Result> Post(List<OpeningStock> openingStock)
         {
-            var result = new Result<OpeningStock>();
+            var result = new Result();
 
             if (!ModelState.IsValid)
             {
@@ -50,8 +50,7 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
-                await _repository.InsertAsync(openingStock);
-                result.Data = openingStock;
+                await _repository.AddOrUpdateRangeAsync(openingStock);
                 result.Message = ResponseMessage.SUCCESSFULLY_CREATED;
                 return result;
             }

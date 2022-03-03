@@ -4,15 +4,14 @@ import {
   CCardBody,
   CCol,
   CRow,
+  CDataTable,
 } from '@coreui/react';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as axios from '../../axios/axiosLib';
 import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
-import SADataTable from '../FormLib/saDataTable';
-
 //Custom hook and state
 import { Form, Formik } from "formik";
 import * as dataApi from '../../customHooks/UseDataApi';
@@ -20,17 +19,20 @@ import * as initialState from '../../functionalLib/initialState';
 
 
 const OpeningStockEntry = () => {
-  let dataObj = {
-    productId: 0,
-    quantity: 0
-  };
-  const [productSubTypes, setProductSubTypes] = useState([]);
-
-  let [dataArr, onSetDataArray] = useState([]);
+  var fields = [
+    { key: "productName", label: "Product" },
+    { key: "unitName", label: 'Unit' },
+    'quantity']
 
   let productTypes = dataApi.useDataApi(`api/ProductType`, initialState.initialCollections);
-  let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
-  let openingStocks = dataApi.useDataApi(`api/OpeningStock`, initialState.initialCollections);
+
+  const [products, setProducts] = useState([]);
+  
+  const [productSubTypes, setProductSubTypes] = useState([]);
+
+  // useEffect(() => {
+  //   setProducts(productList.data.data);
+  // }, [productList])
 
   return (
     <CCard>
@@ -43,11 +45,7 @@ const OpeningStockEntry = () => {
               }}
 
               onSubmit={(values, { resetForm }) => {
-                dataArr.forEach(e => {
-                  e.branchId = values.branchId
-                })
-                axios.fetchPostData('api/OpeningStock', dataArr);
-                console.log(dataArr);
+
               }}
             >
               {
@@ -76,7 +74,7 @@ const OpeningStockEntry = () => {
                                 console.log(response.data)
                                 // formProps.setFieldValue('productSubType', value);
                                 setProductSubTypes(response.data);
-                              })
+                            })
                             }}
                           />
                         </CCol>
@@ -97,57 +95,12 @@ const OpeningStockEntry = () => {
                               axios.fetchGetData(`api/Product/GetByProductSubType/${value}`, undefined, undefined, (response) => {
                                 console.log(response.data)
                                 // formProps.setFieldValue('productSubType', value);
-                                onSetDataArray(response.data);
-                              })
+                                setProducts(response.data);
+                            })
                             }}
                           />
                         </CCol>
                       </CRow>
-                      <CRow style={{ marginTop: '10px' }}>
-                        <SADataTable
-                          md="12"
-                          tableName="LC Cost Details:"
-                          style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
-                          dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                          columns={["Product Name", "Unit Name", "Quantity"]}
-                          fields={["productId", "unitName", "quantity"]}
-                          readOnlyArr={["unitName"]}
-                          dataArr={dataArr}
-                          dataObj={dataObj}
-                          onSetDataArray={onSetDataArray}
-                          fieldsTypeWithValue={[
-
-                            {
-                              thStyle: { width: '30%' },
-                              fieldName: 'productId',
-                              fieldType: 'REACT-SELECT',
-                              isDisabled: true,
-                              options: products.data.data?.map(item => {
-                                return {
-                                  name: item.productCode+"-"+item.productName,
-                                  value: item.id
-                                }
-                              }),
-                            },
-                            {
-                              thStyle: { width: '15%' },
-                              fieldName: 'unitName',
-                              fieldType: 'text',
-                            },
-                            {
-                              thStyle: { width: '15%' },
-                              fieldName: 'quantity',
-                              fieldType: 'NUMBER',
-                            }
-                          ]}
-                        />
-                      </CRow>
-
-                      <CCol md="6" className="text-right mt-2">
-                        <CButton color="success" size="md" type="submit"
-                        ><FontAwesomeIcon icon={faSave} className="ml-1" /> Save
-                        </CButton>
-                      </CCol>
                     </Form>
                   );
                 }
@@ -155,6 +108,43 @@ const OpeningStockEntry = () => {
             </Formik>
           </CCol>
         </CRow>
+        <CDataTable
+          items={products}
+          fields={fields}
+          tableFilter
+          border
+          striped
+          pagination
+          scopedSlots={{
+            'quantity':
+              (item, index) => (
+                <td>
+                  <input
+                    id="quanity"
+                    name="quantity"
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) => {
+                      setProducts(previousproducts => {
+                        previousproducts[index].quantity = parseInt(e.target.value)
+                      });
+                    }}
+                  />
+                </td>
+              )
+          }}
+        />
+
+        <CCol md="6" className="text-right mt-2">
+          <CButton color="success" size="md"
+            onClick={() => {
+              axios.fetchPostData('api/OpeningStock', products)
+              console.log(products);
+            }}
+          ><FontAwesomeIcon icon={faSave} className="ml-1" /> Save
+          </CButton>
+        </CCol>
+
       </CCardBody>
     </CCard>
   )
