@@ -1,0 +1,64 @@
+﻿@model ShopManagement.Entity.Models.Sale
+@{
+  Layout = "../shared/_layout.cshtml";
+  ViewData["Date"] = "12-05-2021";
+}
+@{ 
+    var sl = 0;
+}
+
+<div class="Row">
+    <div class="col-1 text-left">
+        <h6>নাম :</h6>
+    </div>
+    <div class="col-11 text-left" style="border-bottom:1px dashed; margin-left:50px; margin-top:-30px">
+        @Model.CustomerName
+    </div>
+</div>
+<div class="Row" style="margin-bottom:20px">
+    <div class="col-1 text-left">
+        <h6>ঠিকানা :</h6>
+    </div>
+    <div class="col-11 text-left" style="border-bottom:1px dashed; margin-left:50px;margin-top:-30px">
+        @Model.Customer.Address
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">সংখ্যা</th>
+                  <th scope="col">গাড়ী নং-</th>
+                  <th scope="col">বিবরণ</th>
+                </tr>
+              </thead>
+              <tbody>
+                   @foreach (var item in Model.SaleDetails)
+                        {
+                <tr>
+                  <td>@(++sl)</td>
+                  <td></td>
+                  <td>@item.Product.ProductName</td>
+                </tr>
+                        }
+              </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="Row" style="margin-top:10px;">
+    <div class="col-1 text-left">
+        <h6>মাধ্যমে</h6>
+    </div>
+    <div class="col-5 text-left" style="border-bottom:1px dashed; margin-left:50px;">
+    </div>
+</div>
+<div class="Row">
+    <div class="col text-left" style="margin-top:10px;">
+        <h6>এটিভি আমদানি পর্যায়ে পরিশোধিত</h6>
+    </div>
+    <div class="col text-right" style="margin-top:-20px;">
+        <h6>পক্ষে রোজিনা এন্টারপ্রাইজ</h6>
+    </div>
+</div>

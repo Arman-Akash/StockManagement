@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import {
-    CCollapse,
-    CRow, CCardBody, CTooltip,
-    CCol, CButton, CDataTable, CCard, CLink
+    CRow, CCardBody,
+    CCol, CButton, CDataTable, CCard, CLink,CTooltip
 } from '@coreui/react';
 import SAInput from '../FormLib/saInput';
 import SADatePicker from '../FormLib/saDatePicker';
@@ -13,7 +12,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowAltCircleLeft, faSave, faTrash, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleLeft, faSave, faTrash, faTimes,faPrint } from '@fortawesome/free-solid-svg-icons';
 import * as axios from '../../axios/axiosLib';
 import * as initialState from '../../functionalLib/initialState';
 import * as dataApi from '../../customHooks/UseDataApi';
@@ -21,6 +20,7 @@ import DeleteModal from '../commonComponents/DeleteModal';
 import DeleteIcon from '../commonComponents/DeleteIcon';
 import EditIcon from '../commonComponents/EditIcon';
 import SADataTable from '../FormLib/saDataTable';
+import { apiHostName } from '../../../src/config';
 
 const Sale = (props) => {
     const [isDelete, toggleDeleteModal] = useState(false);
@@ -35,7 +35,7 @@ const Sale = (props) => {
     }
     let [saleObj, setSaleObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
-    const fields = ['saleDate', 'challanNo', 'customerName', 'actions'];
+    const fields = ['saleDate', 'challanNo', 'customerName','print', 'actions'];
 
     let dataObj = {
         productId: 0,
@@ -156,9 +156,9 @@ const Sale = (props) => {
                                                             tableName="Product Sale Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                                                            columns={["Product", "Unit", "Sale Quantity", "Rate", "Amount", "Actions"]}
-                                                            fields={["productId", "unitName", "quantity", "rate", "amount"]}
-                                                            readOnlyArr={["unitName", "amount"]}
+                                                            columns={["Product", "Unit","Stock", "Sale Quantity", "Rate", "Amount", "Actions"]}
+                                                            fields={["productId", "unitName","stock", "quantity", "rate", "amount"]}
+                                                            readOnlyArr={["unitName","stock", "amount"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
                                                             onSetDataArray={onSetDataArray}
@@ -176,20 +176,27 @@ const Sale = (props) => {
                                                                     }),
                                                                     onOptionChangeHandler: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
                                                                         axios.fetchGetData(`api/Product/${e.target.value}`, unitName, setUnitname, (response) => {
-                                                                            console.log(response.data.unitName);
-                                                                            let newArr = [...dataArr];
-                                                                            var selectedObj = { ...newArr[indexI] };
-                                                                            selectedObj['unitName'] = response.data.unitName;
-                                                                            newArr[indexI] = selectedObj;
-                                                                            console.log(newArr);
-                                                                            onSetDataArray(newArr);
-                                                                            setUnitname(response.data.unitName);
+                                                                            axios.fetchGetData(`api/Stock/GetStock/${e.target.value}`, undefined, undefined, (stock) => {
+                                                                                let newArr = [...dataArr];
+                                                                                var selectedObj = { ...newArr[indexI] };
+                                                                                selectedObj['unitName'] = response.data.unitName;
+                                                                                selectedObj['stock'] = stock.data;
+                                                                                newArr[indexI] = selectedObj;
+                                                                                console.log(newArr);
+                                                                                onSetDataArray(newArr);
+                                                                            })
                                                                         });
                                                                     }
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '10%', textAlign:'center' },
+                                                                    thStyle: { width: '10%', textAlign: 'center' },
                                                                     fieldName: 'unitName',
+                                                                    fieldStyle: { textAlign: 'center' },
+                                                                    fieldType: 'text',
+                                                                },
+                                                                {
+                                                                    thStyle: { width: '10%', textAlign: 'center' },
+                                                                    fieldName: 'stock',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'text',
                                                                 },
@@ -214,7 +221,7 @@ const Sale = (props) => {
                                                                     }
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '15%' },
+                                                                    thStyle: { width: '10%' },
                                                                     fieldName: 'rate',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
@@ -234,7 +241,7 @@ const Sale = (props) => {
                                                                     }
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '20%' },
+                                                                    thStyle: { width: '15%' },
                                                                     fieldName: 'amount',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
@@ -335,6 +342,15 @@ const Sale = (props) => {
                                             />
                                         </td>
                                     ),
+                                    'print': (item) => (
+                                        <td>
+                                            <CTooltip content="Sale Print">
+                                                <CLink href={`${apiHostName}/api/Report/SaleReport/${item.id}`} target="_blank">
+                                                    <FontAwesomeIcon icon={faPrint} />
+                                                </CLink>
+                                            </CTooltip>
+                                        </td>
+                                    )
                             }}
                         />
                     </CRow>

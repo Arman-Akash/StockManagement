@@ -8,7 +8,6 @@ using ShopManagement.Entity.Models;
 using ShopManagement.Repository;
 using ShopManagement.Utility;
 using ShopManagement.Utility.StaticData;
-using Microsoft.EntityFrameworkCore;
 
 namespace ShopManagement.WebApi.Controllers
 {
@@ -18,14 +17,11 @@ namespace ShopManagement.WebApi.Controllers
     public class OpeningStockController : ControllerBase
     {
         private readonly IRepository<OpeningStock> _repository;
-        private readonly IRepository<Product> _productRepository;
         private readonly ILogError _logError;
 
-        public OpeningStockController(IRepository<OpeningStock> _repository,
-            IRepository<Product> _productRepository, ILogError _logError)
+        public OpeningStockController(IRepository<OpeningStock> _repository, ILogError _logError)
         {
             this._repository = _repository;
-            this._productRepository = _productRepository;
             this._logError = _logError;
         }
 
@@ -40,69 +36,10 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
-        /*
-          // Log in User Store Information
-        [HttpGet("LogInUserStoreItems")]
-        public async Task<ListResult<OpeningStock>> LogInUserStoreItems()
-        {
-            var userId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type.Equals("user_id"))?.Value);
-
-            if (userId == 0)
-                return new ListResult<OpeningStock>();
-
-            var result = new ListResult<OpeningStock>();
-
-            //get employee office information
-            var empOffice = await _empOfficialInfoService.Get()
-                .Where(e => e.EmployeeId == userId)
-                .Include(e => e.Office)
-                .ThenInclude(e => e.OfficeType)
-                .Select(e => e.Office)
-                .FirstOrDefaultAsync();
-
-            if (empOffice != null && empOffice.OfficeType.Type.Equals("store", StringComparison.OrdinalIgnoreCase))
-            {
-                var itemList = await _itemService.Get()
-                    .Include(e => e.Unit)
-                    .Where(e => e.ItemCategory.Name == "Stationary")
-                    .ToListAsync();
-
-                var openingStockItem = await _service.Get()
-                    .Where(e => e.StoreId == empOffice.Id)
-                    .ToListAsync();
-
-                var items = new List<OpeningStock>();
-                foreach (var item in itemList)
-                {
-                    var oldStock = openingStockItem.Where(e => e.ItemId == item.Id)
-                        .FirstOrDefault();
-
-                    var newItem = new OpeningStock
-                    {
-                        ItemId = item.Id,
-                        ItemName = item.Name,
-                        StoreId = empOffice.Id,
-                        UnitName = item.Unit?.Name
-                    };
-
-                    if (oldStock != null)
-                    {
-                        newItem.Id = oldStock.Id;
-                        newItem.Quantity = oldStock.Quantity;
-                    }
-
-                    items.Add(newItem);
-                }
-                result.Data = items;
-            }
-
-            return result;
-        }*/
-
         [HttpPost]
-        public async Task<Result<OpeningStock>> Post(OpeningStock openingStock)
+        public async Task<Result> Post(List<OpeningStock> openingStock)
         {
-            var result = new Result<OpeningStock>();
+            var result = new Result();
 
             if (!ModelState.IsValid)
             {
@@ -113,8 +50,7 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
-                await _repository.InsertAsync(openingStock);
-                result.Data = openingStock;
+                await _repository.AddOrUpdateRangeAsync(openingStock);
                 result.Message = ResponseMessage.SUCCESSFULLY_CREATED;
                 return result;
             }

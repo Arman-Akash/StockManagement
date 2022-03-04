@@ -22,5 +22,15 @@ namespace ShopManagement.Entity.Models
         public Customer Customer { get; set; }
         public string ChallanNo { get; set; }
         public ICollection<SaleDetail> SaleDetails { get; set; }
+
+
+        [NotMapped]
+        public string CustomerName
+        {
+            get
+            {
+                return Customer?.Name;
+            }
+        }
     }
 }

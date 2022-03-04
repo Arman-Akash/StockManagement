@@ -24,7 +24,8 @@ namespace ShopManagement.Repository
         Task<int> DeleteAsync(int id);
         Task<int> DeleteAsync(TEntity entity);
         Task<int> DeleteRangeAsync(List<TEntity> entities);
-        Task<int> AddOrUpdateAsync(TEntity entity);
+        Task<int> AddOrUpdateAsync(TEntity entity, bool saveChanges = true);
+        Task<int> AddOrUpdateRangeAsync(List<TEntity> entities, bool saveChanges = true);
         Task<int> SaveChangesAsync();
     }
 }
