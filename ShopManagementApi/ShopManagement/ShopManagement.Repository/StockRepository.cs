@@ -57,6 +57,7 @@ namespace ShopManagement.Repository
         public async Task<decimal> GetStock(int productId, int branchId)
         {
             decimal stock = 0;
+
             if(branchId == 1)
             {
                 stock += await _context.ReceiveDetails
@@ -64,19 +65,26 @@ namespace ShopManagement.Repository
                     .SumAsync(e => e.Quantity);
             }
 
+            var os = await _context.OpeningStocks
+                .Where(e => e.BranchId == branchId && e.ProductId == productId)
+                .SumAsync(e => e.Quantity);
+
             var transferRcv = await _context.TransferDetails
-                .Where(e => e.Transfer.TransferedBranchId == branchId && e.Transfer.RcvFlg)
+                .Where(e => e.Transfer.TransferedBranchId == branchId 
+                    && e.Transfer.RcvFlg
+                    && e.ProductId == productId)
                 .SumAsync(e => e.Quantity);
 
             var transfer = await _context.TransferDetails
-                .Where(e => e.Transfer.BranchId == branchId)
+                .Where(e => e.Transfer.BranchId == branchId
+                && e.ProductId == productId)
                 .SumAsync(e => e.Quantity);
 
             var sold = await _context.SaleDetails
                 .Where(e => e.ProductId == productId && e.Sale.BranchId == branchId)
                 .SumAsync(e => e.Quantity);
 
-            stock += transferRcv - transfer - sold;
+            stock += os + transferRcv - transfer - sold;
 
             return stock;
         }
