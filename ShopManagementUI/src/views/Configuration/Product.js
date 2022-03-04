@@ -209,6 +209,18 @@ const Product = () => {
                                                             isRequired="true"
                                                         />
                                                     </CCol>
+                                                    <CCol md="6" style={{ marginBottom: '5px' }}>
+                                                    <SAInput
+                                                        id="packSize"
+                                                        name="packSize"
+                                                        type="text"
+                                                        label="Pack Size"
+                                                        isInline="true"
+                                                        lSize="4"
+                                                        rSize="8"
+                                                        labelClassName="float-right"
+                                                    />
+                                                </CCol>
                                                     <CCol md='6' style={{ marginBottom: '5px' }}>
                                                         <SAReactAutoSelect
                                                             name="unitId"
@@ -224,18 +236,7 @@ const Product = () => {
                                                             })}
                                                         />
                                                     </CCol>
-                                                    <CCol md="6" style={{ marginBottom: '5px' }}>
-                                                        <SAInput
-                                                            id="packSize"
-                                                            name="packSize"
-                                                            type="text"
-                                                            label="Pack Size"
-                                                            isInline="true"
-                                                            lSize="4"
-                                                            rSize="8"
-                                                            labelClassName="float-right"
-                                                        />
-                                                    </CCol>
+                                           
                                                     <CCol md="6" style={{ marginBottom: '5px' }}>
                                                         <SAInput
                                                             id="origin"
