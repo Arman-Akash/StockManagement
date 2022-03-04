@@ -189,33 +189,42 @@ namespace ShopManagement.WebApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                var _user = _repository.Validate(user);
-                if (_user.Username == null)
+                try
                 {
-                    return Unauthorized();
-                }
 
-                var claims = new[]
-                {
+                    var _user = _repository.Validate(user);
+                    if (_user.Username == null)
+                    {
+                        return Unauthorized();
+                    }
+
+                    var claims = new[]
+                    {
                     new Claim(JwtRegisteredClaimNames.Sub, _user.Username),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(ClaimTypes.Role, _user.RoleNames),
                     new Claim("user_id", _user.Id.ToString()),
-                    new Claim("branch_id", _user.BranchId.ToString())
+                    new Claim("branch_id", _user.BranchId?.ToString())
                 };
 
-                var token = new JwtSecurityToken
-                (
-                    issuer: _authConfiguration.Issuer,
-                    audience: _authConfiguration.Audience,
-                    claims: claims,
-                    expires: DateTime.UtcNow.AddDays(60),
-                    notBefore: DateTime.UtcNow,
-                    signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authConfiguration.SigningKey)),
-                            SecurityAlgorithms.HmacSha256)
-                );
+                    var token = new JwtSecurityToken
+                    (
+                        issuer: _authConfiguration.Issuer,
+                        audience: _authConfiguration.Audience,
+                        claims: claims,
+                        expires: DateTime.UtcNow.AddDays(60),
+                        notBefore: DateTime.UtcNow,
+                        signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authConfiguration.SigningKey)),
+                                SecurityAlgorithms.HmacSha256)
+                    );
 
-                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token), user_id = _user.Id, username = _user.Username, roles = _user.RoleNames, permissions = _user.Permissions, branch_id = _user.BranchId });
+                    return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token), user_id = _user.Id, username = _user.Username, roles = _user.RoleNames, permissions = _user.Permissions, branch_id = _user.BranchId });
+                }
+                catch(Exception exp)
+                {
+                    _logError.Error(exp);
+                    return Content(exp.Message + exp.InnerException); //StatusCode(StatusCodes.Status500InternalServerError);
+                }
             }
 
             return BadRequest();

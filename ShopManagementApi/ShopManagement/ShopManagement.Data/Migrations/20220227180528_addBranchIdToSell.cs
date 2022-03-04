@@ -12,10 +12,10 @@ namespace ShopManagement.Data.Migrations
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.InsertData(
-                table: "Branches",
-                columns: new[] { "Id", "CreatedTime", "Email", "Location", "ModifierId", "Name", "PhnNumber", "UpdatedTime" },
-                values: new object[] { 1, null, null, null, null, "Warehouse", null, null });
+            //migrationBuilder.InsertData(
+            //    table: "Branches",
+            //    columns: new[] { "Id", "CreatedTime", "Email", "Location", "ModifierId", "Name", "PhnNumber", "UpdatedTime" },
+            //    values: new object[] { 1, null, null, null, null, "Warehouse", null, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sales_BranchId",
@@ -41,10 +41,10 @@ namespace ShopManagement.Data.Migrations
                 name: "IX_Sales_BranchId",
                 table: "Sales");
 
-            migrationBuilder.DeleteData(
-                table: "Branches",
-                keyColumn: "Id",
-                keyValue: 1);
+            //migrationBuilder.DeleteData(
+            //    table: "Branches",
+            //    keyColumn: "Id",
+            //    keyValue: 1);
 
             migrationBuilder.DropColumn(
                 name: "BranchId",
