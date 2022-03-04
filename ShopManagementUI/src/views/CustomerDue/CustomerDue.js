@@ -32,8 +32,8 @@ const CustomerDue = (props) => {
     const [isDelete, toggleDeleteModal] = useState(false);
     let fields = [
         { key: 'creditDate', label: 'Credit Date' },
-        { key: 'branchId', label: 'Branch Name' },
-        { key: 'customerId', label: 'Customer Name' },
+        { key: 'branchName', label: 'Branch Name' },
+        { key: 'customerName', label: 'Customer Name' },
         { key: 'type', label: 'Type' },
         { key: 'amount', label: 'Amount' },
         'actions'
@@ -103,16 +103,17 @@ const CustomerDue = (props) => {
                                     <CRow>
                                         <CCol md="4">
                                             <SADatePicker
-                                                name="creditdate"
+                                                name="creditDate"
                                                 label="Credit Date"
                                                 labelClassName="float-right"
                                                 isInline="true"
-                                                isRequired="true"
                                                 lSize="4"
                                                 rSize="8"
+                                                isRequired="true"
+                                                readOnly={true}
                                                 formProps={formProps}
-                                                // dateFormat="dd/MM/yyyy"
-                                                // placeholderText="dd/MM/yyyy"
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="dd/MM/yyyy"
                                             />
                                         </CCol>
                                         <CCol md="4">

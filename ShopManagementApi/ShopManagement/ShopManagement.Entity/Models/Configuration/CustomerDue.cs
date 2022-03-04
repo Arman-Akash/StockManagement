@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShopManagement.Entity.Models
 {
-    public class CustomerDue : BaseModel
+    public partial class CustomerDue : BaseModel
     {
         public DateTime CreditDate { get; set; }
         public int BranchId { get; set; }
