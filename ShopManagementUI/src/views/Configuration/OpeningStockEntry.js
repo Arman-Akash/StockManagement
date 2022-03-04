@@ -30,7 +30,6 @@ const OpeningStockEntry = () => {
 
   let productTypes = dataApi.useDataApi(`api/ProductType`, initialState.initialCollections);
   let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
-  let openingStocks = dataApi.useDataApi(`api/OpeningStock`, initialState.initialCollections);
 
   return (
     <CCard>
@@ -43,11 +42,8 @@ const OpeningStockEntry = () => {
               }}
 
               onSubmit={(values, { resetForm }) => {
-                dataArr.forEach(e => {
-                  e.branchId = values.branchId
-                })
-                axios.fetchPostData('api/OpeningStock', dataArr);
                 console.log(dataArr);
+                axios.fetchPostData('api/OpeningStock', dataArr);
               }}
             >
               {
@@ -95,7 +91,6 @@ const OpeningStockEntry = () => {
                             })}
                             onChangeHandle={(name, value) => {
                               axios.fetchGetData(`api/Product/GetByProductSubType/${value}`, undefined, undefined, (response) => {
-                                console.log(response.data)
                                 // formProps.setFieldValue('productSubType', value);
                                 onSetDataArray(response.data);
                               })
@@ -110,7 +105,7 @@ const OpeningStockEntry = () => {
                           style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                           dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
                           columns={["Product Name", "Unit Name", "Quantity"]}
-                          fields={["productId", "unitName", "quantity"]}
+                          fields={["productName", "unitName", "quantity"]}
                           readOnlyArr={["unitName"]}
                           dataArr={dataArr}
                           dataObj={dataObj}
@@ -119,15 +114,8 @@ const OpeningStockEntry = () => {
 
                             {
                               thStyle: { width: '30%' },
-                              fieldName: 'productId',
-                              fieldType: 'REACT-SELECT',
-                              isDisabled: true,
-                              options: products.data.data?.map(item => {
-                                return {
-                                  name: item.productCode+"-"+item.productName,
-                                  value: item.id
-                                }
-                              }),
+                              fieldName: 'productName',
+                              fieldType: 'text',
                             },
                             {
                               thStyle: { width: '15%' },

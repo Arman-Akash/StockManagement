@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopManagement.Data;
+using ShopManagement.Entity.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ShopManagement.Repository
     public interface IStockRepository
     {
         public Task<decimal> GetStock(int productId, int branchId);
+        Task<List<OpeningStockVM>> GetOpeningStock(int subTypeId, int branchId);
     }
 
     public class StockRepository: IStockRepository
@@ -20,6 +22,36 @@ namespace ShopManagement.Repository
         public StockRepository(ShopManagementDbContext _context)
         {
             this._context = _context;
+        }
+
+        public async Task<List<OpeningStockVM>> GetOpeningStock(int subTypeId, int branchId)
+        {
+            var productList = await _context.Products
+                .Where(e => e.ProductSubTypeId == subTypeId)
+                .Select(e => new OpeningStockVM
+                {
+                    ProductId = e.Id,
+                    ProductName = e.ProductCode + " - " + e.ProductName,
+                    UnitName = e.Unit.Name,
+                    BranchId = branchId
+                })
+                .ToListAsync();
+
+            foreach(var product in productList)
+            {
+                var os = _context.OpeningStocks
+                    .Where(e => e.ProductId == product.ProductId
+                        && e.BranchId == branchId)
+                    .FirstOrDefault();
+
+                if(os != null)
+                {
+                    product.Quantity = os.Quantity;
+                    product.Id = os.Id;
+                }
+            }
+
+            return productList;
         }
 
         public async Task<decimal> GetStock(int productId, int branchId)

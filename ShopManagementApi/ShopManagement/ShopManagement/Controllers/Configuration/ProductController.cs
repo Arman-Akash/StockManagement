@@ -20,12 +20,16 @@ namespace ShopManagement.WebApi.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IRepository<Product> _repository;
+        private readonly IStockRepository _stockRepository;
         private readonly ILogError _logError;
 
-        public ProductController(IRepository<Product> _repository, ILogError _logError)
+        public ProductController(IRepository<Product> _repository,
+            IStockRepository _stockRepository,
+            ILogError _logError)
         {
             this._repository = _repository;
             this._logError = _logError;
+            this._stockRepository = _stockRepository;
         }
 
         [HttpGet]
@@ -63,20 +67,11 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpGet("GetByProductSubType/{productSubTypeId}")]
-        public async Task<ListResult<ProductVM>> GetByProductSubType(int productSubTypeId)
+        public async Task<ListResult<OpeningStockVM>> GetByProductSubType(int productSubTypeId)
         {
-            return new ListResult<ProductVM>
+            return new ListResult<OpeningStockVM>
             {
-                Data = await _repository.Get()
-                .Where(e => e.ProductSubTypeId == productSubTypeId)
-                .Select(e => new ProductVM
-                {
-                    ProductId = e.Id,
-                    ProductName = e.ProductCode+""+e.ProductName,
-                    UnitId = e.UnitId,
-                    UnitName = e.Unit.Name
-                })
-                .ToListAsync()
+                Data = await _stockRepository.GetOpeningStock(productSubTypeId, User.GetBranchId())
             };
         }
 
