@@ -191,7 +191,7 @@ const CustomerDue = (props) => {
                                 <CRow className=" mt-4">
                                     <CCol md="12" className="text-center mb-3" >
                                         <CButton size="sm" type="submit" color="success" ><FontAwesomeIcon icon={faSave} />&nbsp;Save</CButton>
-                                        <CLink to="/factory-operation">
+                                        <CLink to="/dashboard">
                                             <CButton size="sm" style={{ marginLeft: "20px" }} color="danger" type="rest"><FontAwesomeIcon icon={faArrowAltCircleLeft} />&nbsp;Exit</CButton>
                                         </CLink>
                                     </CCol>

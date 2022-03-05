@@ -148,4 +148,4 @@ const OpeningStockEntry = () => {
   )
 }
 
-export default OpeningStockEntry  
+export default OpeningStockEntry
