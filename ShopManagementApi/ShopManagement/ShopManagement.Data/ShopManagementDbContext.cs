@@ -220,6 +220,10 @@ namespace ShopManagement.Data
 				entity.Property(e => e.RcvDate)
 					.HasDefaultValueSql("getdate()");
 
+				entity.Property(e => e.LcNumber)
+					.HasDefaultValue(string.Empty)
+					.HasMaxLength(100);
+
 				entity.Property(e => e.RcvFrom)
 					.HasDefaultValue(string.Empty)
 					.HasMaxLength(100);

@@ -26,15 +26,21 @@ const WarehouseReceive = (props) => {
 
     var data = {
         id: 0,
-        rcvSerNo: '',
+        billOfEntryNo: '',
         rcvDate: new Date(),
+        billOfEntryDate: new Date(),
         rcvFrom: '',
+        lcNumber: '',
         comment: '',
         receiveDetails: []
     }
     let [receiveObj, setReceiveObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
-    const fields = ['rcvDate', 'rcvSerNo', 'rcvFrom', 'comment', 'actions'];
+    const fields = [
+        {key:'lcNumber',label:'LC Number'},
+        {key:'rcvDate',label:'Goods Receiving Date'},
+        {key:'billOfEntryNo',label:'Bill of Entry No'},
+        {key:'billOfEntryDate',label:'Bill of Entry Date'}, 'actions'];
 
     let dataObj = {
         productId: 0,
@@ -51,12 +57,11 @@ const WarehouseReceive = (props) => {
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let units = dataApi.useDataApi(`api/Unit`, initialState.initialCollections);
     let productReceives = dataApi.useDataApi(`api/Receive`, initialState.initialCollections);
-    let rcvSerNo = dataApi.useDataApi(`api/Receive/RcvSerNo`, initialState.initialCollections);
     return (
         <>
             <CCard>
                 <CCardBody>
-                    <h5 style={{ marginBottom: "0px" }} className='page-title'>Product Receive</h5>
+                    <h5 style={{ marginBottom: "10px" }} className='page-title'>Product Receive</h5>
                     <CRow>
                         <CCol md="12">
                             <Formik
@@ -64,14 +69,13 @@ const WarehouseReceive = (props) => {
                                 initialValues={receiveObj.data}
                                 validationSchema={
                                     Yup.object({
-                                        // rcvSerNo: Yup.string().required('serial no is required'),
+                                        lcNumber: Yup.string().required('LC number no is required'),
 
                                     })
                                 }
                                 onSubmit={(values, { resetForm }) => {
                                     values = {
                                         ...values,
-                                        rcvSerNo: rcvSerNo.data.data,
                                         receiveDetails: dataArr
                                     }
                                     if (dataArr.length <= 0) {
@@ -81,13 +85,11 @@ const WarehouseReceive = (props) => {
                                         if (isAdd) {
                                             axios.fetchPostData('api/Receive', values, () => {
                                                 productReceives.refresh();
-                                                rcvSerNo.refresh();
                                             });
                                             onSetDataArray([]);
                                         } else {
                                             axios.fetchPutData(`api/Receive/${values.id}`, values, () => {
                                                 productReceives.refresh();
-                                                rcvSerNo.refresh();
                                             })
                                             onSetDataArray([]);
                                         }
@@ -108,17 +110,41 @@ const WarehouseReceive = (props) => {
                                                     <CRow>
                                                         <CCol md="4">
                                                             <SAInput
-                                                                id="rcvSerNo"
-                                                                name="rcvSerNo"
+                                                                id="lcNumber"
+                                                                name="lcNumber"
                                                                 type="text"
-                                                                label="Serial No."
+                                                                label="LC Number"
                                                                 isInline="true"
                                                                 isRequired="true"
                                                                 lSize="4"
                                                                 rSize="8"
                                                                 labelClassName="float-right"
-                                                                readOnly={true}
-                                                                value={rcvSerNo.data.data}
+                                                            />
+                                                        </CCol>
+                                                        <CCol md="4">
+                                                            <SAInput
+                                                                id="billOfEntryNo"
+                                                                name="billOfEntryNo"
+                                                                type="text"
+                                                                label="Bill of Entry No"
+                                                                isInline="true"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                labelClassName="float-right"
+                                                            />
+                                                        </CCol>
+                                                        <CCol md="4">
+                                                            <SADatePicker
+                                                                id="billOfEntryDate"
+                                                                name="billOfEntryDate"
+                                                                label="Bill of Entry Date"
+                                                                labelClassName="float-right"
+                                                                isInline="true"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                formProps={formProps}
+                                                                dateFormat="dd/MM/yyyy"
+                                                                placeholderText="dd/MM/yyyy"
                                                             />
                                                         </CCol>
                                                     </CRow>
@@ -127,10 +153,9 @@ const WarehouseReceive = (props) => {
                                                             <SADatePicker
                                                                 id="rcvDate"
                                                                 name="rcvDate"
-                                                                label="Receive Date"
+                                                                label="Goods Receiving Date"
                                                                 labelClassName="float-right"
                                                                 isInline="true"
-                                                                isRequired="true"
                                                                 lSize="4"
                                                                 rSize="8"
                                                                 formProps={formProps}
@@ -167,8 +192,8 @@ const WarehouseReceive = (props) => {
                                                             tableName="Product Receive Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                                                            columns={["Product", "Unit", "Quantity", "Rate","Amount", "MFG. Date", "EXP. Date", "Actions"]}
-                                                            fields={["productId", "unitName", "quantity", "rate","amount", "manufactureDate", "expireDate"]}
+                                                            columns={["Product", "Unit", "Quantity", "Rate", "Amount", "MFG. Date", "EXP. Date", "Actions"]}
+                                                            fields={["productId", "unitName", "quantity", "rate", "amount", "manufactureDate", "expireDate"]}
                                                             readOnlyArr={["amount", "unitName"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
@@ -292,17 +317,15 @@ const WarehouseReceive = (props) => {
                                                     </CRow>
                                                     <CRow>
                                                         <CCol style={{ padding: "10px", textAlign: "center" }} >
-                                                            <CButton onClick={() => {
+                                                            <CButton style={{ marginRight: "20px" }} onClick={() => {
                                                                 // setIsAdd(true);
                                                             }} size="sm" color="success" type="submit"><FontAwesomeIcon icon={faSave} />&nbsp;Save</CButton>
-                                                            <CButton
-                                                                onClick={() => {
-                                                                    onSetDataArray([]);
-                                                                    setReceiveObj({
-                                                                        data: ''
-                                                                    });
-                                                                }}
-                                                                size="sm" style={{ marginLeft: "20px" }} color="secondary" type="rest"><FontAwesomeIcon icon={faTimes} />&nbsp;Cancel</CButton>
+                                                            <CButton onClick={() => {
+                                                                onSetDataArray([]);
+                                                                setReceiveObj({
+                                                                    data: ''
+                                                                });
+                                                            }} size="sm" color="secondary"><FontAwesomeIcon icon={faTimes} />&nbsp;Cancel</CButton>
                                                         </CCol>
                                                     </CRow>
                                                 </div>
@@ -333,11 +356,13 @@ const WarehouseReceive = (props) => {
                                                         data: {
                                                             id: item.id,
                                                             rcvDate: item.rcvDate,
+                                                            lcNumber: item.lcNumber,
+                                                            billOfEntryNo: item.billOfEntryNo,
                                                             rcvFrom: item.rcvFrom,
+                                                            billOfEntryDate: item.billOfEntryDate,
                                                             comment: item.comment
                                                         }
                                                     });
-                                                    rcvSerNo.setData({ data: item.rcvSerNo });
                                                     setUnitname(unitName);
                                                     // axios.fetchGetData(`api/Product/${item.unitName}`, unitName, setUnitname);
                                                     setIsAdd(false);

@@ -86,8 +86,6 @@ const PaymentReceive = (props) => {
                         customerId: Yup.string().required('name is required'),
                         no: Yup.string().required('No is required'),
                         amount: Yup.string().required('Amount is required'),
-                        paymentType: Yup.string().required('Payment Type is required'),
-                        paidBy: Yup.string().required('Paid by is required')
                     })
                 }
                 onSubmit={(values, { resetForm }) => {
@@ -125,6 +123,7 @@ const PaymentReceive = (props) => {
                                                 label="No"
                                                 isInline="true"
                                                 lSize="4"
+                                                isRequired="true"
                                                 rSize="8"
                                                 labelClassName="float-right"
                                             />
@@ -138,7 +137,6 @@ const PaymentReceive = (props) => {
                                                 isInline="true"
                                                 lSize="4"
                                                 rSize="8"
-                                                isRequired="true"
                                                 formProps={formProps}
                                                 dateFormat="dd/MM/yyyy"
                                                 placeholderText="dd/MM/yyyy"
@@ -170,6 +168,7 @@ const PaymentReceive = (props) => {
                                                 isInline="true"
                                                 lSize="4"
                                                 rSize="8"
+                                                isRequired="true"
                                                 labelClassName="float-right"
                                             />
                                         </CCol>
@@ -181,7 +180,6 @@ const PaymentReceive = (props) => {
                                                 isInline="true"
                                                 lSize="4"
                                                 rSize="8"
-                                                isRequired="true"
                                                 formProps={formProps}
                                                 dateFormat="dd/MM/yyyy"
                                                 placeholderText="dd/MM/yyyy"
@@ -192,7 +190,6 @@ const PaymentReceive = (props) => {
                                                 id="paymentType"
                                                 name="paymentType"
                                                 label="Payment Type"
-                                                isRequired="true"
                                                 isInline="true"
                                                 lSize="4"
                                                 rSize="8"
@@ -205,7 +202,6 @@ const PaymentReceive = (props) => {
                                                 id="paidBy"
                                                 name="paidBy"
                                                 label="Payment By"
-                                                isRequired="true"
                                                 isInline="true"
                                                 lSize="4"
                                                 rSize="8"

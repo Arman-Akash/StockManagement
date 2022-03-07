@@ -64,31 +64,31 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
-        [HttpGet("RcvSerNo")]
-        public async Task<Result<string>> ReceiptNo()
-        {
-            var recNo = "";
-            var lastRef = await _repository.Get()
-                .Where(e => e.RcvDate.Year == DateTime.Now.Year)
-                .OrderByDescending(e => e.Id)
-                .Select(e => e.RcvSerNo)
-                .FirstOrDefaultAsync();
+        //[HttpGet("RcvSerNo")]
+        //public async Task<Result<string>> ReceiptNo()
+        //{
+        //    var recNo = "";
+        //    var lastRef = await _repository.Get()
+        //        .Where(e => e.RcvDate.Year == DateTime.Now.Year)
+        //        .OrderByDescending(e => e.Id)
+        //        .Select(e => e.RcvSerNo)
+        //        .FirstOrDefaultAsync();
 
-            if (lastRef == null)
-            {
-                recNo = "WHR/" + "0001/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
-            }
-            else
-            {
-                var num = lastRef.Split('/')[1];
-                recNo = "WHR/" + (Convert.ToInt32(num) + 1).ToString().PadLeft(4, '0') + "/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
-            }
+        //    if (lastRef == null)
+        //    {
+        //        recNo = "WHR/" + "0001/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
+        //    }
+        //    else
+        //    {
+        //        var num = lastRef.Split('/')[1];
+        //        recNo = "WHR/" + (Convert.ToInt32(num) + 1).ToString().PadLeft(4, '0') + "/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
+        //    }
 
-            return new Result<string>
-            {
-                Data = recNo
-            };
-        }
+        //    return new Result<string>
+        //    {
+        //        Data = recNo
+        //    };
+        //}
 
         [HttpPost]
         public async Task<Result<Receive>> Post(Receive purchase)
