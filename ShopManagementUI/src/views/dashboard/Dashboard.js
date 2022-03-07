@@ -115,7 +115,7 @@ const Dashboard = () => {
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/customer-dues">
               <CIcon className='mob-dashboard-img' src={iCustomrDues} />
-              <h6>Customer Dues</h6>
+              <h6>Due Payment </h6>
             </CLink>
           </CCol>
 

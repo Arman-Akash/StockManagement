@@ -16,21 +16,21 @@ namespace ShopManagement.WebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class CustomerDueController : ControllerBase
+    public class PaymentReceiveController : ControllerBase
     {
-        private readonly IRepository<CustomerDue> _repository;
+        private readonly IRepository<PaymentReceive> _repository;
         private readonly ILogError _logError;
 
-        public CustomerDueController(IRepository<CustomerDue> _repository, ILogError _logError)
+        public PaymentReceiveController(IRepository<PaymentReceive> _repository, ILogError _logError)
         {
             this._repository = _repository;
             this._logError = _logError;
         }
 
         [HttpGet]
-        public async Task<ListResult<CustomerDue>> Get()
+        public async Task<ListResult<PaymentReceive>> Get()
         {
-            var result = new ListResult<CustomerDue>()
+            var result = new ListResult<PaymentReceive>()
             {
                 Data = await _repository.Get()
                 .Include(e => e.Branch)
@@ -42,9 +42,9 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Result<CustomerDue>> Get(int id)
+        public async Task<Result<PaymentReceive>> Get(int id)
         {
-            var result = new Result<CustomerDue>();
+            var result = new Result<PaymentReceive>();
             var item = await _repository.Get()
                 .Where(e => e.Id == id)
                 .Include(e => e.Branch)
@@ -60,9 +60,9 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Result<CustomerDue>> Post(CustomerDue customerDue)
+        public async Task<Result<PaymentReceive>> Post(PaymentReceive paymentReceive)
         {
-            var result = new Result<CustomerDue>();
+            var result = new Result<PaymentReceive>();
 
             if (!ModelState.IsValid)
             {
@@ -73,8 +73,9 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
-                await _repository.InsertAsync(customerDue);
-                result.Data = customerDue;
+                paymentReceive.BranchId = User.GetBranchId();
+                await _repository.InsertAsync(paymentReceive);
+                result.Data = paymentReceive;
                 result.Message = ResponseMessage.SUCCESSFULLY_CREATED;
                 return result;
             }
@@ -90,11 +91,11 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<Result<CustomerDue>> Put(int id, CustomerDue customerDue)
+        public async Task<Result<PaymentReceive>> Put(int id, PaymentReceive paymentReceive)
         {
-            var result = new Result<CustomerDue>();
+            var result = new Result<PaymentReceive>();
 
-            if (id != customerDue.Id || !ModelState.IsValid)
+            if (id != paymentReceive.Id || !ModelState.IsValid)
             {
                 result.Success = false;
                 result.Message = ResponseMessage.BAD_REQUEST;
@@ -102,8 +103,8 @@ namespace ShopManagement.WebApi.Controllers
             }
             try
             {
-                await _repository.UpdateAsync(customerDue);
-                result.Data = customerDue;
+                await _repository.UpdateAsync(paymentReceive);
+                result.Data = paymentReceive;
                 result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;
                 return result;
             }
@@ -123,8 +124,8 @@ namespace ShopManagement.WebApi.Controllers
         {
             var result = new Result();
 
-            var customerDue = await _repository.FindAsync(id);
-            if (customerDue == null)
+            var paymentReceive = await _repository.FindAsync(id);
+            if (paymentReceive == null)
             {
                 result.Success = false;
                 result.Message = ResponseMessage.NOT_FOUND;
@@ -133,7 +134,7 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
-                await _repository.DeleteAsync(customerDue);
+                await _repository.DeleteAsync(paymentReceive);
                 result.Message = ResponseMessage.SUCCESSFULLY_DELETED;
                 return result;
             }

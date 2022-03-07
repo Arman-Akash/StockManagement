@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ShopManagement.Entity.Models
 {
-    public partial class CustomerDue
+    public partial class PaymentReceive
     {
         public string BranchName 
         { 
