@@ -19,11 +19,11 @@ namespace ShopManagement.WebApi.Controllers
     [Authorize]
     public class ReceiveController : ControllerBase
     {
-        private readonly IRepository<Receive> _repository;
+        private readonly IRepository<Purchase> _repository;
         private readonly IReceiveRepository _receiveRepository;
         private readonly ILogError _logError;
 
-        public ReceiveController(IRepository<Receive> _repository,
+        public ReceiveController(IRepository<Purchase> _repository,
             IReceiveRepository _receiveReposioty,
             ILogError _logError)
         {
@@ -33,12 +33,12 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ListResult<Receive>> Get()
+        public async Task<ListResult<Purchase>> Get()
         {
-            var result = new ListResult<Receive>()
+            var result = new ListResult<Purchase>()
             {
                 Data = await _repository.Get()
-                .Include(e => e.ReceiveDetails)
+                .Include(e => e.Details)
                 .ToListAsync()
             };
 
@@ -46,12 +46,12 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Result<Receive>> Get(int id)
+        public async Task<Result<Purchase>> Get(int id)
         {
-            var result = new Result<Receive>();
+            var result = new Result<Purchase>();
             var item = await _repository.Get()
                 .Where(e => e.Id == id)
-                .Include(e => e.ReceiveDetails)
+                .Include(e => e.Details)
                 .ThenInclude(e => e.Product)
                 .ThenInclude(e => e.Unit)
                 .FirstOrDefaultAsync();
@@ -91,9 +91,9 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Result<Receive>> Post(Receive purchase)
+        public async Task<Result<Purchase>> Post(Purchase purchase)
         {
-            var result = new Result<Receive>();
+            var result = new Result<Purchase>();
 
             if (!ModelState.IsValid)
             {
@@ -104,6 +104,7 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
+                purchase.BranchId = User.GetBranchId();
                 await _repository.InsertAsync(purchase);
                 result.Data = purchase;
                 result.Message = ResponseMessage.SUCCESSFULLY_CREATED;
@@ -162,9 +163,9 @@ namespace ShopManagement.WebApi.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<Result<Receive>> Put(int id, Receive receive)
+        public async Task<Result<Purchase>> Put(int id, Purchase receive)
         {
-            var result = new Result<Receive>();
+            var result = new Result<Purchase>();
 
             if (id != receive.Id || !ModelState.IsValid)
             {

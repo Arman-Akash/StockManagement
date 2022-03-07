@@ -111,7 +111,6 @@ const OpeningStockEntry = () => {
                           dataObj={dataObj}
                           onSetDataArray={onSetDataArray}
                           fieldsTypeWithValue={[
-
                             {
                               thStyle: { width: '30%' },
                               fieldName: 'productName',

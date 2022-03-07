@@ -4,10 +4,10 @@ using System.Text;
 
 namespace ShopManagement.Entity.Models
 {
-    public class ReceiveDetail : BaseModel
+    public class PurchaseDetail : BaseModel
     {
         public int ReceiveId { get; set; }
-        public Receive Receive { get; set; }
+        public Purchase Receive { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }
         public decimal Quantity { get; set; }

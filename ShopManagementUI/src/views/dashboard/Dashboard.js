@@ -76,9 +76,9 @@ const Dashboard = () => {
             </CLink>
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
-            <CLink to="/warehouse-receive">
+            <CLink to="/product-purchase">
               <CIcon className='mob-dashboard-img' src={iOrder} />
-              <h6>Warehouse Product Receive</h6>
+              <h6>Product Purchase</h6>
             </CLink>
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
