@@ -101,7 +101,7 @@ const OpeningStockEntry = () => {
                       <CRow style={{ marginTop: '10px' }}>
                         <SADataTable
                           md="12"
-                          tableName="LC Cost Details:"
+                          tableName="Opening Stock Details:"
                           style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                           dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
                           columns={["Product Name", "Unit Name", "Quantity"]}
@@ -148,4 +148,4 @@ const OpeningStockEntry = () => {
   )
 }
 
-export default OpeningStockEntry  
+export default OpeningStockEntry

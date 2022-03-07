@@ -12,7 +12,7 @@ namespace ShopManagement.Data
 		#region Configuration
 		public DbSet<Branch> Branches { get; set; }
 		public DbSet<Customer> Customers { get; set; }
-		public DbSet<CustomerDue> CustomerDues { get; set; }
+		public DbSet<PaymentReceive> CustomerDues { get; set; }
 		public DbSet<Unit> Units { get; set; }
 		public DbSet<ProductSubType> ProductTypes { get; set; }
 		public DbSet<OpeningStock> OpeningStocks { get; set; }
@@ -187,13 +187,13 @@ namespace ShopManagement.Data
 				    .HasColumnType("decimal(15, 2)");
             });
 
-			builder.Entity<CustomerDue>(entity =>
+			builder.Entity<PaymentReceive>(entity =>
 			{
-				entity.Property(e => e.ChallanNo)
-				   .IsRequired()
-				   .HasMaxLength(100);
+				entity.Property(e => e.InvoiceNo)
+				   .HasMaxLength(100)
+					.IsRequired();
 
-				entity.Property(e => e.Type)
+				entity.Property(e => e.PaymentType)
 				   .HasMaxLength(100);
 
 				entity.HasOne(e => e.Customer)
@@ -207,7 +207,7 @@ namespace ShopManagement.Data
 				entity.Property(e => e.Amount)
 					.HasColumnType("decimal(15, 2)");
 
-				entity.Property(e => e.CreditDate)
+				entity.Property(e => e.PaymentDate)
 					.HasDefaultValueSql("getdate()");
 			});
 

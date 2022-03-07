@@ -11,7 +11,7 @@ import {
     CCard,
     CCardBody
 } from '@coreui/react'
-import CustomerDue from './CustomerDue'
+import PaymentReceive from './PaymentReceive'
 import CustomerDueReport from './CustomerDueReport'
 
 const CustomerDueContainer = () => {
@@ -25,7 +25,7 @@ const CustomerDueContainer = () => {
                         <CCol md="2">
                             <CNav vertical className="vertical-nav">
                                 <CNavItem>
-                                    <CNavLink>Customer Dues</CNavLink>
+                                    <CNavLink>Due Payment Receive</CNavLink>
                                 </CNavItem>
 
                                 <CNavItem>
@@ -36,7 +36,7 @@ const CustomerDueContainer = () => {
                         <CCol md="10">
                             <CTabContent className="mt-3">
                                 <CTabPane>
-                                    <CustomerDue />
+                                    <PaymentReceive />
                                 </CTabPane>
                                 <CTabPane>
                                     <CustomerDueReport />

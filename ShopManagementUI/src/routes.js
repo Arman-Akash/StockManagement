@@ -12,9 +12,11 @@ const Transfer = React.lazy(() => import('./views/Transfer/Transfer'));
 const Receive = React.lazy(() => import('./views/Transfer/Receive'));
 const Product = React.lazy(() => import('./views/Configuration/Product'));
 const OpeningStockEntry = React.lazy(() => import('./views/Configuration/OpeningStockEntry'));
-const ChangePassword = React.lazy(() => import('./views/users/ChangePassword'))
-const Users = React.lazy(() => import('./views/users/Users'))
-const CustomerDueContainer = React.lazy(() => import('./views/CustomerDue/CustomerDueContainer'))
+const ChangePassword = React.lazy(() => import('./views/users/ChangePassword'));
+const Users = React.lazy(() => import('./views/users/Users'));
+const CustomerDueContainer = React.lazy(() => import('./views/DuePayment/CustomerDueContainer'));
+const StockShow = React.lazy(() => import('./views/Stock/StockShow'));
+const StockAdjustment = React.lazy(() => import('./views/Stock/StockAdjustment'));
 
 export const outlet = [
   { path: '/', exact: true, name: 'Home' },
@@ -24,7 +26,9 @@ export const outlet = [
   { path: '/receive', name: 'Product Receive', component: Receive },
   { path: '/customer', name: 'Customer', component: Customer },
   { path: '/opening-stock-entry', name: 'Opening Stock Entry', component: OpeningStockEntry },
-  { path: '/customer-dues', name: 'Customer Dues', component: CustomerDueContainer }
+  { path: '/stock-list', name: 'Stock List', component: StockShow },
+  { path: '/stock-adjustment', name: 'Stock Adjustment', component: StockAdjustment },
+  { path: '/customer-dues', name: 'Due Payment', component: CustomerDueContainer }
 ]
 
 export const warehouse = [

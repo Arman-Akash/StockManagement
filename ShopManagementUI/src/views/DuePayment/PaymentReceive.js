@@ -27,24 +27,31 @@ import { faSave, faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons'
 import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
 
-const CustomerDue = (props) => {
+const PaymentReceive = (props) => {
     const [isAdd, setIsAdd] = useState(true);
     const [isDelete, toggleDeleteModal] = useState(false);
     let fields = [
-        { key: 'creditDate', label: 'Credit Date' },
-        { key: 'branchId', label: 'Branch Name' },
-        { key: 'customerId', label: 'Customer Name' },
-        { key: 'type', label: 'Type' },
+        { key: 'paymentDate', label: 'Payment Date' },
+        { key: 'invoiceNo', label: 'Invoice No' },
+        { key: 'customerName', label: 'Customer Name' },
+        { key: 'paymentType', label: 'Payment Type' },
         { key: 'amount', label: 'Amount' },
         'actions'
     ];
-    const Type = [
+    const payType = [
+        { label: "Full Payment", value: "Full Payment" },
+        { label: "Part Payment", value: "Part Payment" }
+    ]
+
+    const payBy = [
         { label: "Cash", value: "Cash" },
-        { label: "Credit", value: "Credit" }
+        { label: "Cheque", value: "Cheque" },
+        { label: "D.D", value: "D.D" },
+        { label: "P.O", value: "P.O" }
     ]
     let customers = dataApi.useDataApi(`api/Customer`, initialState.initialCollections);
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
-    let customerDues = dataApi.useDataApi(`api/CustomerDue`, initialState.initialCollections);
+    let payments = dataApi.useDataApi(`api/PaymentReceive`, initialState.initialCollections);
 
     // useEffect(() => {
     //     axios.fetchGetData('api/MeasurementUnit', units, setUnits);
@@ -52,14 +59,20 @@ const CustomerDue = (props) => {
 
     var data = {
         id: 0,
+        no:'',
         branchId: 0,
         customerId: 0,
-        type: '',
-        creditDate: new Date(),
-        challanNo: "",
+        invoiceNo: '',
+        invoiceDate: new Date(),
+        date: new Date(),
+        paymentDate: new Date(),
+        paymentType: '',
+        paidBy: '',
+        bank: '',
+        bankBranchName: '',
         amount: ''
     }
-    let [customerDueObj, setCustomerDueObj] = useState({
+    let [paymentObj, setPaymentObj] = useState({
         data: data
     })
 
@@ -67,11 +80,14 @@ const CustomerDue = (props) => {
         <CCard>
             <Formik
                 enableReinitialize
-                initialValues={customerDueObj.data}
+                initialValues={paymentObj.data}
                 validationSchema={
                     Yup.object({
                         customerId: Yup.string().required('name is required'),
-                        branchId: Yup.string().required('name is required'),
+                        no: Yup.string().required('No is required'),
+                        amount: Yup.string().required('Amount is required'),
+                        paymentType: Yup.string().required('Payment Type is required'),
+                        paidBy: Yup.string().required('Paid by is required')
                     })
                 }
                 onSubmit={(values, { resetForm }) => {
@@ -79,16 +95,16 @@ const CustomerDue = (props) => {
                         ...values,
                     }
                     if (isAdd) {
-                        axios.fetchPostData('api/CustomerDue', values, () => {
-                            customerDues.refresh();
+                        axios.fetchPostData('api/PaymentReceive', values, () => {
+                            payments.refresh();
                         });
                     } else {
-                        axios.fetchPutData(`api/CustomerDue/${values.id}`, values, () => {
-                            customerDues.refresh();
+                        axios.fetchPutData(`api/PaymentReceive/${values.id}`, values, () => {
+                            payments.refresh();
                         });
                     }
                     resetForm();
-                    setCustomerDueObj({
+                    setPaymentObj({
                         data: data
                     })
                 }}
@@ -98,38 +114,38 @@ const CustomerDue = (props) => {
                         return (
                             <Form>
                                 <CCardBody >
-                                    <h5 style={{ marginBottom: "20px" }} className='page-title'>Customer Dues</h5>
+                                    <h5 style={{ marginBottom: "20px" }} className='page-title'> Money Receipt</h5>
                                     {/*For Concern?department  section*/}
                                     <CRow>
                                         <CCol md="4">
-                                            <SADatePicker
-                                                name="creditdate"
-                                                label="Credit Date"
-                                                labelClassName="float-right"
+                                            <SAInput
+                                                id="no"
+                                                name="no"
+                                                type="number"
+                                                label="No"
                                                 isInline="true"
-                                                isRequired="true"
                                                 lSize="4"
                                                 rSize="8"
-                                                formProps={formProps}
-                                                // dateFormat="dd/MM/yyyy"
-                                                // placeholderText="dd/MM/yyyy"
+                                                labelClassName="float-right"
                                             />
                                         </CCol>
+                                        <CCol md=""></CCol>
                                         <CCol md="4">
-                                            <SAReactAutoSelect
-                                                id="branchId"
-                                                name="branchId"
-                                                label="Branch"
-                                                isRequired="true"
+                                            <SADatePicker
+                                                name="date"
+                                                label="Date"
+                                                labelClassName="float-right"
                                                 isInline="true"
                                                 lSize="4"
                                                 rSize="8"
-                                                labelClassName="float-right"
+                                                isRequired="true"
                                                 formProps={formProps}
-                                                options={branches.data.data.map(item => {
-                                                    return { label: item.name, value: item.id }
-                                                })} />
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="dd/MM/yyyy"
+                                            />
                                         </CCol>
+                                    </CRow>
+                                    <CRow>
                                         <CCol md="4">
                                             <SAReactAutoSelect
                                                 id="customerId"
@@ -145,14 +161,12 @@ const CustomerDue = (props) => {
                                                     return { label: item.name, value: item.id }
                                                 })} />
                                         </CCol>
-                                    </CRow>
-                                    <CRow>
                                         <CCol md="4">
                                             <SAInput
-                                                id="challanNo"
-                                                name="challanNo"
+                                                id="invoiceNo"
+                                                name="invoiceNo"
                                                 type="text"
-                                                label="Challan No"
+                                                label="Invoice No"
                                                 isInline="true"
                                                 lSize="4"
                                                 rSize="8"
@@ -160,17 +174,83 @@ const CustomerDue = (props) => {
                                             />
                                         </CCol>
                                         <CCol md="4">
+                                            <SADatePicker
+                                                name="invoiceDate"
+                                                label="Invoice Date"
+                                                labelClassName="float-right"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                isRequired="true"
+                                                formProps={formProps}
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="dd/MM/yyyy"
+                                            />
+                                        </CCol>
+                                        <CCol md="4">
                                             <SAReactAutoSelect
-                                                id="type"
-                                                name="type"
-                                                label="Type"
+                                                id="paymentType"
+                                                name="paymentType"
+                                                label="Payment Type"
                                                 isRequired="true"
                                                 isInline="true"
                                                 lSize="4"
                                                 rSize="8"
                                                 labelClassName="float-right"
                                                 formProps={formProps}
-                                                options={Type} />
+                                                options={payType} />
+                                        </CCol>
+                                        <CCol md="4">
+                                            <SAReactAutoSelect
+                                                id="paidBy"
+                                                name="paidBy"
+                                                label="Payment By"
+                                                isRequired="true"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                labelClassName="float-right"
+                                                formProps={formProps}
+                                                options={payBy} />
+                                        </CCol>
+                                        <CCol md="4">
+                                            <SADatePicker
+                                                name="paymentDate"
+                                                label="Payment Date"
+                                                labelClassName="float-right"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                isRequired="true"
+                                                formProps={formProps}
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="dd/MM/yyyy"
+                                            />
+                                        </CCol>
+                                    </CRow>
+                                    <CRow>
+                                        <CCol md="4">
+                                            <SAInput
+                                                id="bank"
+                                                name="bank"
+                                                type="text"
+                                                label="Bank"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                labelClassName="float-right"
+                                            />
+                                        </CCol>
+                                        <CCol md="4">
+                                            <SAInput
+                                                name="bankBranchName"
+                                                type="text"
+                                                label="Branch"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                labelClassName="float-right"
+                                            />
                                         </CCol>
                                         <CCol md="4">
                                             <SAInput
@@ -190,7 +270,7 @@ const CustomerDue = (props) => {
                                 <CRow className=" mt-4">
                                     <CCol md="12" className="text-center mb-3" >
                                         <CButton size="sm" type="submit" color="success" ><FontAwesomeIcon icon={faSave} />&nbsp;Save</CButton>
-                                        <CLink to="/factory-operation">
+                                        <CLink to="/dashboard">
                                             <CButton size="sm" style={{ marginLeft: "20px" }} color="danger" type="rest"><FontAwesomeIcon icon={faArrowAltCircleLeft} />&nbsp;Exit</CButton>
                                         </CLink>
                                     </CCol>
@@ -201,7 +281,7 @@ const CustomerDue = (props) => {
                 }
             </Formik>
             <CDataTable
-                items={customerDues.data.data}
+                items={payments.data.data}
                 fields={fields}
                 border
                 striped
@@ -214,14 +294,20 @@ const CustomerDue = (props) => {
                             <td>
                                 <EditIcon
                                     onClick={() => {
-                                        setCustomerDueObj({
-                                            ...customerDueObj,
+                                        setPaymentObj({
+                                            ...paymentObj,
                                             data: {
                                                 id: item.id,
-                                                type: item.type,
-                                                challanNo: item.challanNo,
-                                                creditDate: item.creditDate,
-                                                branchId: item.branchId,
+                                                no: item.no,
+                                                paymentType: item.paymentType,
+                                                invoiceNo: item.invoiceNo,
+                                                invoiceDate: item.invoiceDate,
+                                                date: item.date,
+                                                paymentDate: item.paymentDate,
+                                                paymentType: item.paymentType,
+                                                paidBy: item.paidBy,
+                                                bank: item.bank,
+                                                bankBranchName: item.bankBranchName,
                                                 customerId: item.customerId,
                                                 amount: item.amount
                                             }
@@ -232,8 +318,8 @@ const CustomerDue = (props) => {
                                 />
                                 <DeleteIcon
                                     onClick={() => {
-                                        setCustomerDueObj({
-                                            ...customerDueObj,
+                                        setPaymentObj({
+                                            ...paymentObj,
                                             data: {
                                                 id: item.id
                                             }
@@ -256,8 +342,8 @@ const CustomerDue = (props) => {
                     toggleDeleteModal(flag);
                 }}
                 deleteOpp={() => {
-                    axios.fetchDeleteData(`api/CustomerDue/${customerDueObj.data.id}`, () => {
-                        customerDues.refresh();
+                    axios.fetchDeleteData(`api/PaymentReceive/${paymentObj.data.id}`, () => {
+                        payments.refresh();
                     });
                 }}
             />
@@ -265,4 +351,4 @@ const CustomerDue = (props) => {
     )
 }
 
-export default CustomerDue;
+export default PaymentReceive;

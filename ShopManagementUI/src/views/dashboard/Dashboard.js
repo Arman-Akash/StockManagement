@@ -12,7 +12,8 @@ import CIcon from '@coreui/icons-react';
 import iStock from '../../assets/images/stock.png';
 import iSell from '../../assets/images/sell.png';
 import iPurchase from '../../assets/images/purchase.png';
-// import iBgImage from '../../assets/images/dashboard.gif';
+import iStockShow from '../../assets/images/stockShow.png';
+import iStockAdjustment from '../../assets/images/stockAdjustment.png';
 import iSupplier from '../../assets/images/supplier.png';
 import iSubType from '../../assets/images/subtype.png';
 import iProductType from '../../assets/images/productType.png';
@@ -38,18 +39,18 @@ const Dashboard = () => {
             </CLink>
           </CCol>
           <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
-          <CLink to="/product-type">
-            <CIcon className='mob-dashboard-img' src={iProductType} />
-            <h6>Product Type</h6>
-          </CLink>
-        </CCol>
+            <CLink to="/product-type">
+              <CIcon className='mob-dashboard-img' src={iProductType} />
+              <h6>Product Type</h6>
+            </CLink>
+          </CCol>
           <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/product-sub-type">
               <CIcon className='mob-dashboard-img' src={iSubType} />
               <h6>Product Sub Type</h6>
             </CLink>
           </CCol>
-         
+
           <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/product">
               <CIcon className='mob-dashboard-img' src={iProduct} />
@@ -63,17 +64,17 @@ const Dashboard = () => {
             </CLink>
           </CCol>
           <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
-          <CLink to="/customer">
-            <CIcon className='mob-dashboard-img' src={iSupplier} />
-            <h6>Customer</h6>
-          </CLink>
-        </CCol>
+            <CLink to="/customer">
+              <CIcon className='mob-dashboard-img' src={iSupplier} />
+              <h6>Customer</h6>
+            </CLink>
+          </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
-          <CLink to="/opening-stock-entry">
-            <CIcon className='mob-dashboard-img' src={iReceive} />
-            <h6>Opening Stock Entry</h6>
-          </CLink>
-        </CCol>
+            <CLink to="/opening-stock-entry">
+              <CIcon className='mob-dashboard-img' src={iReceive} />
+              <h6>Opening Stock Entry</h6>
+            </CLink>
+          </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/warehouse-receive">
               <CIcon className='mob-dashboard-img' src={iOrder} />
@@ -81,31 +82,42 @@ const Dashboard = () => {
             </CLink>
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
-          <CLink to="/transfer">
-            <CIcon className='mob-dashboard-img' src={iPurchase} />
-            <h6>Transfer</h6>
-          </CLink>
-        </CCol>
-        <CCol xs="2" sm="2" className="text-center oms-icon">
-          <CLink to="/receive">
-            <CIcon className='mob-dashboard-img' src={iStock} />
-            <h6>Receive</h6>
-          </CLink>
-        </CCol>
+            <CLink to="/transfer">
+              <CIcon className='mob-dashboard-img' src={iPurchase} />
+              <h6>Transfer</h6>
+            </CLink>
+          </CCol>
+          <CCol xs="2" sm="2" className="text-center oms-icon">
+            <CLink to="/receive">
+              <CIcon className='mob-dashboard-img' src={iStock} />
+              <h6>Receive</h6>
+            </CLink>
+          </CCol>
 
-        <CCol xs="2" sm="2" className="text-center oms-icon">
-          <CLink to="/sale">
-            <CIcon className='mob-dashboard-img' src={iSell} />
-            <h6>Sale</h6>
+          <CCol xs="2" sm="2" className="text-center oms-icon">
+            <CLink to="/sale">
+              <CIcon className='mob-dashboard-img' src={iSell} />
+              <h6>Sale</h6>
+            </CLink>
+          </CCol>
+          <CCol xs="2" sm="2" className="text-center oms-icon">
+            <CLink to="/stock-list">
+              <CIcon className='mob-dashboard-img' src={iStockShow} />
+              <h6>Stock</h6>
+            </CLink>
+          </CCol>
+          <CCol xs="2" sm="2" className="text-center oms-icon">
+          <CLink to="/stock-adjustment">
+            <CIcon className='mob-dashboard-img' src={iStockAdjustment} />
+            <h6>Stock Adjustment</h6>
           </CLink>
         </CCol>
-
-        <CCol xs="2" sm="2" className="text-center oms-icon">
-        <CLink to="/customer-dues">
-          <CIcon className='mob-dashboard-img' src={iCustomrDues} />
-          <h6>Customer Dues</h6>
-        </CLink>
-      </CCol>
+          <CCol xs="2" sm="2" className="text-center oms-icon">
+            <CLink to="/customer-dues">
+              <CIcon className='mob-dashboard-img' src={iCustomrDues} />
+              <h6>Due Payment </h6>
+            </CLink>
+          </CCol>
 
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/purchase-report">
