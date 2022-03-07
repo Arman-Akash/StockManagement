@@ -12,7 +12,7 @@ namespace ShopManagement.Repository
 {
 	public interface IReceiveRepository
 	{
-		Task<int> UpdateAsync(Receive receive);
+		Task<int> UpdateAsync(Purchase receive);
 	}
 
 	public class ReceiveRepository : IReceiveRepository
@@ -23,27 +23,27 @@ namespace ShopManagement.Repository
 			_context = context;
 		}
 
-		public Task<int> UpdateAsync(Receive receive)
+		public Task<int> UpdateAsync(Purchase receive)
 		{
-			var existingUnitType = _context.Receives
+			var existingUnitType = _context.Purchases
 				.Where(p => p.Id == receive.Id)
-				.Include(p => p.ReceiveDetails)
+				.Include(p => p.Details)
 				.SingleOrDefault();
 
 			// Update parent
 			_context.Entry(existingUnitType).CurrentValues.SetValues(receive);
 
 			// Delete children
-			foreach (var existingChild in existingUnitType.ReceiveDetails.ToList())
+			foreach (var existingChild in existingUnitType.Details.ToList())
 			{
-				if (!receive.ReceiveDetails.Any(c => c.Id == existingChild.Id))
-					_context.ReceiveDetails.Remove(existingChild);
+				if (!receive.Details.Any(c => c.Id == existingChild.Id))
+					_context.PurchaseDetails.Remove(existingChild);
 			}
 
 			// Update and Insert children
-			foreach (var childModel in receive.ReceiveDetails)
+			foreach (var childModel in receive.Details)
 			{
-				var existingChild = existingUnitType.ReceiveDetails
+				var existingChild = existingUnitType.Details
 					.Where(c => c.Id == childModel.Id && c.Id != default(int))
 					.SingleOrDefault();
 
@@ -53,7 +53,7 @@ namespace ShopManagement.Repository
 				else
 				{
 					// Insert child
-					existingUnitType.ReceiveDetails.Add(childModel);
+					existingUnitType.Details.Add(childModel);
 				}
 			}
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagement.Data;
 
 namespace ShopManagement.Data.Migrations
 {
     [DbContext(typeof(ShopManagementDbContext))]
-    partial class ShopManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220307170400_RenameReceiveToPurchase")]
+    partial class RenameReceiveToPurchase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -403,17 +405,10 @@ namespace ShopManagement.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-<<<<<<< HEAD
-                    b.Property<DateTime?>("BillOfEntryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("BillOfEntryNo")
-=======
                     b.Property<int>("BranchId")
                         .HasColumnType("int");
 
                     b.Property<string>("ChallanNo")
->>>>>>> 1d9692b6dcf6edf6e7d51e69559909e4b543d800
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Comment")
@@ -424,12 +419,6 @@ namespace ShopManagement.Data.Migrations
 
                     b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("LcNumber")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100)
-                        .HasDefaultValue("");
 
                     b.Property<int?>("ModifierId")
                         .HasColumnType("int");
@@ -444,6 +433,9 @@ namespace ShopManagement.Data.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100)
                         .HasDefaultValue("");
+
+                    b.Property<string>("RcvSerNo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");

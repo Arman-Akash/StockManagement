@@ -20,7 +20,7 @@ import EditIcon from '../commonComponents/EditIcon';
 import SADataTable from '../FormLib/saDataTable';
 import SATextArea from '../FormLib/saTextarea';
 
-const WarehouseReceive = (props) => {
+const Purchase = (props) => {
     const [isDelete, toggleDeleteModal] = useState(false);
     const [isAdd, setIsAdd] = useState(true);
 
@@ -61,7 +61,7 @@ const WarehouseReceive = (props) => {
         <>
             <CCard>
                 <CCardBody>
-                    <h5 style={{ marginBottom: "10px" }} className='page-title'>Product Receive</h5>
+                    <h5 style={{ marginBottom: "10px" }} className='page-title'>Product Purchase</h5>
                     <CRow>
                         <CCol md="12">
                             <Formik
@@ -189,7 +189,7 @@ const WarehouseReceive = (props) => {
                                                     <CRow style={{ marginTop: '10px' }}>
                                                         <SADataTable
                                                             md="12"
-                                                            tableName="Product Receive Details:"
+                                                            tableName="Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
                                                             columns={["Product", "Unit", "Quantity", "Rate", "Amount", "MFG. Date", "EXP. Date", "Actions"]}
@@ -408,4 +408,4 @@ const WarehouseReceive = (props) => {
     );
 }
 
-export default WarehouseReceive;
+export default Purchase;

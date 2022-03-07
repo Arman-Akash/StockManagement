@@ -5,8 +5,8 @@ const Customer = React.lazy(() => import('./views/Configuration/Customer'));
 const ProductSubType = React.lazy(() => import('./views/Configuration/ProductSubType'));
 const ProductType = React.lazy(() => import('./views/Configuration/ProductType'));
 const Unit = React.lazy(() => import('./views/Configuration/Unit'));
-const PurchaseReport = React.lazy(() => import('./views/WarehouseReceive/PurchaseReport'));
-const WarehouseReceive = React.lazy(() => import('./views/WarehouseReceive/WarehouseReceive'));
+const PurchaseReport = React.lazy(() => import('./views/Purchase/PurchaseReport'));
+const WarehouseReceive = React.lazy(() => import('./views/Purchase/Purchase'));
 const Sale = React.lazy(() => import('./views/Sale/Sale'));
 const Transfer = React.lazy(() => import('./views/Transfer/Transfer'));
 const Receive = React.lazy(() => import('./views/Transfer/Receive'));
@@ -23,6 +23,7 @@ export const outlet = [
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/sale', name: 'Sale', component: Sale },
   { path: '/transfer', name: 'Transfer', component: Transfer },
+  { path: '/product-purchase', name: 'Product Purchase', component: WarehouseReceive },
   { path: '/receive', name: 'Product Receive', component: Receive },
   { path: '/customer', name: 'Customer', component: Customer },
   { path: '/opening-stock-entry', name: 'Opening Stock Entry', component: OpeningStockEntry },
@@ -33,7 +34,6 @@ export const outlet = [
 
 export const warehouse = [
   ...outlet,
-  { path: '/warehouse-receive', name: 'Warehouse Receive', component: WarehouseReceive },
   
   { path: '/product-type', name: 'Product Type', component: ProductType },
   { path: '/product-sub-type', name: 'Product Sub Type', component: ProductSubType },

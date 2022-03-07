@@ -26,8 +26,8 @@ namespace ShopManagement.Data
         public DbSet<SaleDetail> SaleDetails { get; set; }
 		public DbSet<Transfer> Transfers { get; set; }
 		public DbSet<TransferDetail> TransferDetails  { get; set; }
-		public DbSet<Receive> Receives { get; set; }
-		public DbSet<ReceiveDetail> ReceiveDetails { get; set; }
+		public DbSet<Purchase> Purchases { get; set; }
+		public DbSet<PurchaseDetail> PurchaseDetails { get; set; }
 
 		#endregion
 
@@ -215,7 +215,7 @@ namespace ShopManagement.Data
 
 			#region ProductReceive
 
-			builder.Entity<Receive>(entity =>
+			builder.Entity<Purchase>(entity =>
             {
 				entity.Property(e => e.RcvDate)
 					.HasDefaultValueSql("getdate()");
@@ -233,10 +233,10 @@ namespace ShopManagement.Data
 					.HasMaxLength(100);
 			});
 
-            builder.Entity<ReceiveDetail>(entity =>
+            builder.Entity<PurchaseDetail>(entity =>
             {
                 entity.HasOne(e => e.Receive)
-                    .WithMany(e => e.ReceiveDetails)
+                    .WithMany(e => e.Details)
                     .HasForeignKey(e => e.ReceiveId)
                     .OnDelete(DeleteBehavior.Cascade);
 

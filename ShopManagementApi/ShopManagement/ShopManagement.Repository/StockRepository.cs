@@ -15,7 +15,7 @@ namespace ShopManagement.Repository
         Task<List<OpeningStockVM>> GetOpeningStock(int subTypeId, int branchId);
     }
 
-    public class StockRepository: IStockRepository
+    public class StockRepository : IStockRepository
     {
         private readonly ShopManagementDbContext _context;
 
@@ -37,14 +37,14 @@ namespace ShopManagement.Repository
                 })
                 .ToListAsync();
 
-            foreach(var product in productList)
+            foreach (var product in productList)
             {
                 var os = _context.OpeningStocks
                     .Where(e => e.ProductId == product.ProductId
                         && e.BranchId == branchId)
                     .FirstOrDefault();
 
-                if(os != null)
+                if (os != null)
                 {
                     product.Quantity = os.Quantity;
                     product.Id = os.Id;
@@ -58,19 +58,16 @@ namespace ShopManagement.Repository
         {
             decimal stock = 0;
 
-            if(branchId == 1)
-            {
-                stock += await _context.ReceiveDetails
-                    .Where(e => e.ProductId == productId)
-                    .SumAsync(e => e.Quantity);
-            }
+            stock += await _context.PurchaseDetails
+                .Where(e => e.ProductId == productId && e.Receive.BranchId == branchId)
+                .SumAsync(e => e.Quantity);
 
             var os = await _context.OpeningStocks
                 .Where(e => e.BranchId == branchId && e.ProductId == productId)
                 .SumAsync(e => e.Quantity);
 
             var transferRcv = await _context.TransferDetails
-                .Where(e => e.Transfer.TransferedBranchId == branchId 
+                .Where(e => e.Transfer.TransferedBranchId == branchId
                     && e.Transfer.RcvFlg
                     && e.ProductId == productId)
                 .SumAsync(e => e.Quantity);
