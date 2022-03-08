@@ -32,7 +32,7 @@ const Purchase = (props) => {
         rcvFrom: '',
         lcNumber: '',
         comment: '',
-        receiveDetails: []
+        details: []
     }
     let [receiveObj, setReceiveObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
@@ -76,7 +76,7 @@ const Purchase = (props) => {
                                 onSubmit={(values, { resetForm }) => {
                                     values = {
                                         ...values,
-                                        receiveDetails: dataArr
+                                        details: dataArr
                                     }
                                     if (dataArr.length <= 0) {
                                         alert("Please Enter Product, Unit and Quantity....!")
@@ -366,7 +366,7 @@ const Purchase = (props) => {
                                                     setUnitname(unitName);
                                                     // axios.fetchGetData(`api/Product/${item.unitName}`, unitName, setUnitname);
                                                     setIsAdd(false);
-                                                    onSetDataArray(item.receiveDetails);
+                                                    onSetDataArray(item.details);
                                                 }}
                                             />
                                             <DeleteIcon

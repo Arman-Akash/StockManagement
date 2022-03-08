@@ -3,31 +3,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShopManagement.Data.Migrations
 {
-    public partial class ReceiveFieldChange : Migration
+    public partial class PurchaseTableChanged : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
                 name: "ChallanNo",
-                table: "Receives");
+                table: "Purchases");
 
             migrationBuilder.DropColumn(
                 name: "RcvSerNo",
-                table: "Receives");
+                table: "Purchases");
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "BillOfEntryDate",
-                table: "Receives",
+                table: "Purchases",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "BillOfEntryNo",
-                table: "Receives",
+                table: "Purchases",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "LcNumber",
-                table: "Receives",
+                table: "Purchases",
                 maxLength: 100,
                 nullable: true,
                 defaultValue: "");
@@ -37,25 +37,25 @@ namespace ShopManagement.Data.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "BillOfEntryDate",
-                table: "Receives");
+                table: "Purchases");
 
             migrationBuilder.DropColumn(
                 name: "BillOfEntryNo",
-                table: "Receives");
+                table: "Purchases");
 
             migrationBuilder.DropColumn(
                 name: "LcNumber",
-                table: "Receives");
+                table: "Purchases");
 
             migrationBuilder.AddColumn<string>(
                 name: "ChallanNo",
-                table: "Receives",
+                table: "Purchases",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "RcvSerNo",
-                table: "Receives",
+                table: "Purchases",
                 type: "nvarchar(max)",
                 nullable: true);
         }

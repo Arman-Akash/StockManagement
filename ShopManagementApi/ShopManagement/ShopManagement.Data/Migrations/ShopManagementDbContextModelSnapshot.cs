@@ -403,18 +403,14 @@ namespace ShopManagement.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-<<<<<<< HEAD
                     b.Property<DateTime?>("BillOfEntryDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("BillOfEntryNo")
-=======
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("BranchId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ChallanNo")
->>>>>>> 1d9692b6dcf6edf6e7d51e69559909e4b543d800
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Comment")
                         .ValueGeneratedOnAdd()

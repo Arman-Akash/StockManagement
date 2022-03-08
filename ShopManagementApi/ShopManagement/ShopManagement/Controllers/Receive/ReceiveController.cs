@@ -175,6 +175,7 @@ namespace ShopManagement.WebApi.Controllers
             }
             try
             {
+                receive.BranchId = User.GetBranchId();
                 await _receiveRepository.UpdateAsync(receive);
                 result.Data = receive;
                 result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;

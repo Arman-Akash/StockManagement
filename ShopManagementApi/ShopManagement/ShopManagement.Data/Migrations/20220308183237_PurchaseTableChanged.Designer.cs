@@ -10,8 +10,8 @@ using ShopManagement.Data;
 namespace ShopManagement.Data.Migrations
 {
     [DbContext(typeof(ShopManagementDbContext))]
-    [Migration("20220307184640_ReceiveFieldChange")]
-    partial class ReceiveFieldChange
+    [Migration("20220308183237_PurchaseTableChanged")]
+    partial class PurchaseTableChanged
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -398,7 +398,7 @@ namespace ShopManagement.Data.Migrations
                     b.ToTable("ProductSubTypes");
                 });
 
-            modelBuilder.Entity("ShopManagement.Entity.Models.Receive", b =>
+            modelBuilder.Entity("ShopManagement.Entity.Models.Purchase", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -410,6 +410,9 @@ namespace ShopManagement.Data.Migrations
 
                     b.Property<string>("BillOfEntryNo")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Comment")
                         .ValueGeneratedOnAdd()
@@ -445,12 +448,14 @@ namespace ShopManagement.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BranchId");
+
                     b.HasIndex("ModifierId");
 
-                    b.ToTable("Receives");
+                    b.ToTable("Purchases");
                 });
 
-            modelBuilder.Entity("ShopManagement.Entity.Models.ReceiveDetail", b =>
+            modelBuilder.Entity("ShopManagement.Entity.Models.PurchaseDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -499,7 +504,7 @@ namespace ShopManagement.Data.Migrations
 
                     b.HasIndex("ReceiveId");
 
-                    b.ToTable("ReceiveDetails");
+                    b.ToTable("PurchaseDetails");
                 });
 
             modelBuilder.Entity("ShopManagement.Entity.Models.Role", b =>
@@ -957,15 +962,21 @@ namespace ShopManagement.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("ShopManagement.Entity.Models.Receive", b =>
+            modelBuilder.Entity("ShopManagement.Entity.Models.Purchase", b =>
                 {
+                    b.HasOne("ShopManagement.Entity.Models.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ShopManagement.Entity.Models.User", "ModifiedBy")
                         .WithMany()
                         .HasForeignKey("ModifierId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("ShopManagement.Entity.Models.ReceiveDetail", b =>
+            modelBuilder.Entity("ShopManagement.Entity.Models.PurchaseDetail", b =>
                 {
                     b.HasOne("ShopManagement.Entity.Models.User", "ModifiedBy")
                         .WithMany()
@@ -978,8 +989,8 @@ namespace ShopManagement.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ShopManagement.Entity.Models.Receive", "Receive")
-                        .WithMany("ReceiveDetails")
+                    b.HasOne("ShopManagement.Entity.Models.Purchase", "Receive")
+                        .WithMany("Details")
                         .HasForeignKey("ReceiveId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
