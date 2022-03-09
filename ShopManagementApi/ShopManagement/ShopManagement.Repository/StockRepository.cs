@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using ShopManagement.Data;
 using ShopManagement.Entity.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +14,7 @@ namespace ShopManagement.Repository
     public interface IStockRepository
     {
         public Task<decimal> GetStock(int productId, int branchId);
+        public Task<List<OpeningStockVM>> GetAllStock(int branchId);
         Task<List<OpeningStockVM>> GetOpeningStock(int subTypeId, int branchId);
     }
 
@@ -22,6 +25,25 @@ namespace ShopManagement.Repository
         public StockRepository(ShopManagementDbContext _context)
         {
             this._context = _context;
+        }
+
+        public async Task<List<OpeningStockVM>> GetAllStock(int branchId)
+        {
+            var products = await _context.Products
+                .Select(e => new OpeningStockVM
+                {
+                    Id = e.Id,
+                    ProductName = e.ProductName,
+                    UnitName = e.Unit.Name
+                })
+                .ToListAsync();
+
+            foreach(var product in products)
+            {
+                product.Quantity = await GetStock(product.Id, branchId);
+            }
+
+            return products;
         }
 
         public async Task<List<OpeningStockVM>> GetOpeningStock(int subTypeId, int branchId)

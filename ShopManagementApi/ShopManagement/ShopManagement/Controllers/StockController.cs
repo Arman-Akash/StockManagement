@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using ShopManagement.Entity.ViewModels;
 using ShopManagement.Repository;
 using ShopManagement.Utility;
 using ShopManagement.Utility.StaticData;
@@ -42,6 +44,14 @@ namespace ShopManagement.Web.Controllers
 
                 return result;
             }
+            return result;
+        }
+
+        [HttpGet("GetStockByBranch/{branchId}")]
+        public async Task<ListResult<OpeningStockVM>> GetStockByBranch(int branchId)
+        {
+            var result = new ListResult<OpeningStockVM>();
+            result.Data = await _repository.GetAllStock(branchId);
             return result;
         }
     }

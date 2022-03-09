@@ -19,22 +19,18 @@ import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
 import { Form, Formik } from "formik";
 import { initialCollections } from '../../functionalLib/initialState';
-import { apiHostName } from '../../config';
 
 const StockShow = () => {
     var fields = [
-        { key: "productName", label: "Product" }, 'stock',
-        { key: "unitName", label: 'Unit' }]
+        { key: "productName", label: "Product" }, 
+        { key: 'quantity', label: 'stock' },
+        { key: "unitName", label: 'Unit' }
+    ]
 
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
-    let stockList = dataApi.useDataApi(`api/GetStock`, initialState.initialCollections);
 
     const [stocks, setStocks] = useState([]);
 
-    useEffect(() => {
-        setStocks(stockList.data.data);
-        console.log(stockList.data.data);
-    }, [stockList])
 
     return (
         <CCard>
@@ -55,9 +51,6 @@ const StockShow = () => {
                                     return (
                                         <Form>
                                             <CRow>
-                                                <CCol md="2">
-                                                    <CLabel className='pl-3'>Branch Name:</CLabel>
-                                                </CCol>
                                                 <CCol md="4">
                                                     <SAReactAutoSelect
                                                         name="branchId"
@@ -70,33 +63,14 @@ const StockShow = () => {
                                                         options={branches.data.data.map(item => {
                                                             return { label: item.name, value: item.id }
                                                         })}
-                                                    // onChangeHandle={(name, value) => {
-                                                    //     axios.fetchGetData(`api/ProductSubType/GetByProductType/${value}`, undefined, undefined, (response) => {
-                                                    //         console.log(response.data)
-                                                    //         // formProps.setFieldValue('productSubType', value);
-                                                    //         setProductSubTypes(response.data);
-                                                    //     })
-                                                    // }}
+                                                    onChangeHandle={(name, value) => {
+                                                        axios.fetchGetData(`api/stock/GetStockByBranch/${value}`, undefined, undefined, (response) => {
+                                                            console.log(response.data)
+                                                            // formProps.setFieldValue('productSubType', value);
+                                                            setStocks(response.data);
+                                                        })
+                                                    }}
                                                     />
-                                                </CCol>
-                                                <CCol md="2" style={{ textAlign: 'right' }}>
-                                                    <CButton
-                                                        type="button"
-                                                        color="info"
-                                                        size="sm"
-                                                        style={{
-                                                            // float: 'right'
-                                                            marginRight: '25px'
-                                                        }}
-                                                        onClick={() => {
-                                                            axios.fetchReportData(`api/Purchase/Search`, formProps.values, undefined, (response) => {
-                                                                setStocks({
-                                                                    ...initialCollections,
-                                                                    data: axios.filterNull(response.data)
-                                                                });
-                                                            });
-                                                        }}
-                                                    ><FontAwesomeIcon icon={faList} /> Show</CButton>
                                                 </CCol>
                                             </CRow>
                                         </Form>
