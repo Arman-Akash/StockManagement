@@ -12,7 +12,7 @@ namespace ShopManagement.Data
 		#region Configuration
 		public DbSet<Branch> Branches { get; set; }
 		public DbSet<Customer> Customers { get; set; }
-		public DbSet<PaymentReceive> CustomerDues { get; set; }
+		public DbSet<PaymentReceive> PaymentReceives { get; set; }
 		public DbSet<Unit> Units { get; set; }
 		public DbSet<ProductSubType> ProductTypes { get; set; }
 		public DbSet<OpeningStock> OpeningStocks { get; set; }
@@ -117,6 +117,9 @@ namespace ShopManagement.Data
 
 			builder.Entity<Customer>(entity =>
 			{
+				entity.HasOne(e => e.Branch)
+					.WithMany()
+					.HasForeignKey(e => e.BranchId);
 
 				entity.Property(e => e.Name)
 					.HasDefaultValue(string.Empty)

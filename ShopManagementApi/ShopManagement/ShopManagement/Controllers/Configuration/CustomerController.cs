@@ -30,9 +30,13 @@ namespace ShopManagement.WebApi.Controllers
         [HttpGet]
         public async Task<ListResult<Customer>> Get()
         {
+            var loggedInBranch = User.GetBranchId();
+
             var result = new ListResult<Customer>()
             {
-                Data = await _repository.GetAsync()
+                Data = await _repository.Get()
+                .Where(e => e.BranchId == loggedInBranch)
+                .ToListAsync()
             };
 
             return result;
@@ -68,6 +72,7 @@ namespace ShopManagement.WebApi.Controllers
 
             try
             {
+                customer.BranchId = User.GetBranchId();
                 await _repository.InsertAsync(customer);
                 result.Data = customer;
                 result.Message = ResponseMessage.SUCCESSFULLY_CREATED;
