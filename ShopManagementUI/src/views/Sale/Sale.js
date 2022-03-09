@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     CRow, CCardBody,
     CCol, CButton, CDataTable, CCard, CLink,CTooltip
 } from '@coreui/react';
 import SAInput from '../FormLib/saInput';
 import SADatePicker from '../FormLib/saDatePicker';
-import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
+import SAReactCreatableAutoSelect from '../FormLib/SAReactCreatableAutoSelect';
 
 //Formik & Yup lib
 import { Form, Formik } from "formik";
@@ -49,8 +49,11 @@ const Sale = (props) => {
 
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let sales = dataApi.useDataApi(`api/Sale`, initialState.initialCollections);
-    let customers = dataApi.useDataApi(`api/Customer`, initialState.initialCollections);
+    const [customer, setCustomer] = useState(initialState.initialCollections);
     let challanNo = dataApi.useDataApi(`api/Sale/ChallanNo`, initialState.initialCollections);
+    useEffect(() => {
+        axios.fetchGetData('api/Customer', customer, setCustomer);
+    }, []);
     return (
         <>
             <CCard>
@@ -134,19 +137,27 @@ const Sale = (props) => {
                                                         </CCol>
 
                                                         <CCol md='4'>
-                                                            <SAReactAutoSelect
-                                                                name="customerId"
-                                                                label="Customer"
-                                                                isInline="true"
-                                                                lSize="4"
-                                                                rSize="8"
-                                                                labelClassName="float-right"
-                                                                formProps={formProps}
-                                                                nullValue={true}
-                                                                options={customers.data.data.map(item => {
-                                                                    return { label: item.name, value: item.id }
-                                                                })}
-                                                            />
+                                                        <SAReactCreatableAutoSelect
+                                                        name="customerId"
+                                                        label="Customer"
+                                                        isInline="true"
+                                                        lSize="4"
+                                                        rSize="8"
+                                                        labelClassName="float-right"
+                                                        formProps={formProps}
+                                                        onHandleCreate={(inputValue, isLoading, setIsLoading) => {
+                                                            axios.fetchPostData('api/Customer', {
+                                                                name: inputValue
+                                                            }, (obj) => {
+                                                                formProps.setFieldValue('name', obj.data.name);
+                                                                setIsLoading(false);
+                                                                axios.fetchGetData('api/Customer', customer, setCustomer);
+                                                            });
+                                                        }}
+                                                        options={customer.data.map(item => {
+                                                            return { label: item.name, value: item.id }
+                                                        })}
+                                                    />
                                                         </CCol>
                                                     </CRow>
 
