@@ -22,8 +22,10 @@ import iUnit from '../../assets/images/unit.png';
 import iOrder from '../../assets/images/order.png';
 import iBusinessUnit from '../../assets/images/businessunit.png';
 import iCustomrDues from '../../assets/images/credit.png';
-import iReceive from '../../assets/images/openingstock.png';
+import iReceive from '../../assets/images/received.png';
 import iReport from '../../assets/images/report.png';
+import iExpire from '../../assets/images/expired.png';
+import iReorder from '../../assets/images/reorder.png';
 
 const Dashboard = () => {
 
@@ -40,13 +42,13 @@ const Dashboard = () => {
           </CCol>
           <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/product-type">
-              <CIcon className='mob-dashboard-img' src={iProductType} />
+              <CIcon className='mob-dashboard-img' src={iSubType} />
               <h6>Product Type</h6>
             </CLink>
           </CCol>
           <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/product-sub-type">
-              <CIcon className='mob-dashboard-img' src={iSubType} />
+              <CIcon className='mob-dashboard-img' src={iProductType} />
               <h6>Product Sub Type</h6>
             </CLink>
           </CCol>
@@ -71,13 +73,13 @@ const Dashboard = () => {
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/opening-stock-entry">
-              <CIcon className='mob-dashboard-img' src={iReceive} />
+              <CIcon className='mob-dashboard-img' src={iStock} />
               <h6>Opening Stock Entry</h6>
             </CLink>
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/product-purchase">
-              <CIcon className='mob-dashboard-img' src={iOrder} />
+              <CIcon className='mob-dashboard-img' src={iReceive} />
               <h6>Product Purchase</h6>
             </CLink>
           </CCol>
@@ -89,7 +91,7 @@ const Dashboard = () => {
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/receive">
-              <CIcon className='mob-dashboard-img' src={iStock} />
+              <CIcon className='mob-dashboard-img' src={iOrder} />
               <h6>Receive</h6>
             </CLink>
           </CCol>
@@ -118,6 +120,20 @@ const Dashboard = () => {
               <h6>Due Payment </h6>
             </CLink>
           </CCol>
+
+          <CCol xs="2" sm="2" className="text-center oms-icon">
+          <CLink to="/expiry-alert">
+            <CIcon className='mob-dashboard-img' src={iExpire} />
+            <h6>Product Expiry Aleart</h6>
+          </CLink>
+        </CCol>
+
+        <CCol xs="2" sm="2" className="text-center oms-icon">
+        <CLink to="/reorder-alert">
+          <CIcon className='mob-dashboard-img' src={iReorder} />
+          <h6>Product Re-order Aleart</h6>
+        </CLink>
+      </CCol>
 
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/purchase-report">

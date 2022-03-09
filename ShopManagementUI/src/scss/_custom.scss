@@ -1079,8 +1079,8 @@ a {
 
 .dashboard {
   img{
-    width: 80px !important;
-    height: 80px !important;
+    width: 70px !important;
+    height: 70px !important;
     padding-bottom: 3px;
     transition: 0.5s;
   }
@@ -1098,7 +1098,7 @@ a {
   padding-bottom: 30px !important;
   transition: 0.3s;
   width: 125px;
-  margin-left: 28px;
+  // margin-left: 28px;
   // margin-right: 28px;
   h6{
       color: black;
@@ -1180,6 +1180,20 @@ a {
   width: 52px;
   font-weight: 600;
   font-size: 10px;
+}
+
+.oms-icon {
+  margin-bottom: 12px;
+  padding-bottom: 30px !important;
+  transition: 0.3s;
+  width: 125px;
+  margin-left: 34px;
+}
+
+.add-btn{
+  width: 66px;
+  margin-left: 18px;
+  margin-top: 7px;
 }
 }
 

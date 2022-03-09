@@ -96,7 +96,7 @@ const PurchaseReport = (props) => {
                                             <CButton
                                                 type="button"
                                                 color="success"
-                                                size="md"
+                                                size="sm"
                                                 style={{
                                                     // float: 'right'
                                                     marginRight: '25px'
@@ -113,7 +113,7 @@ const PurchaseReport = (props) => {
                                             <CButton
                                                 type="button"
                                                 color="warning"
-                                                size="md"
+                                                size="sm"
                                                 style={{
                                                     float: 'right',
                                                     color: 'white'

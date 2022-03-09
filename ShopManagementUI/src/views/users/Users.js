@@ -266,7 +266,7 @@ const Users = () => {
 
                 {/* edit Modal */}
                 <CModal
-                    style={{ marginLeft: "100px", marginTop: "100px" }}
+                    style={{ marginLeft: "0px", marginTop: "80px" }}
                     show={isEditUser}
                     onClose={() => toggleEditModal(!isEditUser)}
                     color="primary"
