@@ -22,7 +22,8 @@ import * as initialState from '../../functionalLib/initialState';
 const OpeningStockEntry = () => {
   let dataObj = {
     productId: 0,
-    quantity: 0
+    quantity: 0,
+    amount: 0
   };
   const [productSubTypes, setProductSubTypes] = useState([]);
 
@@ -104,8 +105,8 @@ const OpeningStockEntry = () => {
                           tableName="Opening Stock Details:"
                           style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                           dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                          columns={["Product Name", "Unit Name", "Quantity"]}
-                          fields={["productName", "unitName", "quantity"]}
+                          columns={["Product Name","Quantity", "Unit Name","Amount" ]}
+                          fields={["productName","quantity", "unitName","amount" ]}
                           readOnlyArr={["unitName"]}
                           dataArr={dataArr}
                           dataObj={dataObj}
@@ -124,6 +125,12 @@ const OpeningStockEntry = () => {
                             {
                               thStyle: { width: '15%' },
                               fieldName: 'quantity',
+                              fieldType: 'NUMBER',
+                            }
+                            ,
+                            {
+                              thStyle: { width: '15%' },
+                              fieldName: 'amount',
                               fieldType: 'NUMBER',
                             }
                           ]}

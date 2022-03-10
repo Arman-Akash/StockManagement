@@ -27,8 +27,8 @@ const Purchase = (props) => {
     var data = {
         id: 0,
         billOfEntryNo: '',
-        rcvDate: new Date(),
-        billOfEntryDate: new Date(),
+        rcvDate: '',
+        billOfEntryDate: '',
         rcvFrom: '',
         lcNumber: '',
         comment: '',
@@ -69,7 +69,7 @@ const Purchase = (props) => {
                                 initialValues={receiveObj.data}
                                 validationSchema={
                                     Yup.object({
-                                        lcNumber: Yup.string().required('LC number no is required'),
+                                        // lcNumber: Yup.string().required('LC number no is required'),
 
                                     })
                                 }
@@ -115,7 +115,7 @@ const Purchase = (props) => {
                                                                 type="text"
                                                                 label="LC Number"
                                                                 isInline="true"
-                                                                isRequired="true"
+                                                                // isRequired="true"
                                                                 lSize="4"
                                                                 rSize="8"
                                                                 labelClassName="float-right"
