@@ -92,7 +92,7 @@ const Dashboard = () => {
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/receive">
               <CIcon className='mob-dashboard-img' src={iOrder} />
-              <h6>Receive</h6>
+              <h6>Transfer Receive</h6>
             </CLink>
           </CCol>
 

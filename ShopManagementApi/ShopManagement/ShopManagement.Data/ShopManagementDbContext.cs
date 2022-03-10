@@ -359,6 +359,9 @@ namespace ShopManagement.Data
 
 				entity.Property(e => e.Quantity)
 					.HasColumnType("decimal(15, 2)");
+
+				entity.Property(e => e.Amount)
+					.HasColumnType("decimal(15, 2)");
 			});
 
 			#endregion

@@ -47,6 +47,7 @@ namespace ShopManagement.Repository
                 if (os != null)
                 {
                     product.Quantity = os.Quantity;
+                    product.Amount = os.Amount;
                     product.Id = os.Id;
                 }
             }
