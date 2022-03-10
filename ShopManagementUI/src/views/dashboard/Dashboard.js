@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   CCard,
   CCardBody,
@@ -26,9 +26,34 @@ import iReceive from '../../assets/images/received.png';
 import iReport from '../../assets/images/report.png';
 import iExpire from '../../assets/images/expired.png';
 import iReorder from '../../assets/images/reorder.png';
+import routes, { outlet, warehouse } from '../../routes';
+import { loadState } from '../../axios/storage';
+import { LOGGED_IN_USER } from '../../axios/keys';
+import { Roles } from '../../staticData';
 
 const Dashboard = () => {
-
+  useEffect(() => {
+    var icons = document.getElementsByClassName("oms-icon");
+    var user = loadState(LOGGED_IN_USER);
+    for(var i = 0; i< icons.length; i++) {
+      if(user?.permissions == Roles.Admin) {
+        if(!routes.some(e => e.path.includes(icons[i].firstChild.href.split('#')[1]))) {
+          icons[i].style.display = 'none';
+        }
+      }
+      else if(user?.permissions == Roles.Warehouse) {
+        if(!warehouse.some(e => e.path.includes(icons[i].firstChild.href.split('#')[1]))) {
+          icons[i].style.display = 'none';
+        }
+      }
+      else if(user?.permissions == Roles.Outlet) {
+        if(!outlet.some(e => e.path.includes(icons[i].firstChild.href.split('#')[1]))) {
+          icons[i].style.display = 'none';
+        }
+      }
+    }
+  }, [])
+  
   return (
     // <CCard style={{ backgroundImage: `url(${iBgImage})`, backgroundRepeat: "no-repeat", backgroundSize: "100% 100%", overflow: "hidden" }}>
     <CCard>
