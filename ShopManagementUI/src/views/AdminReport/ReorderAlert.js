@@ -19,11 +19,12 @@ import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
 import { Form, Formik } from "formik";
 
-const StockShow = () => {
+const ReorderAlert = () => {
     var fields = [
-        { key: "productName", label: "Product" }, 
-        { key: 'quantity', label: 'stock' },
-        { key: "unitName", label: 'Unit' }
+        { key: "productName", label: "Product" },
+        { key: 'quantity', label: 'Stock', _style: { width: '15%' } },
+        { key: "unitName", label: 'Unit', _style: { width: '15%' } },
+        { label: "Re-order Label", key: 'reorderLabel', _style: { width: '20%' } }
     ]
 
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
@@ -62,13 +63,13 @@ const StockShow = () => {
                                                         options={branches.data.data.map(item => {
                                                             return { label: item.name, value: item.id }
                                                         })}
-                                                    onChangeHandle={(name, value) => {
-                                                        axios.fetchGetData(`api/stock/GetStockByBranch/${value}`, undefined, undefined, (response) => {
-                                                            console.log(response.data)
-                                                            // formProps.setFieldValue('productSubType', value);
-                                                            setStocks(response.data);
-                                                        })
-                                                    }}
+                                                        onChangeHandle={(name, value) => {
+                                                            axios.fetchGetData(`api/stock/GetStockByBranch/${value}`, undefined, undefined, (response) => {
+                                                                console.log(response.data)
+                                                                // formProps.setFieldValue('productSubType', value);
+                                                                setStocks(response.data);
+                                                            })
+                                                        }}
                                                     />
                                                 </CCol>
                                             </CRow>
@@ -98,4 +99,4 @@ const StockShow = () => {
     )
 }
 
-export default StockShow
+export default ReorderAlert

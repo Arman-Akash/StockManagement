@@ -18,11 +18,12 @@ namespace ShopManagement.Data
 		public DbSet<OpeningStock> OpeningStocks { get; set; }
 		public DbSet<ProductType> ProductSubTypes { get; set; }
 		public DbSet<Product> Products { get; set; }
-        #endregion
+		public DbSet<DamageDeclare> DamageDeclares { get; set; }
+		#endregion
 
-        #region Receive
+		#region Receive
 
-        public DbSet<Sale> Sales { get; set; }
+		public DbSet<Sale> Sales { get; set; }
         public DbSet<SaleDetail> SaleDetails { get; set; }
 		public DbSet<Transfer> Transfers { get; set; }
 		public DbSet<TransferDetail> TransferDetails  { get; set; }
@@ -154,6 +155,24 @@ namespace ShopManagement.Data
 				entity.HasOne(e => e.ProductType)
 					.WithMany()
 					.HasForeignKey(e => e.ProductTypeId);
+			});
+
+			builder.Entity<DamageDeclare>(entity =>
+			{
+
+				entity.HasOne(e => e.Branch)
+					.WithMany()
+					.HasForeignKey(e => e.BranchId);
+
+				entity.HasOne(e => e.Product)
+					.WithMany()
+					.HasForeignKey(e => e.ProductId);
+
+				entity.Property(e => e.Quantity)
+					.HasColumnType("decimal(15, 2)");
+
+				entity.Property(e => e.Date)
+					.HasDefaultValueSql("getdate()");
 			});
 
 			builder.Entity<Product>(entity =>

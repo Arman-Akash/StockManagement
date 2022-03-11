@@ -147,9 +147,9 @@ const Dashboard = () => {
           </CCol>
 
           <CCol xs="2" sm="2" className="text-center oms-icon">
-          <CLink to="/expiry-alert">
+          <CLink to="/damage-declare">
             <CIcon className='mob-dashboard-img' src={iExpire} />
-            <h6>Product Expiry Aleart</h6>
+            <h6>Damage Declare</h6>
           </CLink>
         </CCol>
 
