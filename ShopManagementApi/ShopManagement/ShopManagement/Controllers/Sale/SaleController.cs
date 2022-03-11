@@ -67,31 +67,31 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
-        [HttpGet("ChallanNo")]
-        public async Task<Result<string>> OrderNo()
-        {
-            var clnNo = "";
-            var lastRef = await _repository.Get()
-                .Where(e => e.SaleDate.Year == DateTime.Now.Year)
-                .OrderByDescending(e => e.Id)
-                .Select(e => e.ChallanNo)
-                .FirstOrDefaultAsync();
+        //[HttpGet("ChallanNo")]
+        //public async Task<Result<string>> OrderNo()
+        //{
+        //    var clnNo = "";
+        //    var lastRef = await _repository.Get()
+        //        .Where(e => e.SaleDate.Year == DateTime.Now.Year)
+        //        .OrderByDescending(e => e.Id)
+        //        .Select(e => e.ChallanNo)
+        //        .FirstOrDefaultAsync();
 
-            if (lastRef == null)
-            {
-                clnNo = "CLN/" + "0001/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
-            }
-            else
-            {
-                var num = lastRef.Split('/')[1];
-                clnNo = "CLN/" + (Convert.ToInt32(num) + 1).ToString().PadLeft(4, '0') + "/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
-            }
+        //    if (lastRef == null)
+        //    {
+        //        clnNo = "CLN/" + "0001/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
+        //    }
+        //    else
+        //    {
+        //        var num = lastRef.Split('/')[1];
+        //        clnNo = "CLN/" + (Convert.ToInt32(num) + 1).ToString().PadLeft(4, '0') + "/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
+        //    }
 
-            return new Result<string>
-            {
-                Data = clnNo
-            };
-        }
+        //    return new Result<string>
+        //    {
+        //        Data = clnNo
+        //    };
+        //}
 
         //[HttpGet("ReceiptNo")]
         //public async Task<Result<string>> ReceiptNo()

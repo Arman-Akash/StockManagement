@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
     CRow, CCardBody,
-    CCol, CButton, CDataTable, CCard, CLink,CTooltip
+    CCol, CButton, CDataTable, CCard, CLink, CTooltip
 } from '@coreui/react';
 import SAInput from '../FormLib/saInput';
 import SADatePicker from '../FormLib/saDatePicker';
@@ -12,7 +12,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowAltCircleLeft, faSave, faTrash, faTimes,faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleLeft, faSave, faTrash, faTimes, faPrint } from '@fortawesome/free-solid-svg-icons';
 import * as axios from '../../axios/axiosLib';
 import * as initialState from '../../functionalLib/initialState';
 import * as dataApi from '../../customHooks/UseDataApi';
@@ -28,14 +28,21 @@ const Sale = (props) => {
 
     var data = {
         id: 0,
+        billNo: '',
         saleDate: new Date(),
         customerId: null,
-        challanNo: '',
+        orderNo: '',
+        amount: '',
+        transactionType: '',
         saleDetails: []
     }
     let [saleObj, setSaleObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
-    const fields = ['saleDate', 'challanNo', 'customerName','print', 'actions'];
+    const fields = [
+        { key: 'saleDate', label: 'Date' },
+        { key: 'billNo', label: 'Bill No' },
+        { key: 'customerName', label: 'Name' },
+        'print', 'actions'];
 
     let dataObj = {
         productId: 0,
@@ -50,7 +57,6 @@ const Sale = (props) => {
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let sales = dataApi.useDataApi(`api/Sale`, initialState.initialCollections);
     const [customer, setCustomer] = useState(initialState.initialCollections);
-    let challanNo = dataApi.useDataApi(`api/Sale/ChallanNo`, initialState.initialCollections);
     useEffect(() => {
         axios.fetchGetData('api/Customer', customer, setCustomer);
     }, []);
@@ -66,30 +72,27 @@ const Sale = (props) => {
                                 initialValues={saleObj.data}
                                 validationSchema={
                                     Yup.object({
-
+                                        billNo: Yup.string().required('Bill is required'),
+                                        amount: Yup.string().required('Amount is required'),
                                     })
                                 }
                                 onSubmit={(values, { resetForm }) => {
                                     values = {
                                         ...values,
-                                        challanNo: challanNo.data.data,
                                         saleDetails: dataArr,
                                     }
                                     if (dataArr.length <= 0) {
                                         alert("Please Enter Product, Quantity and Rate....!")
                                     }
                                     else {
-                                        values.challanNo = challanNo.data.data;
                                         if (isAdd) {
                                             axios.fetchPostData('api/Sale', values, () => {
                                                 sales.refresh();
-                                                challanNo.refresh();
                                             });
                                             onSetDataArray([]);
                                         } else {
                                             axios.fetchPutData(`api/Sale/${values.id}`, values, () => {
                                                 sales.refresh();
-                                                challanNo.refresh();
                                             })
                                             onSetDataArray([]);
                                         }
@@ -107,9 +110,22 @@ const Sale = (props) => {
                                                 <div id="accordion" style={{ padding: "0px" }}>
                                                     <CRow>
                                                         <CCol md="4">
+                                                            <SAInput
+                                                                id="billNo"
+                                                                name="billNo"
+                                                                type="text"
+                                                                label="Bill No."
+                                                                isInline="true"
+                                                                isRequired="true"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                labelClassName="float-right"
+                                                            />
+                                                        </CCol>
+                                                        <CCol md="4">
                                                             <SADatePicker
                                                                 name="saleDate"
-                                                                label="Sale Date"
+                                                                label="Date"
                                                                 labelClassName="float-right"
                                                                 isInline="true"
                                                                 isRequired="true"
@@ -120,45 +136,57 @@ const Sale = (props) => {
                                                                 placeholderText="dd/MM/yyyy"
                                                             />
                                                         </CCol>
-                                                        <CCol md="4">
-                                                            <SAInput
-                                                                id="challanNo"
-                                                                name="challanNo"
-                                                                type="text"
-                                                                label="Challan No."
+
+                                                        <CCol md='4'>
+                                                            <SAReactCreatableAutoSelect
+                                                                name="customerId"
+                                                                label="Name"
                                                                 isInline="true"
-                                                                isRequired="true"
                                                                 lSize="4"
                                                                 rSize="8"
                                                                 labelClassName="float-right"
-                                                                readOnly={true}
-                                                                value={challanNo.data.data}
+                                                                formProps={formProps}
+                                                                onHandleCreate={(inputValue, isLoading, setIsLoading) => {
+                                                                    axios.fetchPostData('api/Customer', {
+                                                                        name: inputValue
+                                                                    }, (obj) => {
+                                                                        formProps.setFieldValue('name', obj.data.name);
+                                                                        setIsLoading(false);
+                                                                        axios.fetchGetData('api/Customer', customer, setCustomer);
+                                                                    });
+                                                                }}
+                                                                options={customer.data.map(item => {
+                                                                    return { label: item.name, value: item.id }
+                                                                })}
                                                             />
                                                         </CCol>
 
-                                                        <CCol md='4'>
-                                                        <SAReactCreatableAutoSelect
-                                                        name="customerId"
-                                                        label="Customer"
-                                                        isInline="true"
-                                                        lSize="4"
-                                                        rSize="8"
-                                                        labelClassName="float-right"
-                                                        formProps={formProps}
-                                                        onHandleCreate={(inputValue, isLoading, setIsLoading) => {
-                                                            axios.fetchPostData('api/Customer', {
-                                                                name: inputValue
-                                                            }, (obj) => {
-                                                                formProps.setFieldValue('name', obj.data.name);
-                                                                setIsLoading(false);
-                                                                axios.fetchGetData('api/Customer', customer, setCustomer);
-                                                            });
-                                                        }}
-                                                        options={customer.data.map(item => {
-                                                            return { label: item.name, value: item.id }
-                                                        })}
-                                                    />
-                                                        </CCol>
+                                                        <CCol md="4">
+                                                        <SAInput
+                                                            id="orderNo"
+                                                            name="orderNo"
+                                                            type="text"
+                                                            label="Order No"
+                                                            isInline="true"
+                                                            lSize="4"
+                                                            rSize="8"
+                                                            labelClassName="float-right"
+                                                        />
+                                                    </CCol>
+
+                                                        <CCol md="4">
+                                                        <SAInput
+                                                            id="amount"
+                                                            name="amount"
+                                                            type="text"
+                                                            label="Amount"
+                                                            isInline="true"
+                                                            isRequired="true"
+                                                            lSize="4"
+                                                            rSize="8"
+                                                            labelClassName="float-right"
+                                                        />
+                                                    </CCol>
                                                     </CRow>
 
                                                     <CRow style={{ marginTop: '10px' }}>
@@ -167,9 +195,9 @@ const Sale = (props) => {
                                                             tableName="Product Sale Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                                                            columns={["Product", "Unit","Stock", "Sale Quantity", "Rate", "Amount", "Actions"]}
-                                                            fields={["productId", "unitName","stock", "quantity", "rate", "amount"]}
-                                                            readOnlyArr={["unitName","stock", "amount"]}
+                                                            columns={["Product", "Unit", "Stock", "Sale Quantity", "Rate", "Amount", "Actions"]}
+                                                            fields={["productId", "unitName", "stock", "quantity", "rate", "amount"]}
+                                                            readOnlyArr={["unitName", "stock", "amount"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
                                                             onSetDataArray={onSetDataArray}
@@ -332,10 +360,8 @@ const Sale = (props) => {
                                                             customerId: item.customerId
                                                         }
                                                     });
-                                                    challanNo.setData({ data: item.challanNo });
                                                     setUnitname(unitName);
                                                     console.log(item);
-                                                    // axios.fetchGetData(`api/Supplier/${item.supplier.address}`, address, setAddress);
                                                     setIsAdd(false);
                                                     onSetDataArray(item.saleDetails);
                                                 }}
@@ -353,15 +379,15 @@ const Sale = (props) => {
                                             />
                                         </td>
                                     ),
-                                    'print': (item) => (
-                                        <td>
-                                            <CTooltip content="Sale Print">
-                                                <CLink href={`${apiHostName}/api/Report/SaleReport/${item.id}`} target="_blank">
-                                                    <FontAwesomeIcon icon={faPrint} />
-                                                </CLink>
-                                            </CTooltip>
-                                        </td>
-                                    )
+                                'print': (item) => (
+                                    <td>
+                                        <CTooltip content="Sale Print">
+                                            <CLink href={`${apiHostName}/api/Report/SaleReport/${item.id}`} target="_blank">
+                                                <FontAwesomeIcon icon={faPrint} />
+                                            </CLink>
+                                        </CTooltip>
+                                    </td>
+                                )
                             }}
                         />
                     </CRow>

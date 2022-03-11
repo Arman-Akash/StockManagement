@@ -320,6 +320,18 @@ namespace ShopManagement.Data
 				entity.HasOne(e => e.Customer)
 					.WithMany()
 					.HasForeignKey(e => e.CustomerId);
+
+				entity.Property(e => e.Amount)
+					.HasColumnType("decimal(15, 2)");
+
+				entity.Property(e => e.TransactionType)
+					.HasMaxLength(100);
+
+				entity.Property(e => e.BillNo)
+					.HasMaxLength(100);
+
+				entity.Property(e => e.OrderNo)
+					.HasMaxLength(100);
 			});
 
             builder.Entity<SaleDetail>(entity =>
