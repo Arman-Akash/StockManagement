@@ -62,7 +62,7 @@ namespace ShopManagement.Repository
 
             foreach (var product in products)
             {
-                product.Quantity = await GetStock(product.Id, branchId);
+                (product.Quantity, product.Amount) = await GetStock(product.Id, branchId);
             }
             return products;
         }
