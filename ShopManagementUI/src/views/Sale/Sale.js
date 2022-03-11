@@ -40,8 +40,10 @@ const Sale = (props) => {
     let [unitName, setUnitname] = useState('');
     const fields = [
         { key: 'saleDate', label: 'Date' },
-        { key: 'billNo', label: 'Bill No' },
+        { key: 'orderNo', label: 'Order No' },
         { key: 'customerName', label: 'Name' },
+        { key: 'billNo', label: 'Bill No' },
+        { key: 'amount', label: 'Amount' },
         'print', 'actions'];
 
     let dataObj = {
@@ -357,7 +359,10 @@ const Sale = (props) => {
                                                         data: {
                                                             id: item.id,
                                                             saleDate: item.saleDate,
-                                                            customerId: item.customerId
+                                                            customerId: item.customerId,
+                                                            billNo: item.billNo,
+                                                            orderNo: item.orderNo,
+                                                            amount: item.amount
                                                         }
                                                     });
                                                     setUnitname(unitName);
