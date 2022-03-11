@@ -241,7 +241,7 @@ const Purchase = (props) => {
                                                                         var quantity = parseFloat(e.target.value);
                                                                         var selectedObj = newArr[indexI];
                                                                         selectedObj['quantity'] = quantity;
-                                                                        selectedObj['rate'] = 1;
+                                                                        // selectedObj['rate'] = 1;
                                                                         var rate = parseFloat(selectedObj['rate']);
                                                                         var amount = parseFloat(quantity * rate);
                                                                         selectedObj['amount'] = amount;

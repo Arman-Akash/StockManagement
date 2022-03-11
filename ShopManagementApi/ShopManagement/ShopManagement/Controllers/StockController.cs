@@ -33,7 +33,8 @@ namespace ShopManagement.Web.Controllers
             var result = new Result<decimal>();
             try
             {
-                result.Data = await _repository.GetStock(productId, User.GetBranchId());
+                var stock = await _repository.GetStock(productId, User.GetBranchId());
+                result.Data = stock.Item1;
             }
             catch (Exception exp)
             {
