@@ -20,16 +20,9 @@ import * as initialState from '../../functionalLib/initialState';
 import { Form, Formik } from "formik";
 
 const StockShow = () => {
-    var fields = [
-        { key: "productName", label: "Product" }, 
-        { key: 'quantity', label: 'stock' },
-        { key: "unitName", label: 'Unit' }
-    ]
-
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
 
     const [stocks, setStocks] = useState([]);
-
 
     return (
         <CCard>
@@ -62,13 +55,13 @@ const StockShow = () => {
                                                         options={branches.data.data.map(item => {
                                                             return { label: item.name, value: item.id }
                                                         })}
-                                                    onChangeHandle={(name, value) => {
-                                                        axios.fetchGetData(`api/stock/GetStockByBranch/${value}`, undefined, undefined, (response) => {
-                                                            console.log(response.data)
-                                                            // formProps.setFieldValue('productSubType', value);
-                                                            setStocks(response.data);
-                                                        })
-                                                    }}
+                                                        onChangeHandle={(name, value) => {
+                                                            axios.fetchGetData(`api/stock/GetStockByBranch/${value}`, undefined, undefined, (response) => {
+                                                                console.log(response.data)
+                                                                // formProps.setFieldValue('productSubType', value);
+                                                                setStocks(response.data);
+                                                            })
+                                                        }}
                                                     />
                                                 </CCol>
                                             </CRow>
@@ -81,7 +74,12 @@ const StockShow = () => {
                 </CRow>
                 <CDataTable
                     items={stocks}
-                    fields={fields}
+                    fields={[
+                        { key: "productName", label: "Product" },
+                        { key: 'quantity', label: 'stock' },
+                        { key: "unitName", label: 'Unit' },
+                        { key: 'amount', _classes: 'text-right' }
+                    ]}
                     tableFilter
                     border
                     striped

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace ShopManagement.Repository
 {
     public interface IStockRepository
     {
-        public Task<decimal> GetStock(int productId, int branchId);
+        public Task<(decimal, decimal)> GetStock(int productId, int branchId);
         public Task<List<OpeningStockVM>> GetAllStock(int branchId);
         Task<List<OpeningStockVM>> GetOpeningStock(int subTypeId, int branchId);
     }
@@ -40,7 +41,7 @@ namespace ShopManagement.Repository
 
             foreach(var product in products)
             {
-                product.Quantity = await GetStock(product.Id, branchId);
+                (product.Quantity, product.Amount) = await GetStock(product.Id, branchId);
             }
 
             return products;
@@ -77,36 +78,68 @@ namespace ShopManagement.Repository
             return productList;
         }
 
-        public async Task<decimal> GetStock(int productId, int branchId)
+        public async Task<(decimal, decimal)> GetStock(int productId, int branchId)
         {
             decimal stock = 0;
+            decimal amount = 0;
 
-            stock += await _context.PurchaseDetails
+            var purchase = await _context.PurchaseDetails
                 .Where(e => e.ProductId == productId && e.Receive.BranchId == branchId)
-                .SumAsync(e => e.Quantity);
+                .GroupBy(x => true)
+                .Select(x => new
+                {
+                    qty = x.Sum(e => e.Quantity),
+                    amount = x.Sum(e => e.Amount)
+                })
+                .FirstOrDefaultAsync();
 
             var os = await _context.OpeningStocks
                 .Where(e => e.BranchId == branchId && e.ProductId == productId)
-                .SumAsync(e => e.Quantity);
+                .GroupBy(x => true)
+                .Select(x => new
+                {
+                    qty = x.Sum(e => e.Quantity),
+                    amount = x.Sum(e => e.Amount)
+                })
+                .FirstOrDefaultAsync();
 
             var transferRcv = await _context.TransferDetails
                 .Where(e => e.Transfer.TransferedBranchId == branchId
                     && e.Transfer.RcvFlg
                     && e.ProductId == productId)
-                .SumAsync(e => e.Quantity);
+                .GroupBy(x => true)
+                .Select(x => new
+                {
+                    qty = x.Sum(e => e.Quantity),
+                    amount = x.Sum(e => e.Amount)
+                })
+                .FirstOrDefaultAsync();
 
             var transfer = await _context.TransferDetails
                 .Where(e => e.Transfer.BranchId == branchId
                 && e.ProductId == productId)
-                .SumAsync(e => e.Quantity);
+                .GroupBy(x => true)
+                .Select(x => new
+                {
+                    qty = x.Sum(e => e.Quantity),
+                    amount = x.Sum(e => e.Amount)
+                })
+                .FirstOrDefaultAsync();
 
             var sold = await _context.SaleDetails
                 .Where(e => e.ProductId == productId && e.Sale.BranchId == branchId)
-                .SumAsync(e => e.Quantity);
+                .GroupBy(x => true)
+                .Select(x => new
+                {
+                    qty = x.Sum(e => e.Quantity),
+                    amount = x.Sum(e => e.Amount)
+                })
+                .FirstOrDefaultAsync();
 
-            stock += os + transferRcv - transfer - sold;
+            stock = purchase.qty + os.qty + transferRcv.qty - transfer.qty - sold.qty;
+            amount = purchase.amount + os.amount + transferRcv.amount - transfer.amount - sold.amount;
 
-            return stock;
+            return (stock, amount);
         }
     }
 }
