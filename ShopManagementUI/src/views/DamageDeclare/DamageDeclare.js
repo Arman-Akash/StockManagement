@@ -214,8 +214,8 @@ const DamageDeclare = (props) => {
                                             ...damageObj,
                                             data: {
                                                 id: item.id,
-                                                branchId: item.branchId,
-                                                productId: item.productId,
+                                                branchId: item.branchId == null ? 0 : item.branchId,
+                                                productId: item.productId == null ? 0 : item.productId,
                                                 date: item.date,
                                                 quantity: item.quantity
                                             }

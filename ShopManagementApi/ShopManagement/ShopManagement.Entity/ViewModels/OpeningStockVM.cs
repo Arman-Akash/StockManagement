@@ -13,5 +13,6 @@ namespace ShopManagement.Entity.ViewModels
         public decimal Quantity { get; set; }
         public decimal Amount { get; set; }
         public string UnitName { get; set; }
+        public decimal? ReorderLabel { get; set; }
     }
 }

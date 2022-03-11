@@ -15,6 +15,7 @@ namespace ShopManagement.Repository
     {
         public Task<decimal> GetStock(int productId, int branchId);
         public Task<List<OpeningStockVM>> GetAllStock(int branchId);
+        public Task<List<OpeningStockVM>> GetAllReorder(int branchId);
         Task<List<OpeningStockVM>> GetOpeningStock(int subTypeId, int branchId);
     }
 
@@ -33,7 +34,7 @@ namespace ShopManagement.Repository
                 .Select(e => new OpeningStockVM
                 {
                     Id = e.Id,
-                    ProductName = e.ProductName,
+                    ProductName = e.ProductCode + " - " + e.ProductName,
                     UnitName = e.Unit.Name
                 })
                 .ToListAsync();
@@ -46,6 +47,25 @@ namespace ShopManagement.Repository
             return products;
         }
 
+        public async Task<List<OpeningStockVM>> GetAllReorder(int branchId)
+        {
+            var products = await _context.Products
+                .Select(e => new OpeningStockVM
+                {
+                    Id = e.Id,
+                    ProductName = e.ProductCode + " " + e.ProductName,
+                    UnitName = e.Unit.Name,
+                    ReorderLabel = e.ReOrderLebel
+                })
+                .ToListAsync();
+
+            foreach (var product in products)
+            {
+                product.Quantity = await GetStock(product.Id, branchId);
+            }
+            return products;
+        }
+
         public async Task<List<OpeningStockVM>> GetOpeningStock(int subTypeId, int branchId)
         {
             var productList = await _context.Products
@@ -53,7 +73,7 @@ namespace ShopManagement.Repository
                 .Select(e => new OpeningStockVM
                 {
                     ProductId = e.Id,
-                    ProductName = e.ProductCode + " - " + e.ProductName,
+                    ProductName = e.ProductCode + " " + e.ProductName,
                     UnitName = e.Unit.Name,
                     BranchId = branchId
                 })
