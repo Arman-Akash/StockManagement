@@ -225,6 +225,9 @@ namespace ShopManagement.WebApi.Controllers
             }
             try
             {
+                transfer.BranchId = User.GetBranchId();
+                transfer.UserId = User.GetUserId();
+                transfer.Status = "Pending";
                 await _transferRepository.UpdateAsync(transfer);
                 result.Data = transfer;
                 result.Message = ResponseMessage.SUCCESSFULLY_UPDATED;
