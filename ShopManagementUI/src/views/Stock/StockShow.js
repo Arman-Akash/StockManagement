@@ -5,24 +5,42 @@ import {
     CCol,
     CRow,
     CDataTable,
-    CLink,
-    CLabel
+    CLink
 } from '@coreui/react';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
 import * as axios from '../../axios/axiosLib';
 //Custom hook and state
 import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
 import { Form, Formik } from "formik";
+import { loadState } from '../../axios/storage';
+import { LOGGED_IN_USER } from '../../axios/keys';
+import { Roles } from '../../staticData';
 
 const StockShow = () => {
+
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
 
     const [stocks, setStocks] = useState([]);
+    const [disable, setDisable] = useState(true);
+
+    var user = loadState(LOGGED_IN_USER);
+
+    useEffect(() => {
+        if (user?.permissions == Roles.Admin) {
+            setDisable(false);
+        }
+        console.log(user);
+        axios.fetchGetData(`api/stock/GetStockByBranch/${user?.branch_id}`, undefined, undefined, (response) => {
+            console.log(response.data)
+            // formProps.setFieldValue('productSubType', value);
+            setStocks(response.data);
+        })
+    }, [])
 
     return (
         <CCard>
@@ -32,6 +50,7 @@ const StockShow = () => {
                         <Formik
                             enableReinitialize
                             initialValues={{
+                                branchId: user?.branch_id
                             }}
 
                             onSubmit={(values, { resetForm }) => {
@@ -55,6 +74,7 @@ const StockShow = () => {
                                                         options={branches.data.data.map(item => {
                                                             return { label: item.name, value: item.id }
                                                         })}
+                                                        isDisabled={disable}
                                                         onChangeHandle={(name, value) => {
                                                             axios.fetchGetData(`api/stock/GetStockByBranch/${value}`, undefined, undefined, (response) => {
                                                                 console.log(response.data)
