@@ -18,6 +18,7 @@ namespace ShopManagement.Repository
         public Task<List<OpeningStockVM>> GetAllStock(int branchId);
         public Task<List<OpeningStockVM>> GetAllReorder(int branchId);
         Task<List<OpeningStockVM>> GetOpeningStock(int subTypeId, int branchId);
+        Task<List<OpeningStockVM>> GetOpeningStock(int branchId);
     }
 
     public class StockRepository : IStockRepository
@@ -72,6 +73,36 @@ namespace ShopManagement.Repository
         {
             var productList = await _context.Products
                 .Where(e => e.ProductSubTypeId == subTypeId)
+                .Select(e => new OpeningStockVM
+                {
+                    ProductId = e.Id,
+                    ProductName = e.ProductCode + " " + e.ProductName,
+                    UnitName = e.Unit.Name,
+                    BranchId = branchId
+                })
+                .ToListAsync();
+
+            foreach (var product in productList)
+            {
+                var os = _context.OpeningStocks
+                    .Where(e => e.ProductId == product.ProductId
+                        && e.BranchId == branchId)
+                    .FirstOrDefault();
+
+                if (os != null)
+                {
+                    product.Quantity = os.Quantity;
+                    product.Amount = os.Amount;
+                    product.Id = os.Id;
+                }
+            }
+
+            return productList;
+        }
+
+        public async Task<List<OpeningStockVM>> GetOpeningStock(int branchId)
+        {
+            var productList = await _context.Products
                 .Select(e => new OpeningStockVM
                 {
                     ProductId = e.Id,

@@ -75,6 +75,15 @@ namespace ShopManagement.WebApi.Controllers
             };
         }
 
+        [HttpGet("GetByProductSubType")]
+        public async Task<ListResult<OpeningStockVM>> GetByProductSubType()
+        {
+            return new ListResult<OpeningStockVM>
+            {
+                Data = await _stockRepository.GetOpeningStock(User.GetBranchId())
+            };
+        }
+
         [HttpPost]
         public async Task<Result<Product>> Post(Product product)
         {

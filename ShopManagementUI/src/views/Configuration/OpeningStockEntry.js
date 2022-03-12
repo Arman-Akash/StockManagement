@@ -3,15 +3,15 @@ import {
   CCard,
   CCardBody,
   CCol,
+  CDataTable,
   CRow,
 } from '@coreui/react';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as axios from '../../axios/axiosLib';
 import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
-import SADataTable from '../FormLib/saDataTable';
 
 //Custom hook and state
 import { Form, Formik } from "formik";
@@ -20,17 +20,17 @@ import * as initialState from '../../functionalLib/initialState';
 
 
 const OpeningStockEntry = () => {
-  let dataObj = {
-    productId: 0,
-    quantity: 0,
-    amount: 0
-  };
   const [productSubTypes, setProductSubTypes] = useState([]);
 
   let [dataArr, onSetDataArray] = useState([]);
 
   let productTypes = dataApi.useDataApi(`api/ProductType`, initialState.initialCollections);
-  let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
+
+  useEffect(() => {
+    axios.fetchGetData(`api/Product/GetByProductSubType`, undefined, undefined, (response) => {
+      onSetDataArray(response.data);
+    })
+  }, [])
 
   return (
     <CCard>
@@ -43,7 +43,6 @@ const OpeningStockEntry = () => {
               }}
 
               onSubmit={(values, { resetForm }) => {
-                console.log(dataArr);
                 axios.fetchPostData('api/OpeningStock', dataArr);
               }}
             >
@@ -70,8 +69,6 @@ const OpeningStockEntry = () => {
                             })}
                             onChangeHandle={(name, value) => {
                               axios.fetchGetData(`api/ProductSubType/GetByProductType/${value}`, undefined, undefined, (response) => {
-                                console.log(response.data)
-                                // formProps.setFieldValue('productSubType', value);
                                 setProductSubTypes(response.data);
                               })
                             }}
@@ -92,7 +89,6 @@ const OpeningStockEntry = () => {
                             })}
                             onChangeHandle={(name, value) => {
                               axios.fetchGetData(`api/Product/GetByProductSubType/${value}`, undefined, undefined, (response) => {
-                                // formProps.setFieldValue('productSubType', value);
                                 onSetDataArray(response.data);
                               })
                             }}
@@ -100,40 +96,60 @@ const OpeningStockEntry = () => {
                         </CCol>
                       </CRow>
                       <CRow style={{ marginTop: '10px' }}>
-                        <SADataTable
-                          md="12"
-                          tableName="Opening Stock Details:"
-                          style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
-                          dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                          columns={["Product Name","Quantity", "Unit Name","Amount" ]}
-                          fields={["productName","quantity", "unitName","amount" ]}
-                          readOnlyArr={["unitName"]}
-                          dataArr={dataArr}
-                          dataObj={dataObj}
-                          onSetDataArray={onSetDataArray}
-                          fieldsTypeWithValue={[
-                            {
-                              thStyle: { width: '30%' },
-                              fieldName: 'productName',
-                              fieldType: 'text',
-                            },
-                            {
-                              thStyle: { width: '15%' },
-                              fieldName: 'unitName',
-                              fieldType: 'text',
-                            },
-                            {
-                              thStyle: { width: '15%' },
-                              fieldName: 'quantity',
-                              fieldType: 'NUMBER',
-                            }
-                            ,
-                            {
-                              thStyle: { width: '15%' },
-                              fieldName: 'amount',
-                              fieldType: 'NUMBER',
-                            }
+                        <CDataTable
+                          items={dataArr}
+                          fields={[
+                            { key: "productName", label: "Product" },
+                            'quantity',
+                            { key: "unitName", label: 'Unit' },
+                            'amount'
                           ]}
+                          tableFilter
+                          border
+                          striped
+                          pagination
+                          scopedSlots={{
+                            'quantity':
+                              (item, index) => (
+                                <td className='p-0'>
+                                  <input
+                                    id="quanity"
+                                    name="quantity"
+                                    type="number"
+                                    className='form-control'
+                                    value={item.quantity}
+                                    onChange={(e) => {
+                                      var val = e.target.value;
+                                      var arr = [...dataArr];
+                                      var product = arr[index];
+                                      product.quantity = val;
+                                      arr[index] = product;
+                                      onSetDataArray(arr);
+                                    }}
+                                  />
+                                </td>
+                              ),
+                            'amount':
+                              (item, index) => (
+                                <td className='p-0'>
+                                  <input
+                                    id="amount"
+                                    name="amount"
+                                    type="number"
+                                    className='form-control'
+                                    value={item.amount}
+                                    onChange={(e) => {
+                                      var val = e.target.value;
+                                      var arr = [...dataArr];
+                                      var product = arr[index];
+                                      product.amount = val;
+                                      arr[index] = product;
+                                      onSetDataArray(arr);
+                                    }}
+                                  />
+                                </td>
+                              )
+                          }}
                         />
                       </CRow>
 
