@@ -11,13 +11,16 @@ import {
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
 import * as axios from '../../axios/axiosLib';
 //Custom hook and state
 import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
 import { Form, Formik } from "formik";
+import { loadState } from '../../axios/storage';
+import { LOGGED_IN_USER } from '../../axios/keys';
+import { Roles } from '../../staticData';
 
 const ReorderAlert = () => {
     var fields = [
@@ -28,9 +31,19 @@ const ReorderAlert = () => {
     ]
 
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
+    const [disable, setDisable] = useState(true);
 
     const [stocks, setStocks] = useState([]);
+    var user = loadState(LOGGED_IN_USER);
 
+    useEffect(() => {
+        if (user?.permissions == Roles.Admin) {
+            setDisable(false);
+        }
+        axios.fetchGetData(`api/stock/GetReorderByBranch/${user?.branch_id}`, undefined, undefined, (response) => {
+            setStocks(response.data);
+        })
+    }, [])
 
     return (
         <CCard>
@@ -40,6 +53,7 @@ const ReorderAlert = () => {
                         <Formik
                             enableReinitialize
                             initialValues={{
+                                branchId: user?.branch_id
                             }}
 
                             onSubmit={(values, { resetForm }) => {
@@ -60,14 +74,13 @@ const ReorderAlert = () => {
                                                         rSize="8"
                                                         labelClassName="float-right"
                                                         formProps={formProps}
+                                                        isDisabled={disable}
                                                         options={branches.data.data.map(item => {
                                                             return { label: item.name, value: item.id }
                                                         })}
                                                         onChangeHandle={(name, value) => {
                                                             axios.fetchGetData(`api/stock/GetReorderByBranch/${value}`, undefined, undefined, (response) => {
-                                                                console.log(response.data)
-                                                                // formProps.setFieldValue('productSubType', value);
-                                                                setStocks(response.data.filter(e => e.quantity <= e.reorderLabel));
+                                                                setStocks(response.data);
                                                             })
                                                         }}
                                                     />

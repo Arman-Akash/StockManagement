@@ -34,10 +34,7 @@ const StockShow = () => {
         if (user?.permissions == Roles.Admin) {
             setDisable(false);
         }
-        console.log(user);
         axios.fetchGetData(`api/stock/GetStockByBranch/${user?.branch_id}`, undefined, undefined, (response) => {
-            console.log(response.data)
-            // formProps.setFieldValue('productSubType', value);
             setStocks(response.data);
         })
     }, [])

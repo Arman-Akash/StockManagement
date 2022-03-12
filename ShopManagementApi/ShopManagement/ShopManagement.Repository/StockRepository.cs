@@ -64,7 +64,8 @@ namespace ShopManagement.Repository
             {
                 (product.Quantity, product.Amount) = await GetStock(product.Id, branchId);
             }
-            return products;
+            return products.Where(e => e.Quantity <= e.ReorderLabel)
+                .ToList();
         }
 
         public async Task<List<OpeningStockVM>> GetOpeningStock(int subTypeId, int branchId)
