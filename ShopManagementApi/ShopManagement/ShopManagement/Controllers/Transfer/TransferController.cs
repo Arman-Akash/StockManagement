@@ -170,48 +170,6 @@ namespace ShopManagement.WebApi.Controllers
             }
         }
 
-        //[HttpPost("Search")]
-        //public async Task<IEnumerable<PurchaseVM>> Search(PurchaseVM transferVM)
-        //{
-        //    var result = _repository.Get()
-        //        .Include(e => e.TransferDetails)
-        //        .Include(e => e.Customer)
-        //        .AsQueryable();
-
-        //    if (transferVM.StartDate != null)
-        //    {
-        //        result = result.Where(e => e.TransferDate >= transferVM.StartDate);
-        //    }
-
-        //    if (transferVM.EndDate != null)
-        //    {
-        //        result = result.Where(e => e.TransferDate <= transferVM.EndDate);
-        //    }
-
-        //    if (transferVM.CustomerId != 0)
-        //    {
-        //        result = result.Where(e => e.SupplierId == transferVM.CustomerId);
-        //    }
-        //    if (!String.IsNullOrWhiteSpace(transferVM.ReceiptNo))
-        //    {
-        //        result = result.Where(e => e.ReceiptNo.Contains(transferVM.ReceiptNo));
-        //    }
-        //    if (!String.IsNullOrWhiteSpace(transferVM.TransactionType))
-        //    {
-        //        result = result.Where(e => e.TransactionType.Contains(transferVM.TransactionType));
-        //    }
-
-        //    return await result.Select(e => new PurchaseVM
-        //    {
-        //        CustomerName = e.Customer.Name,
-        //        ReceiptNo = e.ReceiptNo,
-        //        TransactionType = e.TransactionType,
-        //        TransferDate = e.TransferDate
-        //    })
-        //     .ToListAsync();
-        //}
-
-
         [HttpPut("{id}")]
         public async Task<Result<Transfer>> Put(int id, Transfer transfer)
         {

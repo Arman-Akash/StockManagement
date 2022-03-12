@@ -5,7 +5,7 @@ const Customer = React.lazy(() => import('./views/Configuration/Customer'));
 const ProductSubType = React.lazy(() => import('./views/Configuration/ProductSubType'));
 const ProductType = React.lazy(() => import('./views/Configuration/ProductType'));
 const Unit = React.lazy(() => import('./views/Configuration/Unit'));
-const PurchaseReport = React.lazy(() => import('./views/Purchase/PurchaseReport'));
+const AdminReportContainer = React.lazy(() => import('./views/AdminReport/AdminReportContainer'));
 const WarehouseReceive = React.lazy(() => import('./views/Purchase/Purchase'));
 const Sale = React.lazy(() => import('./views/Sale/Sale'));
 const Transfer = React.lazy(() => import('./views/Transfer/Transfer'));
@@ -48,7 +48,7 @@ export const warehouse = [
 const routes = [
   ...warehouse,
   { path: '/branch', name: 'Branch Information', component: Branch },
-  { path: '/purchase-report', name: 'Report', component: PurchaseReport },
+  { path: '/admin-report', name: 'Admin Report', component: AdminReportContainer },
   { path: '/users/create-user', exact: true, name: 'Users', component: Users },
   { path: '/user/change-password', exact: true, name: 'Access Control', component: ChangePassword },
 ];

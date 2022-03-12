@@ -93,30 +93,45 @@ namespace ShopManagement.WebApi.Controllers
         //    };
         //}
 
-        //[HttpGet("ReceiptNo")]
-        //public async Task<Result<string>> ReceiptNo()
+        //[HttpPost("Search")]
+        //public async Task<IEnumerable<PurchaseVM>> Search(PurchaseVM transferVM)
         //{
-        //    var recNo = "";
-        //    var lastRef = await _repository.Get()
-        //        .Where(e => e.SaleDate.Value.Year == DateTime.Now.Year)
-        //        .OrderByDescending(e => e.Id)
-        //        .Select(e => e.MoneyReceiptNo)
-        //        .FirstOrDefaultAsync();
+        //    var result = _repository.Get()
+        //        .Include(e => e.TransferDetails)
+        //        .Include(e => e.Customer)
+        //        .AsQueryable();
 
-        //    if (lastRef == null)
+        //    if (transferVM.StartDate != null)
         //    {
-        //        recNo = "SAL/" + "0001/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
-        //    }
-        //    else
-        //    {
-        //        var num = lastRef.Split('/')[1];
-        //        recNo = "SAL/" + (Convert.ToInt32(num) + 1).ToString().PadLeft(4, '0') + "/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
+        //        result = result.Where(e => e.TransferDate >= transferVM.StartDate);
         //    }
 
-        //    return new Result<string>
+        //    if (transferVM.EndDate != null)
         //    {
-        //        Data = recNo
-        //    };
+        //        result = result.Where(e => e.TransferDate <= transferVM.EndDate);
+        //    }
+
+        //    if (transferVM.CustomerId != 0)
+        //    {
+        //        result = result.Where(e => e.SupplierId == transferVM.CustomerId);
+        //    }
+        //    if (!String.IsNullOrWhiteSpace(transferVM.ReceiptNo))
+        //    {
+        //        result = result.Where(e => e.ReceiptNo.Contains(transferVM.ReceiptNo));
+        //    }
+        //    if (!String.IsNullOrWhiteSpace(transferVM.TransactionType))
+        //    {
+        //        result = result.Where(e => e.TransactionType.Contains(transferVM.TransactionType));
+        //    }
+
+        //    return await result.Select(e => new PurchaseVM
+        //    {
+        //        CustomerName = e.Customer.Name,
+        //        ReceiptNo = e.ReceiptNo,
+        //        TransactionType = e.TransactionType,
+        //        TransferDate = e.TransferDate
+        //    })
+        //     .ToListAsync();
         //}
 
         [HttpPost]

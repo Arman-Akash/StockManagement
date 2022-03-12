@@ -161,7 +161,7 @@ const Dashboard = () => {
       </CCol>
 
           <CCol xs="2" sm="2" className="text-center oms-icon">
-            <CLink to="/purchase-report">
+            <CLink to="/admin-report">
               <CIcon className='mob-dashboard-img' src={iReport} />
               <h6>Report</h6>
             </CLink>

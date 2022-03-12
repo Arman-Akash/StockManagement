@@ -77,5 +77,44 @@ namespace ShopManagement.Web.Controllers
             };
             //return View(transfer) ;
         }
+
+
+        //[HttpPost("SaleSearch")]
+        //public async Task<IEnumerable<Sale>> Search(Sale sale)
+        //{
+        //    var result = _saleRepository.Get()
+        //        .Include(e => e.TransferDetails)
+        //        .Include(e => e.Customer)
+        //        .AsQueryable();
+
+        //    if (transferVM.StartDate != null)
+        //    {
+        //        result = result.Where(e => e.TransferDate >= transferVM.StartDate);
+        //    }
+
+        //    if (transferVM.EndDate != null)
+        //    {
+        //        result = result.Where(e => e.TransferDate <= transferVM.EndDate);
+        //    }
+
+        //    if (transferVM.CustomerId != 0)
+        //    {
+        //        result = result.Where(e => e.SupplierId == transferVM.CustomerId);
+        //    }
+        //    if (!String.IsNullOrWhiteSpace(transferVM.ReceiptNo))
+        //    {
+        //        result = result.Where(e => e.ReceiptNo.Contains(transferVM.ReceiptNo));
+        //    }
+
+        //    return await result.Select(e => new PurchaseVM
+        //    {
+        //        CustomerName = e.Customer.Name,
+        //        ReceiptNo = e.ReceiptNo,
+        //        TransactionType = e.TransactionType,
+        //        TransferDate = e.TransferDate
+        //    })
+        //     .ToListAsync();
+        //}
+
     }
 }
