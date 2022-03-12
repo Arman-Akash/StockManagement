@@ -121,9 +121,9 @@ namespace ShopManagement.WebApi.Controllers
             {
                 result = result.Where(e => e.Sale.BranchId == saleVM.BranchId);
             }
-            if (saleVM.BranchId != 0)
+            if (saleVM.ProductId != 0)
             {
-                result = result.Where(e => e.Sale.BranchId == saleVM.BranchId);
+                result = result.Where(e => e.ProductId == saleVM.ProductId);
             }
             //if (!String.IsNullOrWhiteSpace(saleVM.ReceiptNo))
             //{
@@ -133,6 +133,7 @@ namespace ShopManagement.WebApi.Controllers
             listResult.Data = await result.Select(e => new SaleDetailVM
             {
                 Id = e.Id,
+                SaleDate = e.Sale.SaleDate,
                 ProductId = e.ProductId,
                 ProductName = e.Product.ProductCodeName,
                 UnitName = e.Product.Unit.Name,

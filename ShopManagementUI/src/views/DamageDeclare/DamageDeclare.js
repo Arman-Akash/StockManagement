@@ -47,6 +47,7 @@ const DamageDeclare = (props) => {
         { key: 'productName', label: 'Product' },
         { key: 'unitName', label: 'Unit' },
         { key: 'quantity', label: 'Quantity' },
+        { key: 'amount', label: 'Amount' },
         'actions'
     ];
 

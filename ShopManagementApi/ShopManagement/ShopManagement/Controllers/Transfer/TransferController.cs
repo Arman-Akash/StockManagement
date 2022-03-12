@@ -20,14 +20,17 @@ namespace ShopManagement.WebApi.Controllers
     public class TransferController : ControllerBase
     {
         private readonly IRepository<Transfer> _repository;
+        private readonly IRepository<TransferDetail> _transferDetailRepository;
         private readonly ITransferRepository _transferRepository;
         private readonly ILogError _logError;
 
         public TransferController(IRepository<Transfer> _repository,
+            IRepository<TransferDetail> _transferDetailRepository,
             ITransferRepository _transferReposioty,
             ILogError _logError)
         {
             this._repository = _repository;
+            this._transferDetailRepository = _transferDetailRepository;
             this._transferRepository = _transferReposioty;
             this._logError = _logError;
         }
@@ -200,6 +203,50 @@ namespace ShopManagement.WebApi.Controllers
 
                 return result;
             }
+        }
+
+        [HttpPost("TransferReport")]
+        public async Task<ListResult<TransferDetailVM>> Search(TransferDetailVM transferVM)
+        {
+            var listResult = new ListResult<TransferDetailVM>();
+
+            var result = _transferDetailRepository.Get()
+                .Include(e => e.Product)
+                .Include(e => e.Product.Unit)
+                .AsQueryable();
+
+            if (transferVM.StartDate != null)
+            {
+                result = result.Where(e => e.Transfer.TransferDate >= transferVM.StartDate);
+            }
+
+            if (transferVM.EndDate != null)
+            {
+                result = result.Where(e => e.Transfer.TransferDate <= transferVM.EndDate);
+            }
+
+            if (transferVM.BranchId != 0)
+            {
+                result = result.Where(e => e.Transfer.BranchId == transferVM.BranchId);
+            }
+            if (transferVM.ProductId != 0)
+            {
+                result = result.Where(e => e.ProductId == transferVM.ProductId);
+            }
+
+            listResult.Data = await result.Select(e => new TransferDetailVM
+            {
+                Id = e.Id,
+                TransferDate = e.Transfer.TransferDate,
+                ProductId = e.ProductId,
+                ProductName = e.Product.ProductCodeName,
+                UnitName = e.Product.Unit.Name,
+                Quantity = e.Quantity,
+                Amount = e.Amount
+            })
+             .ToListAsync();
+
+            return listResult;
         }
 
         [HttpPut("Receive/{id}")]

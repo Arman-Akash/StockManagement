@@ -4,12 +4,12 @@ using System.Text;
 
 namespace ShopManagement.Entity.ViewModels
 {
-    public class SaleDetailVM
+    public class TransferDetailVM
     {
         public int Id { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public DateTime SaleDate { get; set; }
+        public DateTime TransferDate { get; set; }
         public int BranchId { get; set; }
         public string BranchName { get; set; }
         public int ProductId { get; set; }

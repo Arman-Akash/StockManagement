@@ -37,8 +37,8 @@ const SaleReport = (props) => {
         <Formik
             enableReinitialize
             initialValues={{
-                startDate: new Date(),
-                endDate: new Date(),
+                startDate: null,
+                endDate: null,
                 branchId: 0,
                 productId: 0
             }}

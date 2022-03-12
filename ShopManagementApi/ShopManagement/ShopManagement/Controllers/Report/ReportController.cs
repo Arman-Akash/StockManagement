@@ -65,6 +65,7 @@ namespace ShopManagement.Web.Controllers
             var transfer = _transferRepository.Get()
                 .Where(e => e.Id == id)
                 .Include(e => e.Branch)
+                .Include(e => e.TransferedBranch)
                 .Include(e => e.TransferDetails)
                 .ThenInclude(e => e.Product)
                 .ThenInclude(e => e.Unit)

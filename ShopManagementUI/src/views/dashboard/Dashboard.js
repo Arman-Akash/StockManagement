@@ -35,25 +35,25 @@ const Dashboard = () => {
   useEffect(() => {
     var icons = document.getElementsByClassName("oms-icon");
     var user = loadState(LOGGED_IN_USER);
-    for(var i = 0; i< icons.length; i++) {
-      if(user?.permissions == Roles.Admin) {
-        if(!routes.some(e => e.path.includes(icons[i].firstChild.href.split('#')[1]))) {
+    for (var i = 0; i < icons.length; i++) {
+      if (user?.permissions == Roles.Admin) {
+        if (!routes.some(e => e.path.includes(icons[i].firstChild.href.split('#')[1]))) {
           icons[i].style.display = 'none';
         }
       }
-      else if(user?.permissions == Roles.Warehouse) {
-        if(!warehouse.some(e => e.path.includes(icons[i].firstChild.href.split('#')[1]))) {
+      else if (user?.permissions == Roles.Warehouse) {
+        if (!warehouse.some(e => e.path.includes(icons[i].firstChild.href.split('#')[1]))) {
           icons[i].style.display = 'none';
         }
       }
-      else if(user?.permissions == Roles.Outlet) {
-        if(!outlet.some(e => e.path.includes(icons[i].firstChild.href.split('#')[1]))) {
+      else if (user?.permissions == Roles.Outlet) {
+        if (!outlet.some(e => e.path.includes(icons[i].firstChild.href.split('#')[1]))) {
           icons[i].style.display = 'none';
         }
       }
     }
   }, [])
-  
+
   return (
     // <CCard style={{ backgroundImage: `url(${iBgImage})`, backgroundRepeat: "no-repeat", backgroundSize: "100% 100%", overflow: "hidden" }}>
     <CCard>
@@ -133,12 +133,12 @@ const Dashboard = () => {
               <h6>Stock</h6>
             </CLink>
           </CCol>
-          <CCol xs="2" sm="2" className="text-center oms-icon">
+          {/* <CCol xs="2" sm="2" className="text-center oms-icon">
           <CLink to="/stock-adjustment">
             <CIcon className='mob-dashboard-img' src={iStockAdjustment} />
             <h6>Stock Adjustment</h6>
           </CLink>
-        </CCol>
+          </CCol>*/}
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/customer-dues">
               <CIcon className='mob-dashboard-img' src={iCustomrDues} />
@@ -147,18 +147,18 @@ const Dashboard = () => {
           </CCol>
 
           <CCol xs="2" sm="2" className="text-center oms-icon">
-          <CLink to="/damage-declare">
-            <CIcon className='mob-dashboard-img' src={iExpire} />
-            <h6>Damage Declare</h6>
-          </CLink>
-        </CCol>
+            <CLink to="/damage-declare">
+              <CIcon className='mob-dashboard-img' src={iExpire} />
+              <h6>Damage Declare</h6>
+            </CLink>
+          </CCol>
 
-        <CCol xs="2" sm="2" className="text-center oms-icon">
-        <CLink to="/reorder-alert">
-          <CIcon className='mob-dashboard-img' src={iReorder} />
-          <h6>Product Re-order Aleart</h6>
-        </CLink>
-      </CCol>
+          <CCol xs="2" sm="2" className="text-center oms-icon">
+            <CLink to="/reorder-alert">
+              <CIcon className='mob-dashboard-img' src={iReorder} />
+              <h6>Product Re-order Aleart</h6>
+            </CLink>
+          </CCol>
 
           <CCol xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/admin-report">

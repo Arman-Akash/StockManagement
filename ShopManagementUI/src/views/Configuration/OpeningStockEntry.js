@@ -72,6 +72,11 @@ const OpeningStockEntry = () => {
                             options={branches.data.data.map(item => {
                               return { label: item.name, value: item.id }
                             })}
+                            onChangeHandle={(name, value) => {
+                              axios.fetchGetData(`api/Product/GetByProductSubType/${value}`, undefined, undefined, (response) => {
+                                onSetDataArray(response.data);
+                              })
+                            }}
                           />
                         </CCol>
                         <CCol md="4">
