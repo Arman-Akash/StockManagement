@@ -157,8 +157,20 @@ namespace ShopManagement.Repository
                 })
                 .FirstOrDefaultAsync();
 
-            stock = purchase.qty + os.qty + transferRcv.qty - transfer.qty - sold.qty;
-            amount = purchase.amount + os.amount + transferRcv.amount - transfer.amount - sold.amount;
+            var damage = await _context.DamageDeclares
+                .Where(e => e.ProductId == productId && e.BranchId == branchId)
+                .GroupBy(x => true)
+                .Select(x => new
+                {
+                    qty = x.Sum(e => e.Quantity),
+                    amount = x.Sum(e => e.Amount)
+                })
+                .FirstOrDefaultAsync();
+
+            stock = purchase.qty + os.qty + transferRcv.qty 
+                - transfer.qty - sold.qty - damage.qty;
+            amount = purchase.amount + os.amount + transferRcv.amount 
+                - transfer.amount - sold.amount - damage.amount;
 
             return (stock, amount);
         }

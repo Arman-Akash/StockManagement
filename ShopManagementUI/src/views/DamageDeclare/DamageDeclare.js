@@ -82,7 +82,6 @@ const DamageDeclare = (props) => {
                             damages.refresh();
                         });
                     } else {
-                        debugger;
                         axios.fetchPutData(`api/DamageDeclare/${values.id}`, values, () => {
                             damages.refresh();
                         });
@@ -154,27 +153,40 @@ const DamageDeclare = (props) => {
                                                 }}
                                                 />
                                         </CCol>
-                                        <CCol md="4">
-                                            <SAInput
-                                                id="unit"
-                                                name="unit"
-                                                type="text"
-                                                readOnly="true"
-                                                label="Amount"
-                                                isInline="true"
-                                                lSize="4"
-                                                rSize="8"
-                                                labelClassName="float-right"
-                                                value={unit}
-                                            />
-                                        </CCol>
-                                        <CCol md="4">
+                                        <CCol md="3">
                                             <SAInput
                                                 id="quantity"
                                                 name="quantity"
                                                 type="number"
                                                 isRequired="true"
                                                 label="Quantity"
+                                                isInline="true"
+                                                lSize="5"
+                                                rSize="7"
+                                                labelClassName="float-right"
+                                            />
+                                        </CCol>
+                                        <CCol md="1">
+                                            <SAInput
+                                                id="unit"
+                                                name="unit"
+                                                type="text"
+                                                readOnly="true"
+                                                // label="Unit"
+                                                // isInline="true"
+                                                rSize="12"
+                                                labelClassName="float-right"
+                                                value={unit}
+                                            />
+                                        </CCol>
+                                        
+                                        <CCol md="3">
+                                            <SAInput
+                                                id="amount"
+                                                name="amount"
+                                                type="number"
+                                                isRequired="true"
+                                                label="Amount"
                                                 isInline="true"
                                                 lSize="4"
                                                 rSize="8"
