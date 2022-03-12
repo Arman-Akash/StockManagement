@@ -15,25 +15,27 @@ import SADatePicker from '../FormLib/saDatePicker';
 import * as axios from '../../axios/axiosLib';
 import { apiHostName } from '../../config';
 import { Form, Formik } from "formik";
-import SAInput from '../FormLib/saInput';
+import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
 import { initialCollections } from '../../functionalLib/initialState';
+import * as dataApi from '../../customHooks/UseDataApi';
+import * as initialState from '../../functionalLib/initialState';
 
 const SaleReport = (props) => {
     let [isOpen, toggleModal] = useState(false);
 
-    const fields = ['purchaseDate', 'receiptNo', 'transactionType', 'actions'];
+    const fields = ['saleDate', 'productCodeName', 'UnitName', 'quantity', 'amount'];
+    let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
+    let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
 
     let [response, setResponse] = useState({ data: [] });
     return (
         <Formik
             enableReinitialize
             initialValues={{
-                id: 0,
-                receiptNo: '',
-                purchaseDate: new Date(),
-                supplierId: 0,
-                transactionType: '',
-                purchaseDetails: []
+                startDate: new Date(),
+                endDate: new Date(),
+                branchId: 0,
+                productId: 0
             }}
 
             onSubmit={(values) => {
@@ -47,19 +49,6 @@ const SaleReport = (props) => {
                             <CCardBody>
                                 <Form>
                                     <CRow>
-                                        <CCol md="4" className="mb-1">
-                                            <SAInput
-                                                id="receiptNo"
-                                                name="receiptNo"
-                                                type="text"
-                                                label="Receipt No."
-                                                isInline="true"
-                                                lSize="4"
-                                                rSize="8"
-                                                labelClassName="float-right"
-                                            />
-                                        </CCol>
-
                                         <CCol md="4">
                                             <SADatePicker
                                                 id="startDate"
@@ -89,6 +78,36 @@ const SaleReport = (props) => {
                                                 placeholderText="dd/MM/yyyy"
                                             />
                                         </CCol>
+                                        <CCol md="4">
+                                            <SAReactAutoSelect
+                                                id="branchId"
+                                                name="branchId"
+                                                label="Branch"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                labelClassName="float-right"
+                                                formProps={formProps}
+                                                options={branches.data.data.map(item => {
+                                                    return { label: item.name, value: item.id }
+                                                })}
+                                            />
+                                        </CCol>
+                                        <CCol md="4">
+                                            <SAReactAutoSelect
+                                                id="productId"
+                                                name="productId"
+                                                label="Product"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                labelClassName="float-right"
+                                                formProps={formProps}
+                                                options={products.data.data.map(item => {
+                                                    return { label: item.productCode + " " + item.productName, value: item.id }
+                                                })}
+                                            />
+                                        </CCol>
                                     </CRow>
 
                                     <CRow>
@@ -102,7 +121,7 @@ const SaleReport = (props) => {
                                                     marginRight: '25px'
                                                 }}
                                                 onClick={() => {
-                                                    axios.fetchReportData(`api/Purchase/Search`, formProps.values, undefined, (response) => {
+                                                    axios.fetchPostData(`api/Sale/SaleReport`, formProps.values, undefined, (response) => {
                                                         setResponse({
                                                             ...initialCollections,
                                                             data: axios.filterNull(response.data)
@@ -142,7 +161,7 @@ const SaleReport = (props) => {
                                                                 }} icon={faEye} />
                                                             </CTooltip>
                                                         </td>
-                                                    ) 
+                                                    )
                                             }}
                                         />
                                     </CRow>

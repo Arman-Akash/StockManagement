@@ -10,6 +10,7 @@ using ShopManagement.Utility;
 using ShopManagement.Utility.StaticData;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using ShopManagement.Entity.ViewModels;
 
 namespace ShopManagement.WebApi.Controllers
 {
@@ -19,15 +20,18 @@ namespace ShopManagement.WebApi.Controllers
     public class SaleController : ControllerBase
     {
         private readonly IRepository<Sale> _repository;
+        private readonly IRepository<SaleDetail> _saleDetailsRepository;
         private readonly ISaleRepository _saleRepository;
         private readonly ILogError _logError;
 
         public SaleController(IRepository<Sale> _repository,
             ISaleRepository _saleRepository,
+            IRepository<SaleDetail> _saleDetailsRepository,
             ILogError _logError)
         {
             this._repository = _repository;
             this._saleRepository = _saleRepository;
+            this._saleDetailsRepository = _saleDetailsRepository;
             this._logError = _logError;
         }
 
@@ -93,46 +97,48 @@ namespace ShopManagement.WebApi.Controllers
         //    };
         //}
 
-        //[HttpPost("Search")]
-        //public async Task<IEnumerable<PurchaseVM>> Search(PurchaseVM transferVM)
-        //{
-        //    var result = _repository.Get()
-        //        .Include(e => e.TransferDetails)
-        //        .Include(e => e.Customer)
-        //        .AsQueryable();
+        [HttpPost("SaleReport")]
+        public async Task<IEnumerable<SaleDetailVM>> Search(SaleDetailVM saleVM)
+        {
+            var result = _saleDetailsRepository.Get()
+                .Include(e => e.Product)
+                .Include(e => e.Product.Unit)
+                .AsQueryable();
 
-        //    if (transferVM.StartDate != null)
-        //    {
-        //        result = result.Where(e => e.TransferDate >= transferVM.StartDate);
-        //    }
+            if (saleVM.StartDate != null)
+            {
+                result = result.Where(e => e.Sale.SaleDate >= saleVM.StartDate);
+            }
 
-        //    if (transferVM.EndDate != null)
-        //    {
-        //        result = result.Where(e => e.TransferDate <= transferVM.EndDate);
-        //    }
+            if (saleVM.EndDate != null)
+            {
+                result = result.Where(e => e.Sale.SaleDate <= saleVM.EndDate);
+            }
 
-        //    if (transferVM.CustomerId != 0)
-        //    {
-        //        result = result.Where(e => e.SupplierId == transferVM.CustomerId);
-        //    }
-        //    if (!String.IsNullOrWhiteSpace(transferVM.ReceiptNo))
-        //    {
-        //        result = result.Where(e => e.ReceiptNo.Contains(transferVM.ReceiptNo));
-        //    }
-        //    if (!String.IsNullOrWhiteSpace(transferVM.TransactionType))
-        //    {
-        //        result = result.Where(e => e.TransactionType.Contains(transferVM.TransactionType));
-        //    }
+            if (saleVM.BranchId != 0)
+            {
+                result = result.Where(e => e.Sale.BranchId == saleVM.BranchId);
+            }
+            if (saleVM.BranchId != 0)
+            {
+                result = result.Where(e => e.Sale.BranchId == saleVM.BranchId);
+            }
+            //if (!String.IsNullOrWhiteSpace(saleVM.ReceiptNo))
+            //{
+            //    result = result.Where(e => e.ReceiptNo.Contains(saleVM.ReceiptNo));
+            //}
 
-        //    return await result.Select(e => new PurchaseVM
-        //    {
-        //        CustomerName = e.Customer.Name,
-        //        ReceiptNo = e.ReceiptNo,
-        //        TransactionType = e.TransactionType,
-        //        TransferDate = e.TransferDate
-        //    })
-        //     .ToListAsync();
-        //}
+            return await result.Select(e => new SaleDetailVM
+            {
+                Id = e.Id,
+                ProductId = e.ProductId,
+                ProductName = e.Product.ProductCodeName,
+                UnitName = e.Product.Unit.Name,
+                Quantity = e.Quantity,
+                Amount = e.Amount
+            })
+             .ToListAsync();
+        }
 
         [HttpPost]
         public async Task<Result<Sale>> Post(Sale sell)

@@ -55,7 +55,6 @@ const Purchase = (props) => {
     let [dataArr, onSetDataArray] = useState([]);
 
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
-    let units = dataApi.useDataApi(`api/Unit`, initialState.initialCollections);
     let productReceives = dataApi.useDataApi(`api/Receive`, initialState.initialCollections);
     return (
         <>
