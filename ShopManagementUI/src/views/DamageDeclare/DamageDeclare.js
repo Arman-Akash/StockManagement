@@ -55,7 +55,7 @@ const DamageDeclare = (props) => {
         branchId: 0,
         productId: 0,
         date: new Date(),
-        amount: ''
+        amount: 0
     }
     let [damageObj, setDamageObj] = useState({
         data: data
@@ -82,6 +82,7 @@ const DamageDeclare = (props) => {
                             damages.refresh();
                         });
                     } else {
+                        debugger;
                         axios.fetchPutData(`api/DamageDeclare/${values.id}`, values, () => {
                             damages.refresh();
                         });
@@ -213,8 +214,8 @@ const DamageDeclare = (props) => {
                                             ...damageObj,
                                             data: {
                                                 id: item.id,
-                                                branchId: item.branchId,
-                                                productId: item.productId,
+                                                branchId: item.branchId == null ? 0 : item.branchId,
+                                                productId: item.productId == null ? 0 : item.productId,
                                                 date: item.date,
                                                 quantity: item.quantity
                                             }

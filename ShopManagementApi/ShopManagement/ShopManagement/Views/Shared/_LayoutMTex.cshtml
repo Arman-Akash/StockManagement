@@ -1,0 +1,44 @@
+﻿@model ShopManagement.Entity.Models.Transfer
+<!DOCTYPE html>
+<html>
+<head>
+  @*<partial></partial>*@
+  <meta charset="utf-8" />
+  @await Html.PartialAsync("_Bootstrap.cshtml")
+  @await Html.PartialAsync("_Styles.cshtml")
+</head>
+<body>
+  <!--Header-->
+  <div>
+      <div class="text-center">
+          <div class="row">
+              <div class="col">
+                     <h6><span class="deleveryChallan">Cash Memo/Bill</span></h6>
+              <h1 style="font-weight:bold">M-Tex BD</h1>
+              <h5>Importer & Wholesaler</h5>
+              <p class="text-center" style="line-height:60%;">All Kinds of Textile Printing Ink & Accessories</p>
+              <p class="text-center" style="line-height:60%">Mobile: 01716-255283, 01745-555274, 01610-558888 </p>
+              <p class="text-center" style="line-height:60%">Padma City Plaza, Shop No-02, S.M. Maleh Road, Tanbazar, Narayangonj.</p>
+              <p class="text-center" style="line-height:60%">E-mail: mtexbd.bd@gmail.com</p>
+              </div>
+          </div>
+@*          <div class="row">
+              <div class="col-1"></div>
+              <div class="col-2">
+                  @await Html.PartialAsync("LogoBase64")
+              </div>
+              <div class="col-6">
+                 <h3>Laa Tahzan Shop</h3>
+                 <h6>Mirpur-11, Pallabi, Dhaka-1216</h6>
+              </div>
+          </div>*@
+              @*<h3>@ViewData["Date"]</h3>*@
+      </div>
+  </div>
+  <!--Content-->
+  <div>
+    @RenderBody()
+  </div>
+  <!--Footer-->
+</body>
+</html>

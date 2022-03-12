@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
     CRow, CCardBody,
-    CCol, CButton, CDataTable, CCard, CLink
+    CCol, CButton, CDataTable, CCard, CLink, CTooltip
 } from '@coreui/react';
 import SAInput from '../FormLib/saInput';
 import SADatePicker from '../FormLib/saDatePicker';
@@ -12,7 +12,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowAltCircleLeft, faSave, faTimes, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleLeft, faSave, faTimes, faTrash, faEye, faPrint } from '@fortawesome/free-solid-svg-icons';
 import * as axios from '../../axios/axiosLib';
 import * as initialState from '../../functionalLib/initialState';
 import * as dataApi from '../../customHooks/UseDataApi';
@@ -21,6 +21,7 @@ import DeleteIcon from '../commonComponents/DeleteIcon';
 import EditIcon from '../commonComponents/EditIcon';
 import SADataTable from '../FormLib/saDataTable';
 import SATextArea from '../FormLib/saTextarea';
+import { apiHostName } from '../../../src/config';
 
 const Transfer = (props) => {
     const [isDelete, toggleDeleteModal] = useState(false);
@@ -43,7 +44,7 @@ const Transfer = (props) => {
     const fields = ['transferDate',
         { key: 'branchName', label: 'From Branch' },
         { key: 'transferBranchName', label: 'To Branch' },
-        'vehicleNo', 'details', 'status', 'actions'];
+        'vehicleNo', 'details', 'status', 'print', 'actions'];
 
     let dataObj = {
         productId: 0,
@@ -339,7 +340,7 @@ const Transfer = (props) => {
                                                 item.status == "Pending" ? <>
                                                     <EditIcon
                                                         onClick={() => {
-                                                        setSaveBtn(true);
+                                                            setSaveBtn(true);
                                                             setTransferObj({
                                                                 ...transferObj,
                                                                 data: {
@@ -372,7 +373,7 @@ const Transfer = (props) => {
                                                         title="View"
                                                         className="text-info"
                                                         onClick={() => {
-                                                        setSaveBtn(false);
+                                                            setSaveBtn(false);
                                                             setTransferObj({
                                                                 ...transferObj,
                                                                 data: {
@@ -393,6 +394,15 @@ const Transfer = (props) => {
                                             }
                                         </td>
                                     ),
+                                'print': (item) => (
+                                    <td>
+                                        <CTooltip content="Transfer Print">
+                                            <CLink href={`${apiHostName}/api/Report/TransferReport/${item.id}`} target="_blank">
+                                                <FontAwesomeIcon icon={faPrint} />
+                                            </CLink>
+                                        </CTooltip>
+                                    </td>
+                                )
                             }}
                         />
                     </CRow>

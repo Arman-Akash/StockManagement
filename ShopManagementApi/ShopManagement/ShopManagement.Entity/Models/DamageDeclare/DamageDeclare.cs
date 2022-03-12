@@ -37,7 +37,7 @@ namespace ShopManagement.Entity.Models
         {
             get
             {
-                return Product?.ProductCode+"-"+Product.ProductName;
+                return Product?.ProductCode+"-"+Product?.ProductName;
             }
         }
     }

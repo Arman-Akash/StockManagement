@@ -55,5 +55,13 @@ namespace ShopManagement.Web.Controllers
             result.Data = await _repository.GetAllStock(branchId);
             return result;
         }
+
+        [HttpGet("GetReorderByBranch/{branchId}")]
+        public async Task<ListResult<OpeningStockVM>> GetReorderByBranch(int branchId)
+        {
+            var result = new ListResult<OpeningStockVM>();
+            result.Data = await _repository.GetAllReorder(branchId);
+            return result;
+        }
     }
 }

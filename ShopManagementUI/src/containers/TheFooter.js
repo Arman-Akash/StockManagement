@@ -10,13 +10,16 @@ const TheFooter = () => {
     <CFooter fixed={false}>
       <div>
         <span className="ml-1">&copy; {today.getFullYear()} &nbsp;</span>
-        <a style={{ textDecoration: "none" }} href="https://mansurtraders.co" target="_blank" rel="noopener noreferrer">M/S Mansur Traders</a>
+        <a style={{ textDecoration: "none" }} href="https://mansurtraders.co" target="_blank" rel="noopener noreferrer">
+        <span style=
+        {{fontWeight:'bold', color:'#2F3292'}}>M/S. Mansur Traders</span></a>
         <span className="ml-1"></span>
       </div>
       <div className="mfs-auto">
         <span className="mr-1">Powered by</span>
         <a style={{ textDecoration: "none" }} href="https://laatahzanbd.com" target="_blank" rel="noopener noreferrer">
-          <CIcon src={logo} style={{ height: "15px" }} /> Laa Tahzan</a>
+          <CIcon src={logo} style={{ height: "15px" }} /> <span style=
+          {{fontWeight:'bold', color:'#01B763'}}>Laa Tahzan</span></a>
       </div>
     </CFooter >
   )

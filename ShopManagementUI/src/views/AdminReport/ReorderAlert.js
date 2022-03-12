@@ -64,10 +64,10 @@ const ReorderAlert = () => {
                                                             return { label: item.name, value: item.id }
                                                         })}
                                                         onChangeHandle={(name, value) => {
-                                                            axios.fetchGetData(`api/stock/GetStockByBranch/${value}`, undefined, undefined, (response) => {
+                                                            axios.fetchGetData(`api/stock/GetReorderByBranch/${value}`, undefined, undefined, (response) => {
                                                                 console.log(response.data)
                                                                 // formProps.setFieldValue('productSubType', value);
-                                                                setStocks(response.data);
+                                                                setStocks(response.data.filter(e => e.quantity <= e.reorderLabel));
                                                             })
                                                         }}
                                                     />
