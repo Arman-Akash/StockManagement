@@ -7,29 +7,35 @@ import {
   CRow,
 } from '@coreui/react';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import * as axios from '../../axios/axiosLib';
 import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
-
-//Custom hook and state
 import { Form, Formik } from "formik";
 import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
+import { loadState } from '../../axios/storage';
+import { LOGGED_IN_USER } from '../../axios/keys';
+import { Roles } from '../../staticData';
 
 
 const OpeningStockEntry = () => {
   const [productSubTypes, setProductSubTypes] = useState([]);
-
-  let [dataArr, onSetDataArray] = useState([]);
+  const [dataArr, onSetDataArray] = useState([]);
+  const [disable, setDisable] = useState(true);
+  var user = loadState(LOGGED_IN_USER);
 
   let productTypes = dataApi.useDataApi(`api/ProductType`, initialState.initialCollections);
+  let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
 
   useEffect(() => {
-    axios.fetchGetData(`api/Product/GetByProductSubType`, undefined, undefined, (response) => {
+    axios.fetchGetData(`api/Product/GetByProductSubType/${user?.branch_id}`, undefined, undefined, (response) => {
       onSetDataArray(response.data);
     })
+
+    if (user?.permissions == Roles.Admin) {
+      setDisable(false);
+    }
   }, [])
 
   return (
@@ -40,6 +46,7 @@ const OpeningStockEntry = () => {
             <Formik
               enableReinitialize
               initialValues={{
+                branchId: user?.branch_id
               }}
 
               onSubmit={(values, { resetForm }) => {
@@ -52,7 +59,20 @@ const OpeningStockEntry = () => {
                     <Form>
                       <h5 style={{ marginBottom: "10px" }} className='page-title'>Opening Stock</h5>
                       <CRow>
-                        <CCol md="2">
+                        <CCol md="4">
+                          <SAReactAutoSelect
+                            name="branchId"
+                            label="Branch"
+                            isInline="true"
+                            lSize="4"
+                            rSize="8"
+                            labelClassName="float-right"
+                            formProps={formProps}
+                            isDisabled={disable}
+                            options={branches.data.data.map(item => {
+                              return { label: item.name, value: item.id }
+                            })}
+                          />
                         </CCol>
                         <CCol md="4">
                           <SAReactAutoSelect
@@ -88,7 +108,7 @@ const OpeningStockEntry = () => {
                               return { label: item.subType, value: item.id }
                             })}
                             onChangeHandle={(name, value) => {
-                              axios.fetchGetData(`api/Product/GetByProductSubType/${value}`, undefined, undefined, (response) => {
+                              axios.fetchGetData(`api/Product/GetByProductSubType/${value}/${formProps.values.branchId}`, undefined, undefined, (response) => {
                                 onSetDataArray(response.data);
                               })
                             }}

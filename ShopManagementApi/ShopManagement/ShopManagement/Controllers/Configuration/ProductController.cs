@@ -66,21 +66,22 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
-        [HttpGet("GetByProductSubType/{productSubTypeId}")]
-        public async Task<ListResult<OpeningStockVM>> GetByProductSubType(int productSubTypeId)
+        [HttpGet("GetByProductSubType/{productSubTypeId}/{branchId}")]
+        public async Task<ListResult<OpeningStockVM>> GetByProductSubType(int productSubTypeId, 
+            int branchId)
         {
             return new ListResult<OpeningStockVM>
             {
-                Data = await _stockRepository.GetOpeningStock(productSubTypeId, User.GetBranchId())
+                Data = await _stockRepository.GetOpeningStock(productSubTypeId, branchId)
             };
         }
 
-        [HttpGet("GetByProductSubType")]
-        public async Task<ListResult<OpeningStockVM>> GetByProductSubType()
+        [HttpGet("GetByProductSubType/{branchId}")]
+        public async Task<ListResult<OpeningStockVM>> GetByProductSubType(int branchId)
         {
             return new ListResult<OpeningStockVM>
             {
-                Data = await _stockRepository.GetOpeningStock(User.GetBranchId())
+                Data = await _stockRepository.GetOpeningStock(branchId)
             };
         }
 
