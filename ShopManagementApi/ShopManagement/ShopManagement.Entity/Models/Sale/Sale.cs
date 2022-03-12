@@ -22,6 +22,7 @@ namespace ShopManagement.Entity.Models
         public Customer Customer { get; set; }
         public decimal Amount { get; set; }
         public string TransactionType { get; set; }
+        public decimal PaidAmount { get; set; }
         public ICollection<SaleDetail> SaleDetails { get; set; }
 
 

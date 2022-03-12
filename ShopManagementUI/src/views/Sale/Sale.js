@@ -6,6 +6,7 @@ import {
 import SAInput from '../FormLib/saInput';
 import SADatePicker from '../FormLib/saDatePicker';
 import SAReactCreatableAutoSelect from '../FormLib/SAReactCreatableAutoSelect';
+import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
 
 //Formik & Yup lib
 import { Form, Formik } from "formik";
@@ -33,6 +34,7 @@ const Sale = (props) => {
         customerId: null,
         orderNo: '',
         amount: '',
+        paidAmount: 0,
         transactionType: '',
         saleDetails: []
     }
@@ -53,6 +55,12 @@ const Sale = (props) => {
         amount: '',
         customerId: null
     };
+
+    const transactionType = [
+        { label: "Full Payment", value: "Paid" },
+        { label: "Part Payment", value: "Partial" },
+        { label: "Full Credit", value: "Credit" },
+    ]
 
     let [dataArr, onSetDataArray] = useState([]);
 
@@ -112,6 +120,22 @@ const Sale = (props) => {
                                                 <div id="accordion" style={{ padding: "0px" }}>
                                                     <CRow>
                                                         <CCol md="4">
+                                                            <SADatePicker
+                                                                name="saleDate"
+                                                                label="Date"
+                                                                labelClassName="float-right"
+                                                                isInline="true"
+                                                                isRequired="true"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                formProps={formProps}
+                                                                dateFormat="dd/MM/yyyy"
+                                                                placeholderText="dd/MM/yyyy"
+                                                            />
+                                                        </CCol>
+                                                    </CRow>
+                                                    <CRow>
+                                                        <CCol md="4">
                                                             <SAInput
                                                                 id="billNo"
                                                                 name="billNo"
@@ -124,18 +148,17 @@ const Sale = (props) => {
                                                                 labelClassName="float-right"
                                                             />
                                                         </CCol>
+
                                                         <CCol md="4">
-                                                            <SADatePicker
-                                                                name="saleDate"
-                                                                label="Date"
-                                                                labelClassName="float-right"
+                                                            <SAInput
+                                                                id="orderNo"
+                                                                name="orderNo"
+                                                                type="text"
+                                                                label="Order No"
                                                                 isInline="true"
-                                                                isRequired="true"
                                                                 lSize="4"
                                                                 rSize="8"
-                                                                formProps={formProps}
-                                                                dateFormat="dd/MM/yyyy"
-                                                                placeholderText="dd/MM/yyyy"
+                                                                labelClassName="float-right"
                                                             />
                                                         </CCol>
 
@@ -164,31 +187,43 @@ const Sale = (props) => {
                                                         </CCol>
 
                                                         <CCol md="4">
-                                                        <SAInput
-                                                            id="orderNo"
-                                                            name="orderNo"
-                                                            type="text"
-                                                            label="Order No"
-                                                            isInline="true"
-                                                            lSize="4"
-                                                            rSize="8"
-                                                            labelClassName="float-right"
-                                                        />
-                                                    </CCol>
-
+                                                            <SAInput
+                                                                id="amount"
+                                                                name="amount"
+                                                                type="text"
+                                                                label="Total Amount"
+                                                                isInline="true"
+                                                                isRequired="true"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                labelClassName="float-right"
+                                                            />
+                                                        </CCol>
                                                         <CCol md="4">
-                                                        <SAInput
-                                                            id="amount"
-                                                            name="amount"
-                                                            type="text"
-                                                            label="Amount"
-                                                            isInline="true"
-                                                            isRequired="true"
-                                                            lSize="4"
-                                                            rSize="8"
-                                                            labelClassName="float-right"
-                                                        />
-                                                    </CCol>
+                                                            <SAReactAutoSelect
+                                                                id="transactionType"
+                                                                name="transactionType"
+                                                                label="Payment Type"
+                                                                isInline="true"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                labelClassName="float-right"
+                                                                formProps={formProps}
+                                                                options={transactionType} />
+                                                        </CCol>
+                                                        <CCol md="4">
+                                                            <SAInput
+                                                                id="paidAmount"
+                                                                name="paidAmount"
+                                                                type="text"
+                                                                label="Paid Amount"
+                                                                isInline="true"
+                                                                isRequired="true"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                labelClassName="float-right"
+                                                            />
+                                                        </CCol>
                                                     </CRow>
 
                                                     <CRow style={{ marginTop: '10px' }}>
@@ -362,7 +397,9 @@ const Sale = (props) => {
                                                             customerId: item.customerId,
                                                             billNo: item.billNo,
                                                             orderNo: item.orderNo,
-                                                            amount: item.amount
+                                                            amount: item.amount,
+                                                            paidAmount: item.paidAmount,
+                                                            transactionType: item.transactionType
                                                         }
                                                     });
                                                     setUnitname(unitName);

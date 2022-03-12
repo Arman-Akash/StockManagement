@@ -19,6 +19,7 @@ namespace ShopManagement.Data
 		public DbSet<ProductType> ProductSubTypes { get; set; }
 		public DbSet<Product> Products { get; set; }
 		public DbSet<DamageDeclare> DamageDeclares { get; set; }
+		public DbSet<CustomerDue> CustomerDues { get; set; }
 		#endregion
 
 		#region Receive
@@ -173,6 +174,17 @@ namespace ShopManagement.Data
 
 				entity.Property(e => e.Date)
 					.HasDefaultValueSql("getdate()");
+			});
+
+			builder.Entity<CustomerDue>(entity =>
+			{
+
+				entity.HasOne(e => e.Customer)
+					.WithMany()
+					.HasForeignKey(e => e.CustomerId);
+
+				entity.Property(e => e.CreditAmount)
+					.HasColumnType("decimal(15, 2)");
 			});
 
 			builder.Entity<Product>(entity =>
@@ -341,6 +353,9 @@ namespace ShopManagement.Data
 					.HasForeignKey(e => e.CustomerId);
 
 				entity.Property(e => e.Amount)
+					.HasColumnType("decimal(15, 2)");
+
+				entity.Property(e => e.PaidAmount)
 					.HasColumnType("decimal(15, 2)");
 
 				entity.Property(e => e.TransactionType)
