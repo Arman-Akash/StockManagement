@@ -98,8 +98,10 @@ namespace ShopManagement.WebApi.Controllers
         //}
 
         [HttpPost("SaleReport")]
-        public async Task<IEnumerable<SaleDetailVM>> Search(SaleDetailVM saleVM)
+        public async Task<ListResult<SaleDetailVM>> Search(SaleDetailVM saleVM)
         {
+            var listResult = new ListResult<SaleDetailVM>();
+
             var result = _saleDetailsRepository.Get()
                 .Include(e => e.Product)
                 .Include(e => e.Product.Unit)
@@ -128,7 +130,7 @@ namespace ShopManagement.WebApi.Controllers
             //    result = result.Where(e => e.ReceiptNo.Contains(saleVM.ReceiptNo));
             //}
 
-            return await result.Select(e => new SaleDetailVM
+            listResult.Data = await result.Select(e => new SaleDetailVM
             {
                 Id = e.Id,
                 ProductId = e.ProductId,
@@ -138,6 +140,8 @@ namespace ShopManagement.WebApi.Controllers
                 Amount = e.Amount
             })
              .ToListAsync();
+
+            return listResult;
         }
 
         [HttpPost]

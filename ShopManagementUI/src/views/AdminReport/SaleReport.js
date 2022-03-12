@@ -23,7 +23,12 @@ import * as initialState from '../../functionalLib/initialState';
 const SaleReport = (props) => {
     let [isOpen, toggleModal] = useState(false);
 
-    const fields = ['saleDate', 'productCodeName', 'UnitName', 'quantity', 'amount'];
+    const fields = ['saleDate',
+        { key: 'productName', label: 'Product' },
+        { key: 'unitName', label: 'Unit' },
+        'quantity', 
+        {key: 'amount', _classes: 'text-right' }
+    ];
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
 
@@ -121,12 +126,7 @@ const SaleReport = (props) => {
                                                     marginRight: '25px'
                                                 }}
                                                 onClick={() => {
-                                                    axios.fetchPostData(`api/Sale/SaleReport`, formProps.values, undefined, (response) => {
-                                                        setResponse({
-                                                            ...initialCollections,
-                                                            data: axios.filterNull(response.data)
-                                                        });
-                                                    });
+                                                    axios.fetchPostData(`api/Sale/SaleReport`, formProps.values, setResponse);
                                                 }}
                                             ><FontAwesomeIcon icon={faSearch} /> Search</CButton>
                                             <CButton
