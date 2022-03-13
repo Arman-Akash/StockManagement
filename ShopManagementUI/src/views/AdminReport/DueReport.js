@@ -42,6 +42,7 @@ const DueReport = () => {
     return (
         <CCard>
             <CCardBody>
+            <h5 style={{ marginBottom: "10px" }} className='page-title'>Customer Due Report</h5>
                 <CRow>
                     <CCol md="12">
                         <Formik

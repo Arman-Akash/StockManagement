@@ -13,7 +13,7 @@ import {
 } from '@coreui/react'
 import PaymentReceive from './PaymentReceive'
 import DueEntry from './DueEntry'
-import CustomerDueReport from './CustomerDueReport'
+// import CustomerDueReport from './CustomerDueReport'
 
 const CustomerDueContainer = () => {
     const [active, setActive] = useState(0)
@@ -31,9 +31,6 @@ const CustomerDueContainer = () => {
                                 <CNavItem>
                                     <CNavLink>Due Payment Receive</CNavLink>
                                 </CNavItem>
-                                <CNavItem>
-                                    <CNavLink>Report</CNavLink>
-                                </CNavItem>
                             </CNav>
                         </CCol>
                         <CCol md="10">
@@ -43,9 +40,6 @@ const CustomerDueContainer = () => {
                                 </CTabPane>
                                 <CTabPane>
                                     <PaymentReceive />
-                                </CTabPane>
-                                <CTabPane>
-                                    <CustomerDueReport />
                                 </CTabPane>
                             </CTabContent>
                         </CCol>
