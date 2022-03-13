@@ -16,18 +16,22 @@ import * as axios from '../../axios/axiosLib';
 import { apiHostName } from '../../config';
 import { Form, Formik } from "formik";
 import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
-import { initialCollections } from '../../functionalLib/initialState';
+import SAInput from '../FormLib/saInput';
 import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
 
-const SaleReport = (props) => {
+const PurchaseReport = (props) => {
     let [isOpen, toggleModal] = useState(false);
 
-    const fields = ['saleDate',
+    const fields = [
+        { key: 'rcvDate', label: 'Purchase Date' },
+        { key: 'lcNumber', label: 'LC Number' },
+        { key: 'billOfEntryNo', label: 'Bill of Entry No' },
+        { key: 'billOfEntryDate', label: 'Bill Entry Date' },
         { key: 'productName', label: 'Product' },
         { key: 'unitName', label: 'Unit' },
-        'quantity', 
-        {key: 'amount', _classes: 'text-right' }
+        'quantity',
+        { key: 'amount', _classes: 'text-right' }
     ];
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
@@ -37,8 +41,12 @@ const SaleReport = (props) => {
         <Formik
             enableReinitialize
             initialValues={{
+                lcNumber:'',
+                billOfEntryNo:'',
                 startDate: null,
                 endDate: null,
+                billStartDate: null,
+                billEndDate: null,
                 branchId: 0,
                 productId: 0
             }}
@@ -52,9 +60,34 @@ const SaleReport = (props) => {
                     return (
                         <CCard>
                             <CCardBody>
-                            <h5 style={{ marginBottom: "10px" }} className='page-title'>Sale Report</h5>
+                                <h5 style={{ marginBottom: "10px" }} className='page-title'>Purchase Report</h5>
                                 <Form>
                                     <CRow>
+                                        <CCol md="4">
+                                            <SAInput
+                                                id="lcNumber"
+                                                name="lcNumber"
+                                                type="text"
+                                                label="LC Number"
+                                                isInline="true"
+                                                // isRequired="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                labelClassName="float-right"
+                                            />
+                                        </CCol>
+                                        <CCol md="4">
+                                            <SAInput
+                                                id="billOfEntryNo"
+                                                name="billOfEntryNo"
+                                                type="text"
+                                                label="Bill of Entry No"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                labelClassName="float-right"
+                                            />
+                                        </CCol>
                                         <CCol md="4">
                                             <SADatePicker
                                                 id="startDate"
@@ -75,6 +108,36 @@ const SaleReport = (props) => {
                                                 id="endDate"
                                                 name="endDate"
                                                 label="End Date"
+                                                labelClassName="float-right"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                formProps={formProps}
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="dd/MM/yyyy"
+                                            />
+                                        </CCol>
+
+                                        <CCol md="4">
+                                            <SADatePicker
+                                                id="billStartDate"
+                                                name="billStartDate"
+                                                label="Bill Start Date"
+                                                labelClassName="float-right"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                formProps={formProps}
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="dd/MM/yyyy"
+                                            />
+                                        </CCol>
+
+                                        <CCol md="4">
+                                            <SADatePicker
+                                                id="billEndDate"
+                                                name="billEndDate"
+                                                label="Bill End Date"
                                                 labelClassName="float-right"
                                                 isInline="true"
                                                 lSize="4"
@@ -127,7 +190,7 @@ const SaleReport = (props) => {
                                                     marginRight: '25px'
                                                 }}
                                                 onClick={() => {
-                                                    axios.fetchPostData(`api/Sale/SaleReport`, formProps.values, setResponse);
+                                                    axios.fetchPostData(`api/Receive/PurchaseReport`, formProps.values, setResponse);
                                                 }}
                                             ><FontAwesomeIcon icon={faSearch} /> Search</CButton>
                                         </CCol>
@@ -161,4 +224,4 @@ const SaleReport = (props) => {
     )
 }
 
-export default SaleReport;
+export default PurchaseReport;

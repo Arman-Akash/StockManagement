@@ -20,16 +20,19 @@ namespace ShopManagement.WebApi.Controllers
     public class ReceiveController : ControllerBase
     {
         private readonly IRepository<Purchase> _repository;
+        private readonly IRepository<PurchaseDetail> _purchaseDetailRepository;
         private readonly IReceiveRepository _receiveRepository;
         private readonly ILogError _logError;
 
         public ReceiveController(IRepository<Purchase> _repository,
+            IRepository<PurchaseDetail> _purchaseDetailRepository,
             IReceiveRepository _receiveReposioty,
             ILogError _logError)
         {
             this._repository = _repository;
             this._logError = _logError;
             this._receiveRepository = _receiveReposioty;
+            this._purchaseDetailRepository = _purchaseDetailRepository;
         }
 
         [HttpGet]
@@ -161,6 +164,70 @@ namespace ShopManagement.WebApi.Controllers
         //     .ToListAsync();
         //}
 
+        [HttpPost("PurchaseReport")]
+        public async Task<ListResult<PurchaseDetailVM>> Search(PurchaseDetailVM purchaseVM)
+        {
+            var listResult = new ListResult<PurchaseDetailVM>();
+
+            var result = _purchaseDetailRepository.Get()
+                .Include(e => e.Product)
+                .Include(e => e.Product.Unit)
+                .AsQueryable();
+
+            if (purchaseVM.StartDate != null)
+            {
+                result = result.Where(e => e.Receive.RcvDate >= purchaseVM.StartDate);
+            }
+
+            if (purchaseVM.EndDate != null)
+            {
+                result = result.Where(e => e.Receive.RcvDate <= purchaseVM.EndDate);
+            }
+
+            if (purchaseVM.BillStartDate != null)
+            {
+                result = result.Where(e => e.Receive.BillOfEntryDate >= purchaseVM.BillStartDate);
+            }
+
+            if (purchaseVM.BillEndDate != null)
+            {
+                result = result.Where(e => e.Receive.BillOfEntryDate <= purchaseVM.BillEndDate);
+            }
+
+            if (purchaseVM.BranchId != 0)
+            {
+                result = result.Where(e => e.Receive.BranchId == purchaseVM.BranchId);
+            }
+            if (purchaseVM.ProductId != 0)
+            {
+                result = result.Where(e => e.ProductId == purchaseVM.ProductId);
+            }
+            if (!String.IsNullOrWhiteSpace(purchaseVM.LcNumber))
+            {
+                result = result.Where(e => e.Receive.LcNumber.Contains(purchaseVM.LcNumber));
+            }
+            if (!String.IsNullOrWhiteSpace(purchaseVM.BillOfEntryNo))
+            {
+                result = result.Where(e => e.Receive.BillOfEntryNo.Contains(purchaseVM.BillOfEntryNo));
+            }
+
+            listResult.Data = await result.Select(e => new PurchaseDetailVM
+            {
+                Id = e.Id,
+                RcvDate = e.Receive.RcvDate,
+                BillOfEntryDate = e.Receive.BillOfEntryDate,
+                ProductId = e.ProductId,
+                ProductName = e.Product.ProductCodeName,
+                UnitName = e.Product.Unit.Name,
+                LcNumber = e.Receive.LcNumber,
+                BillOfEntryNo = e.Receive.BillOfEntryNo,
+                Quantity = e.Quantity,
+                Amount = e.Amount
+            })
+             .ToListAsync();
+
+            return listResult;
+        }
 
         [HttpPut("{id}")]
         public async Task<Result<Purchase>> Put(int id, Purchase receive)

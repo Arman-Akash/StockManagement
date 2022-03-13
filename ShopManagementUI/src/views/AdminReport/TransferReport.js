@@ -20,10 +20,10 @@ import { initialCollections } from '../../functionalLib/initialState';
 import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
 
-const SaleReport = (props) => {
+const TransferReport = (props) => {
     let [isOpen, toggleModal] = useState(false);
 
-    const fields = ['saleDate',
+    const fields = ['transferDate',
         { key: 'productName', label: 'Product' },
         { key: 'unitName', label: 'Unit' },
         'quantity', 
@@ -52,7 +52,7 @@ const SaleReport = (props) => {
                     return (
                         <CCard>
                             <CCardBody>
-                            <h5 style={{ marginBottom: "10px" }} className='page-title'>Sale Report</h5>
+                            <h5 style={{ marginBottom: "10px" }} className='page-title'>Transfer Report</h5>
                                 <Form>
                                     <CRow>
                                         <CCol md="4">
@@ -127,7 +127,7 @@ const SaleReport = (props) => {
                                                     marginRight: '25px'
                                                 }}
                                                 onClick={() => {
-                                                    axios.fetchPostData(`api/Sale/SaleReport`, formProps.values, setResponse);
+                                                    axios.fetchPostData(`api/Transfer/TransferReport`, formProps.values, setResponse);
                                                 }}
                                             ><FontAwesomeIcon icon={faSearch} /> Search</CButton>
                                         </CCol>
@@ -161,4 +161,4 @@ const SaleReport = (props) => {
     )
 }
 
-export default SaleReport;
+export default TransferReport;

@@ -11,6 +11,8 @@ import {
     CCard,
     CCardBody
 } from '@coreui/react'
+import PurchaseReport from './PurchaseReport'
+import TransferReport from './TransferReport'
 import SaleReport from './SaleReport'
 
 const AdminReportContainer = () => {
@@ -38,10 +40,10 @@ const AdminReportContainer = () => {
                         <CCol md="10">
                             <CTabContent className="mt-3">
                                 <CTabPane>
-                                    <SaleReport />
+                                    <PurchaseReport />
                                 </CTabPane>
                                 <CTabPane>
-                                    <SaleReport />
+                                    <TransferReport />
                                 </CTabPane>
                                 <CTabPane>
                                     <SaleReport />

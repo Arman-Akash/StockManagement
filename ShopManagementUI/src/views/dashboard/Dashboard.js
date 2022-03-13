@@ -77,19 +77,19 @@ const Dashboard = () => {
               <h6>Product Sub Type</h6>
             </CLink>
           </CCol>
-
-          <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
-            <CLink to="/product">
-              <CIcon className='mob-dashboard-img' src={iProduct} />
-              <h6>Product</h6>
-            </CLink>
-          </CCol>
           <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/unit">
               <CIcon className='mob-dashboard-img' src={iUnit} />
               <h6>Unit</h6>
             </CLink>
           </CCol>
+          <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
+            <CLink to="/product">
+              <CIcon className='mob-dashboard-img' src={iProduct} />
+              <h6>Product</h6>
+            </CLink>
+          </CCol>
+
           <CCol md="2" xs="2" sm="2" className="text-center oms-icon">
             <CLink to="/customer">
               <CIcon className='mob-dashboard-img' src={iSupplier} />
