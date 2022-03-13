@@ -49,6 +49,7 @@ const DueEntry = () => {
             <CRow>
                 <CCol md="8">
                     <CCardBody>
+                    <h5 style={{ marginBottom: "10px" }} className='page-title'>Opening Due Balance Entry</h5>
                         <AddButton
                             onClick={() => {
                                 toggleModal(!isOpen);

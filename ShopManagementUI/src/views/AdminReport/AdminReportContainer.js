@@ -14,6 +14,7 @@ import {
 import PurchaseReport from './PurchaseReport'
 import TransferReport from './TransferReport'
 import SaleReport from './SaleReport'
+import DueReport from './DueReport'
 
 const AdminReportContainer = () => {
     return (
@@ -49,7 +50,7 @@ const AdminReportContainer = () => {
                                     <SaleReport />
                                 </CTabPane>
                                 <CTabPane>
-                                    <SaleReport />
+                                    <DueReport />
                                 </CTabPane>
                             </CTabContent>
                         </CCol>
