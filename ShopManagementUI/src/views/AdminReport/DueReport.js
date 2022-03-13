@@ -27,6 +27,7 @@ const DueReport = () => {
 
     const [dues, setDues] = useState([]);
     const [disable, setDisable] = useState(true);
+    const [total, setTotal] = useState(0);
 
     var user = loadState(LOGGED_IN_USER);
 
@@ -36,13 +37,14 @@ const DueReport = () => {
         }
         axios.fetchGetData(`api/due/GetDueByBranch/${user?.branch_id}`, undefined, undefined, (response) => {
             setDues(response.data);
+            setTotal(response.data.reduce((a, b) => a + b.amount, 0).toFixed("2"));
         })
     }, [])
 
     return (
         <CCard>
             <CCardBody>
-            <h5 style={{ marginBottom: "10px" }} className='page-title'>Customer Due Report</h5>
+                <h5 style={{ marginBottom: "10px" }} className='page-title'>Customer Due Report</h5>
                 <CRow>
                     <CCol md="12">
                         <Formik
@@ -77,6 +79,7 @@ const DueReport = () => {
                                                             axios.fetchGetData(`api/due/GetDueByBranch/${value}`, undefined, undefined, (response) => {
                                                                 console.log(response.data)
                                                                 setDues(response.data);
+                                                                setTotal(response.data.reduce((a, b) => a + b.amount, 0).toFixed("2"));
                                                             })
                                                         }}
                                                     />
@@ -94,13 +97,26 @@ const DueReport = () => {
                     fields={[
                         // { key: "branchName", label: "Branch Name" },
                         { key: 'customerName', label: 'Customer Name' },
-                        { key: 'amount',label:'Due Amount', _classes: 'text-right' }
+                        { key: 'address', label: 'Address' },
+                        { key: 'phoneNo', label: 'Phone No' },
+                        { key: 'amount', label: 'Due Amount', _classes: 'text-right' }
                     ]}
                     tableFilter
                     border
                     striped
                     pagination
+                    extraRow={<tr>
+                        <td colSpan="2" className="text-right">Total:</td>
+                        <td>total</td>
+                        <td colSpan="7"></td>
+                    </tr>}
                 />
+
+                <CRow>
+                    <CCol md="12" className="text-right">
+                        Total Credit Amount: <span style={{ color: 'red' }}>{total}</span> TK
+                    </CCol>
+                </CRow>
 
                 <CCol md="6" className="text-right mt-2">
                     <CLink to="/dashboard">

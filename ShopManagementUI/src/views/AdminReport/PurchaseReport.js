@@ -37,12 +37,14 @@ const PurchaseReport = (props) => {
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
 
     let [response, setResponse] = useState({ data: [] });
+    const [total, setTotal] = useState(0);
+
     return (
         <Formik
             enableReinitialize
             initialValues={{
-                lcNumber:'',
-                billOfEntryNo:'',
+                lcNumber: '',
+                billOfEntryNo: '',
                 startDate: null,
                 endDate: null,
                 billStartDate: null,
@@ -191,6 +193,11 @@ const PurchaseReport = (props) => {
                                                 }}
                                                 onClick={() => {
                                                     axios.fetchPostData(`api/Receive/PurchaseReport`, formProps.values, setResponse);
+                                                    // axios.fetchGetData(`api/Receive/PurchaseReport`, formProps.values, undefined, (response) => {
+                                                    //     setResponse(response.data);
+                                                    //     console.log(response.data)
+                                                    //     setTotal(response.data.reduce((a, b) => a + b.amount, 0).toFixed("2"));
+                                                    // })
                                                 }}
                                             ><FontAwesomeIcon icon={faSearch} /> Search</CButton>
                                         </CCol>
@@ -214,6 +221,11 @@ const PurchaseReport = (props) => {
                                             }}
                                         />
                                     </CRow>
+                                    {/*<CRow>
+                                        <CCol md="12" className="text-right">
+                                            Total Credit Amount: <span style={{ color: 'green' }}>{total}</span> TK
+                                        </CCol>
+                                        </CRow>*/}
                                 </Form>
                             </CCardBody>
                         </CCard>

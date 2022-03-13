@@ -230,7 +230,8 @@ const DamageDeclare = (props) => {
                                                 branchId: item.branchId == null ? 0 : item.branchId,
                                                 productId: item.productId == null ? 0 : item.productId,
                                                 date: item.date,
-                                                quantity: item.quantity
+                                                quantity: item.quantity,
+                                                amount: item.amount
                                             }
                                         });
                                         setUnit(item.unitName);

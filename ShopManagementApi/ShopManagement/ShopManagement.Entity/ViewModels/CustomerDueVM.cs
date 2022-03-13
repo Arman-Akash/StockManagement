@@ -9,6 +9,8 @@ namespace ShopManagement.Entity.ViewModels
         public int Id { get; set; }
         public int CustomerId { get; set; }
         public string CustomerName { get; set; }
+        public string Address { get; set; }
+        public string PhoneNo { get; set; }
         public int BranchId { get; set; }
         public string BranchName { get; set; }
         public decimal Amount { get; set; }

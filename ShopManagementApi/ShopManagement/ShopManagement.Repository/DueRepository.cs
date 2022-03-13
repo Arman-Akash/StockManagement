@@ -63,13 +63,17 @@ namespace ShopManagement.Repository
 
         public async Task<List<CustomerDueVM>> GetAllDue(int branchId)
         {
+            var loggedInBranch = branchId;
             var customers = await _context.Customers
+                .Where(e => e.BranchId == branchId)
                 .Select(e => new CustomerDueVM
                 {
                     Id = e.Id,
                     CustomerId = e.Id,
                     BranchId = e.BranchId,
                     CustomerName = e.Name,
+                    Address = e.Address,
+                    PhoneNo = e.MobileNo,
                     BranchName = e.Branch.Name
                 })
                 .ToListAsync();
