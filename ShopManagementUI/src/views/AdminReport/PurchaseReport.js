@@ -192,12 +192,11 @@ const PurchaseReport = (props) => {
                                                     marginRight: '25px'
                                                 }}
                                                 onClick={() => {
-                                                    axios.fetchPostData(`api/Receive/PurchaseReport`, formProps.values, setResponse);
-                                                    // axios.fetchGetData(`api/Receive/PurchaseReport`, formProps.values, undefined, (response) => {
-                                                    //     setResponse(response.data);
-                                                    //     console.log(response.data)
-                                                    //     setTotal(response.data.reduce((a, b) => a + b.amount, 0).toFixed("2"));
-                                                    // })
+                                                    // axios.fetchPostData(`api/Receive/PurchaseReport`, formProps.values, setResponse);
+                                                    axios.fetchPostData(`api/Receive/PurchaseReport`, formProps.values, undefined, (response) => {
+                                                        setResponse(response.data);
+                                                        setTotal(response.data.data.reduce((a, b) => a + b.amount, 0).toFixed("2"));
+                                                    })
                                                 }}
                                             ><FontAwesomeIcon icon={faSearch} /> Search</CButton>
                                         </CCol>
@@ -220,6 +219,11 @@ const PurchaseReport = (props) => {
                                                     )
                                             }}
                                         />
+                                    </CRow>
+                                    <CRow>
+                                        <CCol className='text-right'>
+                                            <span>Total: {total}</span>
+                                        </CCol>
                                     </CRow>
                                     {/*<CRow>
                                         <CCol md="12" className="text-right">
