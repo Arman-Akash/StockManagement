@@ -33,6 +33,8 @@ const SaleReport = (props) => {
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
 
     let [response, setResponse] = useState({ data: [] });
+    const [total, setTotal] = useState(0);
+
     return (
         <Formik
             enableReinitialize
@@ -127,7 +129,11 @@ const SaleReport = (props) => {
                                                     marginRight: '25px'
                                                 }}
                                                 onClick={() => {
-                                                    axios.fetchPostData(`api/Sale/SaleReport`, formProps.values, setResponse);
+                                                    //axios.fetchPostData(`api/Sale/SaleReport`, formProps.values, setResponse);
+                                                    axios.fetchPostData(`api/Sale/SaleReport`, formProps.values, undefined, (response) => {
+                                                        setResponse(response.data);
+                                                        setTotal(response.data.data.reduce((a, b) => a + b.amount, 0).toFixed("2"));
+                                                    })
                                                 }}
                                             ><FontAwesomeIcon icon={faSearch} /> Search</CButton>
                                         </CCol>
@@ -137,6 +143,7 @@ const SaleReport = (props) => {
                                             items={axios.filterNull(response.data)}
                                             addTableClasses="table table-bordered table-striped"
                                             fields={fields}
+                                            tableFilter
                                             scopedSlots={{
                                                 'actions':
                                                     (item) => (
@@ -150,6 +157,11 @@ const SaleReport = (props) => {
                                                     )
                                             }}
                                         />
+                                    </CRow>
+                                    <CRow>
+                                        <CCol md="12" className="text-right">
+                                            Total Sale Amount: <span style={{ color: 'green', fontWeight: 'bold' }}>{total}</span> TK
+                                        </CCol>
                                     </CRow>
                                 </Form>
                             </CCardBody>

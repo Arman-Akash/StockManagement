@@ -186,7 +186,7 @@ const Purchase = (props) => {
                                                         </CCol>
                                                     </CRow>
                                                     <CRow style={{ marginTop: '10px' }}>
-                                                        <SADataTable
+                                                        <SADataTable className="sadatatable-phn"
                                                             md="12"
                                                             tableName="Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
@@ -362,8 +362,8 @@ const Purchase = (props) => {
                                                             comment: item.comment
                                                         }
                                                     });
-                                                    setUnitname(unitName);
-                                                    // axios.fetchGetData(`api/Product/${item.unitName}`, unitName, setUnitname);
+                                                    setUnitname(item.product.unitName);
+                                                    //axios.fetchGetData(`api/Product/${item.productId}`, unitName, setUnitname);
                                                     setIsAdd(false);
                                                     onSetDataArray(item.details);
                                                 }}

@@ -114,7 +114,7 @@ const DueReport = () => {
 
                 <CRow>
                     <CCol md="12" className="text-right">
-                        Total Credit Amount: <span style={{ color: 'red' }}>{total}</span> TK
+                        Total Credit Amount: <span style={{ color: 'red', fontWeight:'bold'}}>{total}</span> TK
                     </CCol>
                 </CRow>
 

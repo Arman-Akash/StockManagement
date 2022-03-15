@@ -27,6 +27,8 @@ const StockShow = () => {
 
     const [stocks, setStocks] = useState([]);
     const [disable, setDisable] = useState(true);
+    const [total, setTotal] = useState(0);
+
 
     var user = loadState(LOGGED_IN_USER);
 
@@ -36,6 +38,7 @@ const StockShow = () => {
         }
         axios.fetchGetData(`api/stock/GetStockByBranch/${user?.branch_id}`, undefined, undefined, (response) => {
             setStocks(response.data);
+            setTotal(response.data.reduce((a, b) => a + b.amount, 0).toFixed("2"));
         })
     }, [])
 
@@ -77,6 +80,7 @@ const StockShow = () => {
                                                                 console.log(response.data)
                                                                 // formProps.setFieldValue('productSubType', value);
                                                                 setStocks(response.data);
+                                                                setTotal(response.data.reduce((a, b) => a + b.amount, 0).toFixed("2"));
                                                             })
                                                         }}
                                                     />
@@ -93,7 +97,7 @@ const StockShow = () => {
                     items={stocks}
                     fields={[
                         { key: "productName", label: "Product" },
-                        { key: 'quantity', label: 'stock' },
+                        { key: 'quantity', label: 'Stock' },
                         { key: "unitName", label: 'Unit' },
                         { key: 'amount', _classes: 'text-right' }
                     ]}
@@ -102,6 +106,12 @@ const StockShow = () => {
                     striped
                     pagination
                 />
+
+                <CRow>
+                    <CCol md="12" className="text-right">
+                        Total Amount: <span style={{ color: 'green', fontWeight: 'bold' }}>{total}</span> TK
+                    </CCol>
+                </CRow>
 
                 <CCol md="6" className="text-right mt-2">
                     <CLink to="/dashboard">

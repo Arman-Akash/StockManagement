@@ -206,6 +206,7 @@ const PurchaseReport = (props) => {
                                             items={axios.filterNull(response.data)}
                                             addTableClasses="table table-bordered table-striped"
                                             fields={fields}
+                                            tableFilter
                                             scopedSlots={{
                                                 'actions':
                                                     (item) => (
@@ -220,16 +221,12 @@ const PurchaseReport = (props) => {
                                             }}
                                         />
                                     </CRow>
+
                                     <CRow>
-                                        <CCol className='text-right'>
-                                            <span>Total: {total}</span>
+                                        <CCol md="12" className="text-right">
+                                            Total Purchase Amount: <span style={{ color: 'green', fontWeight: 'bold' }}>{total}</span> TK
                                         </CCol>
                                     </CRow>
-                                    {/*<CRow>
-                                        <CCol md="12" className="text-right">
-                                            Total Credit Amount: <span style={{ color: 'green' }}>{total}</span> TK
-                                        </CCol>
-                                        </CRow>*/}
                                 </Form>
                             </CCardBody>
                         </CCard>

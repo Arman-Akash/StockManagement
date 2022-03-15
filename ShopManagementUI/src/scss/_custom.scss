@@ -1175,6 +1175,16 @@ a {
     transition: 0.5s;
 }
 
+html:not([dir="rtl"]) .float-right {
+  float: left !important;
+  margin-right: 10px;
+  margin-left: 0px;
+}
+.sadatatable-phn{
+  display: block;
+overflow-x: auto;
+margin-left: -20px;
+}
 .oms-icon h6 {
   color: black;
   width: 52px;
