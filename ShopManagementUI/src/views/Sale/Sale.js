@@ -70,6 +70,13 @@ const Sale = (props) => {
     useEffect(() => {
         axios.fetchGetData('api/Customer', customer, setCustomer);
     }, []);
+
+    // const [total, setTotal] = useState(0);
+
+    // useEffect(() => {
+    //     setTotal(dataArr.reduce((a, b) => a + b.stock, 0).toFixed("2"))
+    // }, [dataArr])
+
     return (
         <>
             <CCard>
@@ -238,6 +245,11 @@ const Sale = (props) => {
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
                                                             onSetDataArray={onSetDataArray}
+                                                            // extraRow={<tr>
+                                                            //     <td colSpan="2" className="text-right">Total:</td>
+                                                            //     <td>{total}</td>
+                                                            //     <td colSpan="7"></td>
+                                                            // </tr>}
                                                             fieldsTypeWithValue={[
 
                                                                 {
