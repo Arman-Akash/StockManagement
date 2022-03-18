@@ -39,6 +39,7 @@ const Transfer = (props) => {
         transferDetails: []
     }
     let [transferObj, setTransferObj] = useState({ data: data });
+    let [unitName, setUnitname] = useState('');
     const [saveBtn, setSaveBtn] = useState(true);
 
     const fields = ['transferDate',
@@ -186,7 +187,7 @@ const Transfer = (props) => {
                                                             md="12"
                                                             tableName="Product Transfer Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
-                                                            dataTableStyle={{ maxHeight: '200px', overflow: 'auto'}}
+                                                            dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
                                                             columns={["Product", "Unit", "stock", "Transfer Quantity", "Rate", "Amount", "Actions"]}
                                                             fields={["productId", "unitName", "stock", "quantity", "rate", "amount"]}
                                                             readOnlyArr={["unitName", "amount"]}
@@ -205,8 +206,7 @@ const Transfer = (props) => {
                                                                         }
                                                                     }),
                                                                     onOptionChangeHandler: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                        var unitName = "";
-                                                                        axios.fetchGetData(`api/Product/${e.target.value}`, undefined, undefined, (response) => {
+                                                                        axios.fetchGetData(`api/Product/${e.target.value}`, unitName, setUnitname, (response) => {
                                                                             axios.fetchGetData(`api/Stock/GetStock/${e.target.value}`, undefined, undefined, (stock) => {
                                                                                 let newArr = [...dataArr];
                                                                                 var selectedObj = { ...newArr[indexI] };
@@ -215,6 +215,7 @@ const Transfer = (props) => {
                                                                                 newArr[indexI] = selectedObj;
                                                                                 console.log(newArr);
                                                                                 onSetDataArray(newArr);
+                                                                                setUnitname(response.data.unitName);
                                                                             })
                                                                         });
                                                                     }
@@ -354,6 +355,10 @@ const Transfer = (props) => {
                                                             });
                                                             transferChallan.setData({ data: item.transferChallan });
                                                             setIsAdd(false);
+                                                            item.transferDetails.forEach(e => {
+                                                                e.unitName = e.product.unitName
+                                                            })
+                                                            console.log(item.transferDetails);
                                                             onSetDataArray(item.transferDetails);
                                                         }}
                                                     />
@@ -388,6 +393,9 @@ const Transfer = (props) => {
                                                             transferChallan.setData({ data: item.transferChallan });
                                                             setIsAdd(false);
                                                             onSetDataArray(item.transferDetails);
+                                                            item.transferDetails.forEach(e => {
+                                                                e.unitName = e.product.unitName
+                                                            })
                                                         }}
                                                         icon={faEye}
                                                     />

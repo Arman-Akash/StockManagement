@@ -272,6 +272,7 @@ const Sale = (props) => {
                                                                                 newArr[indexI] = selectedObj;
                                                                                 console.log(newArr);
                                                                                 onSetDataArray(newArr);
+                                                                                setUnitname(response.data.unitName);
                                                                             })
                                                                         });
                                                                     }
@@ -414,10 +415,13 @@ const Sale = (props) => {
                                                             transactionType: item.transactionType
                                                         }
                                                     });
-                                                    setUnitname(unitName);
                                                     console.log(item);
                                                     setIsAdd(false);
                                                     onSetDataArray(item.saleDetails);
+                                                    console.log(item.saleDetails);
+                                                    item.saleDetails.forEach(e => {
+                                                        e.unitName = e.product.unitName
+                                                    })
                                                 }}
                                             />
                                             <DeleteIcon

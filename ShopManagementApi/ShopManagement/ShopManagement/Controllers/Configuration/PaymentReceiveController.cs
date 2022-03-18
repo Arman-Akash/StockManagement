@@ -30,9 +30,12 @@ namespace ShopManagement.WebApi.Controllers
         [HttpGet]
         public async Task<ListResult<PaymentReceive>> Get()
         {
+            var loggedInBraanch = User.GetBranchId();
             var result = new ListResult<PaymentReceive>()
             {
+
                 Data = await _repository.Get()
+                .Where(e => e.BranchId == loggedInBraanch)
                 .Include(e => e.Branch)
                 .Include(e => e.Customer)
                 .ToListAsync()

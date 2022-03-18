@@ -25,7 +25,7 @@ export const outlet = [
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/sale', name: 'Sale', component: Sale },
   { path: '/transfer', name: 'Transfer', component: Transfer },
-  { path: '/product-purchase', name: 'Product Purchase', component: Purchase },
+  { path: '/purchase', name: 'Product Purchase', component: Purchase },
   { path: '/receive', name: 'Product Receive', component: Receive },
   { path: '/customer', name: 'Customer', component: Customer },
   { path: '/opening-stock-entry', name: 'Opening Stock Entry', component: OpeningStockEntry },
@@ -33,7 +33,6 @@ export const outlet = [
   { path: '/stock-adjustment', name: 'Stock Adjustment', component: StockAdjustment },
   { path: '/customer-dues', name: 'Due Payment', component: CustomerDueContainer },
   { path: '/reorder-alert', name: 'Re-order Alert', component: ReorderAlert },
-  { path: '/damage-declare', name: 'Damage Declare', component: DamageDeclare }
 ]
 
 export const warehouse = [
@@ -43,6 +42,7 @@ export const warehouse = [
   { path: '/product-sub-type', name: 'Product Sub Type', component: ProductSubType },
   { path: '/unit', name: 'Unit', component: Unit },
   { path: '/product', name: 'Product', component: Product },
+  { path: '/damage-declare', name: 'Damage Declare', component: DamageDeclare }
 ]
 
 const routes = [

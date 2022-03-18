@@ -366,6 +366,7 @@ const Purchase = (props) => {
                                                         e.unitName = e.product.unitName
                                                     })
                                                     onSetDataArray(item.details);
+                                                    console.log(item.details);
                                                 }}
                                             />
                                             <DeleteIcon

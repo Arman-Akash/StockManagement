@@ -43,11 +43,34 @@ namespace ShopManagement.WebApi.Controllers
             {
                 Data = await _repository.Get()
                 .Where(e => e.BranchId == loggedInBraanch)
-                .Include(e => e.TransferDetails)
                 .Include(e => e.Branch)
                 .Include(e => e.TransferedBranch)
                 .Include(e => e.User)
                 .Include(e => e.ReceivedUser)
+                .Include(e => e.TransferDetails)
+                .ThenInclude(e => e.Product)
+                .ThenInclude(e => e.Unit)
+                .ToListAsync()
+            };
+
+            return result;
+        }
+
+        [HttpGet("Receive")]
+        public async Task<ListResult<Transfer>> Receive()
+        {
+            var loggedInBraanch = User.GetBranchId();
+            var result = new ListResult<Transfer>()
+            {
+                Data = await _repository.Get()
+                .Where(e => e.BranchId == loggedInBraanch)
+                .Include(e => e.Branch)
+                .Include(e => e.TransferedBranch)
+                .Include(e => e.User)
+                .Include(e => e.ReceivedUser)
+                .Include(e => e.TransferDetails)
+                .ThenInclude(e => e.Product)
+                .ThenInclude(e => e.Unit)
                 .ToListAsync()
             };
 

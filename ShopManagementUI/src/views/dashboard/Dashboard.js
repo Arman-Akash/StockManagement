@@ -103,7 +103,7 @@ const Dashboard = () => {
             </CLink>
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
-            <CLink to="/product-purchase">
+            <CLink to="purchase">
               <CIcon className='mob-dashboard-img' src={iReceive} />
               <h6>Product Purchase</h6>
             </CLink>

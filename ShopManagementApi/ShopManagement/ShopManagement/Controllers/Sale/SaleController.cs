@@ -38,9 +38,11 @@ namespace ShopManagement.WebApi.Controllers
         [HttpGet]
         public async Task<ListResult<Sale>> Get()
         {
+            var loggedInBraanch = User.GetBranchId();
             var result = new ListResult<Sale>()
             {
                 Data = await _repository.Get()
+                .Where(e => e.BranchId == loggedInBraanch)
                 .Include(e => e.Customer)
                 .Include(e => e.SaleDetails)
                 .ThenInclude(e => e.Product)
