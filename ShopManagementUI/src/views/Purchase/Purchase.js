@@ -55,7 +55,7 @@ const Purchase = (props) => {
     let [dataArr, onSetDataArray] = useState([]);
 
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
-    let productReceives = dataApi.useDataApi(`api/Receive`, initialState.initialCollections);
+    let productReceives = dataApi.useDataApi(`api/Purchase`, initialState.initialCollections);
     return (
         <>
             <CCard>
@@ -82,12 +82,12 @@ const Purchase = (props) => {
                                     }
                                     else {
                                         if (isAdd) {
-                                            axios.fetchPostData('api/Receive', values, () => {
+                                            axios.fetchPostData('api/Purchase', values, () => {
                                                 productReceives.refresh();
                                             });
                                             onSetDataArray([]);
                                         } else {
-                                            axios.fetchPutData(`api/Receive/${values.id}`, values, () => {
+                                            axios.fetchPutData(`api/Purchase/${values.id}`, values, () => {
                                                 productReceives.refresh();
                                             })
                                             onSetDataArray([]);
@@ -211,7 +211,6 @@ const Purchase = (props) => {
                                                                     }),
                                                                     onOptionChangeHandler: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
                                                                         axios.fetchGetData(`api/Product/${e.target.value}`, unitName, setUnitname, (response) => {
-                                                                            console.log(response.data.unitName);
                                                                             let newArr = [...dataArr];
                                                                             var selectedObj = { ...newArr[indexI] };
                                                                             selectedObj['unitName'] = response.data.unitName;
@@ -240,7 +239,6 @@ const Purchase = (props) => {
                                                                         var quantity = parseFloat(e.target.value);
                                                                         var selectedObj = newArr[indexI];
                                                                         selectedObj['quantity'] = quantity;
-                                                                        // selectedObj['rate'] = 1;
                                                                         var rate = parseFloat(selectedObj['rate']);
                                                                         var amount = parseFloat(quantity * rate);
                                                                         selectedObj['amount'] = amount;
@@ -362,9 +360,11 @@ const Purchase = (props) => {
                                                             comment: item.comment
                                                         }
                                                     });
-                                                    setUnitname(item.product.unitName);
                                                     //axios.fetchGetData(`api/Product/${item.productId}`, unitName, setUnitname);
                                                     setIsAdd(false);
+                                                    item.details.forEach(e => {
+                                                        e.unitName = e.product.unitName
+                                                    })
                                                     onSetDataArray(item.details);
                                                 }}
                                             />
@@ -385,8 +385,7 @@ const Purchase = (props) => {
                         />
                     </CRow>
                     <CRow className="text-center">
-                        <CCol textAlign="center">
-
+                        <CCol>
                             <CLink to="/dashboard">
                                 <CButton size="sm" style={{ marginLeft: "20px" }} color="danger" type="button"><FontAwesomeIcon icon={faArrowAltCircleLeft} />&nbsp;Exit</CButton>
                             </CLink>
@@ -397,7 +396,7 @@ const Purchase = (props) => {
                     isDelete={isDelete}
                     toggleDeleteModal={toggleDeleteModal}
                     deleteOpp={() => {
-                        axios.fetchDeleteData(`api/Receive/${receiveObj.data.id}`, () => {
+                        axios.fetchDeleteData(`api/Purchase/${receiveObj.data.id}`, () => {
                             productReceives.refresh();
                         });
                     }}

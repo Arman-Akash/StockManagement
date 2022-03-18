@@ -17,14 +17,14 @@ namespace ShopManagement.WebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ReceiveController : ControllerBase
+    public class PurchaseController : ControllerBase
     {
         private readonly IRepository<Purchase> _repository;
         private readonly IRepository<PurchaseDetail> _purchaseDetailRepository;
         private readonly IReceiveRepository _receiveRepository;
         private readonly ILogError _logError;
 
-        public ReceiveController(IRepository<Purchase> _repository,
+        public PurchaseController(IRepository<Purchase> _repository,
             IRepository<PurchaseDetail> _purchaseDetailRepository,
             IReceiveRepository _receiveReposioty,
             ILogError _logError)
@@ -42,6 +42,8 @@ namespace ShopManagement.WebApi.Controllers
             {
                 Data = await _repository.Get()
                 .Include(e => e.Details)
+                .ThenInclude(e => e.Product)
+                .ThenInclude(e => e.Unit)
                 .ToListAsync()
             };
 
