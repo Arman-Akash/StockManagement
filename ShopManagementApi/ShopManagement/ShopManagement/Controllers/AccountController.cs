@@ -42,6 +42,7 @@ namespace ShopManagement.WebApi.Controllers
             this._logError = _logError;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ListResult<User>> Get()
         {
@@ -57,6 +58,7 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<Result<User>> Get(int id)
         {
@@ -75,6 +77,7 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("CreateUser")]
         public async Task<Result> CreateUser(UserLogin newUser)
         {
@@ -103,6 +106,7 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("updateUser/{id}")]
         public async Task<Result> UpdateUser(int id, User updatedUser)
         {
@@ -168,6 +172,7 @@ namespace ShopManagement.WebApi.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -202,7 +207,7 @@ namespace ShopManagement.WebApi.Controllers
                     {
                     new Claim(JwtRegisteredClaimNames.Sub, _user.Username),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(ClaimTypes.Role, _user.RoleNames),
+                    new Claim(ClaimTypes.Role, _user.Permissions),
                     new Claim("user_id", _user.Id.ToString()),
                     new Claim("branch_id", _user.BranchId?.ToString())
                 };

@@ -33,6 +33,7 @@ export const outlet = [
   { path: '/stock-adjustment', name: 'Stock Adjustment', component: StockAdjustment },
   { path: '/customer-dues', name: 'Due Payment', component: CustomerDueContainer },
   { path: '/reorder-alert', name: 'Re-order Alert', component: ReorderAlert },
+  { path: '/user/change-password', exact: true, name: 'Access Control', component: ChangePassword }
 ]
 
 export const warehouse = [
@@ -45,12 +46,12 @@ export const warehouse = [
   { path: '/damage-declare', name: 'Damage Declare', component: DamageDeclare }
 ]
 
+//admin
 const routes = [
   ...warehouse,
   { path: '/branch', name: 'Branch Information', component: Branch },
   { path: '/admin-report', name: 'Admin Report', component: AdminReportContainer },
   { path: '/users/create-user', exact: true, name: 'Users', component: Users },
-  { path: '/user/change-password', exact: true, name: 'Access Control', component: ChangePassword },
 ];
 
 export default routes;

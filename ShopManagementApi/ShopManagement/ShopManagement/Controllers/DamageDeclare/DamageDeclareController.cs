@@ -15,7 +15,7 @@ namespace ShopManagement.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin, Warehouse")]
     public class DamageDeclareController : ControllerBase
     {
         private readonly IRepository<DamageDeclare> _repository;

@@ -36,6 +36,7 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
+        [Authorize(Roles = "Admin, Warehouse")]
         [HttpPost]
         public async Task<Result<Unit>> Post(Unit unit)
         {
@@ -66,6 +67,7 @@ namespace ShopManagement.WebApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Warehouse")]
         [HttpPut("{id}")]
         public async Task<Result<Unit>> Put(int id, Unit unit)
         {
@@ -95,6 +97,7 @@ namespace ShopManagement.WebApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Warehouse")]
         [HttpDelete("{id}")]
         public async Task<Result> Delete(int id)
         {
