@@ -29,6 +29,7 @@ import DeleteIcon from '../commonComponents/DeleteIcon';
 import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
 import { BranchTypes } from '../../staticData';
+import SATextArea from '../FormLib/saTextarea';
 
 
 const Institute = () => {
@@ -50,8 +51,8 @@ const Institute = () => {
         { key: 'type', label: 'Branch Type' },
         { key: 'phnNumber', label: 'Phone Number' },
         { key: 'email', label: 'Email' },
-        { key: 'location', label: 'Location' },
-     'actions'];
+        { key: 'location', label: 'Address' },
+        'actions'];
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
 
     return (
@@ -104,7 +105,7 @@ const Institute = () => {
                 <CModal
                     show={isOpen}
                     onClose={() => toggleModal(!isOpen)}
-                    style={{marginLeft:"0px"}}
+                    style={{ marginLeft: "0px" }}
                     color="primary"
                 >
                     <Formik
@@ -157,21 +158,21 @@ const Institute = () => {
                                                     />
                                                 </CCol>
                                                 <CCol md="12">
-                                                <SAReactAutoSelect
-                                                    id="type"
-                                                    name="type"
-                                                    label="Branch Type"
-                                                    isInline="true"
-                                                    lSize="4"
-                                                    rSize="7"
-                                                    labelClassName="float-right"
-                                                    formProps={formProps}
-                                                    options={[
-                                                        { label: BranchTypes.Warehouse, value: BranchTypes.Warehouse },
-                                                        { label: BranchTypes.Outlet, value: BranchTypes.Outlet }
-                                                    ]}
-                                                />
-                                            </CCol>
+                                                    <SAReactAutoSelect
+                                                        id="type"
+                                                        name="type"
+                                                        label="Branch Type"
+                                                        isInline="true"
+                                                        lSize="4"
+                                                        rSize="7"
+                                                        labelClassName="float-right"
+                                                        formProps={formProps}
+                                                        options={[
+                                                            { label: BranchTypes.Warehouse, value: BranchTypes.Warehouse },
+                                                            { label: BranchTypes.Outlet, value: BranchTypes.Outlet }
+                                                        ]}
+                                                    />
+                                                </CCol>
                                                 <CCol md="12">
                                                     <SAInput
                                                         id="phnNumber"
@@ -185,29 +186,29 @@ const Institute = () => {
                                                     />
                                                 </CCol>
                                                 <CCol md="12">
-                                                <SAInput
-                                                    id="email"
-                                                    name="email"
-                                                    type="text"
-                                                    label="Email"
-                                                    isInline="true"
-                                                    lSize="4"
-                                                    rSize="7"
-                                                    labelClassName="float-right"
-                                                />
-                                            </CCol>
-                                            <CCol md="12">
-                                            <SAInput
-                                                id="location"
-                                                name="location"
-                                                type="text"
-                                                label="Location"
-                                                isInline="true"
-                                                lSize="4"
-                                                rSize="7"
-                                                labelClassName="float-right"
-                                            />
-                                        </CCol>
+                                                    <SAInput
+                                                        id="email"
+                                                        name="email"
+                                                        type="text"
+                                                        label="Email"
+                                                        isInline="true"
+                                                        lSize="4"
+                                                        rSize="7"
+                                                        labelClassName="float-right"
+                                                    />
+                                                </CCol>
+                                                <CCol md="12">
+                                                    <SATextArea
+                                                        id="location"
+                                                        name="location"
+                                                        type="text"
+                                                        label="Address"
+                                                        isInline="true"
+                                                        lSize="4"
+                                                        rSize="7"
+                                                        labelClassName="float-right"
+                                                    />
+                                                </CCol>
                                             </CModalBody>
                                             <CModalFooter>
                                                 <CButton type="submit" color="success" size="sm"><FontAwesomeIcon icon={faSave} /> Save</CButton>
