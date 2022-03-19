@@ -5,7 +5,7 @@ import {
 } from '@coreui/react';
 //Formik & Yup lib
 import { useField } from "formik";
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 
 /**
@@ -61,8 +61,6 @@ const SAReactCreatableAutoSelect = ({ isRequired, labelStyle, inlineLabelStyle, 
     const [field, meta] = useField(props);
     const [isLoading, setIsLoading] = useState(false);
     let isR = (isRequired !== undefined && isRequired === "true");
-    let isInvalid = (meta.touched && meta.error && isR) ? true : false;
-    let isValid = isR ? !meta.touched ? false : true : false;
     isInline = isInline === undefined ? "false" : isInline;
     initialLabelName = initialLabelName !== undefined ? initialLabelName : 'Select option...';
     options = [{ label: initialLabelName, value: 0 }].concat(options);
@@ -76,7 +74,6 @@ const SAReactCreatableAutoSelect = ({ isRequired, labelStyle, inlineLabelStyle, 
     }
 
     let star = <span className="text-danger">*</span>
-    let space = <span>&nbsp;&nbsp;</span>
 
     let cLabelBlock = (label == undefined || label == '') ? null :
         (<CLabel className={labelClassName} style={labelStyle} htmlFor={props.id || props.name}>{label} {isR ? star : null}</CLabel>);

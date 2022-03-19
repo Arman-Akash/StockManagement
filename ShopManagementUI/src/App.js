@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import userManager, { loadUserFromStorage } from './views/Auth/UserService';
 import AuthProvider from './views/Auth/utils/authProvider'
-import PrivateRoute from './views/Auth/utils/protectedRoute'
+// import PrivateRoute from './views/Auth/utils/protectedRoute'
 
 // React Notification
 import 'react-notifications/lib/notifications.css';

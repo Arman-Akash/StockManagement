@@ -5,8 +5,7 @@ import {
     CCol,
     CRow,
     CDataTable,
-    CLink,
-    CLabel
+    CLink
 } from '@coreui/react';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 ///Font Awesome

@@ -24,15 +24,11 @@ import AddButton from '../commonComponents/AddButton';
 import DeleteIcon from '../commonComponents/DeleteIcon';
 import DeleteModal from '../commonComponents/DeleteModal';
 import SAInput from '../FormLib/saInput';
-import * as keys from '../../axios/keys';
-import * as storage from '../../axios/storage';
 import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
 import SACheckBox from '../FormLib/saCheckBoxTest'
 import { Roles } from '../../staticData';
 
 const Users = () => {
-    var user = storage.loadState(keys.LOGGED_IN_USER);
-
     const [isAddModalOpen, toggleAddModal] = useState(false);
     const [isDelete, toggleDeleteModal] = useState(false);
     const [isEditUser, toggleEditModal] = useState(false);

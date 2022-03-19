@@ -16,12 +16,10 @@ import DueEntry from './DueEntry'
 // import CustomerDueReport from './CustomerDueReport'
 
 const CustomerDueContainer = () => {
-    const [active, setActive] = useState(0)
-
     return (
         <CCard>
             <CCardBody>
-                <CTabs activeTab={active}>
+                <CTabs activeTab={0}>
                     <CRow>
                         <CCol md="2">
                             <CNav vertical className="vertical-nav">

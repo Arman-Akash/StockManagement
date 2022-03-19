@@ -13,7 +13,6 @@ import iStock from '../../assets/images/stock.png';
 import iSell from '../../assets/images/sell.png';
 import iPurchase from '../../assets/images/purchase.png';
 import iStockShow from '../../assets/images/stockShow.png';
-import iStockAdjustment from '../../assets/images/stockAdjustment.png';
 import iSupplier from '../../assets/images/supplier.png';
 import iSubType from '../../assets/images/subtype.png';
 import iProductType from '../../assets/images/productType.png';

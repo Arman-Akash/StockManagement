@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import {
   CButton,
   CCardBody,
@@ -16,12 +16,9 @@ import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Form, Formik } from "formik";
-import SACheckBox from '../FormLib/saCheckbox';
 
 const AccessControl = () => {
-  const handlePermissionChange = (obj, prop, val) => {
-
-  }
+  
   return (
     <CCard>
       <CCardBody>

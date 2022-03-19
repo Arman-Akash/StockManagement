@@ -23,7 +23,7 @@ import EditIcon from '../commonComponents/EditIcon';
 import SADataTable from '../FormLib/saDataTable';
 import { apiHostName } from '../../../src/config';
 
-const Sale = (props) => {
+const Sale = () => {
     const [isDelete, toggleDeleteModal] = useState(false);
     const [isAdd, setIsAdd] = useState(true);
 
@@ -67,6 +67,7 @@ const Sale = (props) => {
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let sales = dataApi.useDataApi(`api/Sale`, initialState.initialCollections);
     const [customer, setCustomer] = useState(initialState.initialCollections);
+    
     useEffect(() => {
         axios.fetchGetData('api/Customer', customer, setCustomer);
     }, []);
@@ -297,7 +298,7 @@ const Sale = (props) => {
                                                                     min: 0,
                                                                     onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
                                                                         let newArr = [...dataArr];
-                                                                        var selectedObj = { ...newArr[indexI] };
+                                                                        // var selectedObj = { ...newArr[indexI] };
                                                                         var quantity = parseFloat(e.target.value);
                                                                         var selectedObj = newArr[indexI];
                                                                         selectedObj['quantity'] = quantity;
@@ -317,7 +318,7 @@ const Sale = (props) => {
                                                                     min: 0,
                                                                     onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
                                                                         let newArr = [...dataArr];
-                                                                        var selectedObj = { ...newArr[indexI] };
+                                                                        // var selectedObj = { ...newArr[indexI] };
                                                                         var rate = parseFloat(e.target.value);
                                                                         var selectedObj = newArr[indexI];
                                                                         selectedObj['rate'] = rate;

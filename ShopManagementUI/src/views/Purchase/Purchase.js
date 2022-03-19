@@ -5,10 +5,8 @@ import {
 } from '@coreui/react';
 import SAInput from '../FormLib/saInput';
 import SADatePicker from '../FormLib/saDatePicker';
-//Formik & Yup lib
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowAltCircleLeft, faSave, faTrash, faTimes } from '@fortawesome/free-solid-svg-icons';
 import * as axios from '../../axios/axiosLib';
@@ -20,7 +18,7 @@ import EditIcon from '../commonComponents/EditIcon';
 import SADataTable from '../FormLib/saDataTable';
 import SATextArea from '../FormLib/saTextarea';
 
-const Purchase = (props) => {
+const Purchase = () => {
     const [isDelete, toggleDeleteModal] = useState(false);
     const [isAdd, setIsAdd] = useState(true);
 

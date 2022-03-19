@@ -157,7 +157,8 @@ export const fetchPostData = (url, postData, func, handleOther) => {
                 handleOther(response);
             }
 
-            if (response.data.message !== null && response.data.message !== '') {
+            if (response.data.message != undefined && 
+                response.data.message !== null && response.data.message !== '') {
                 createNotification(getNotificationType(response), response.data.message);
             }
         })

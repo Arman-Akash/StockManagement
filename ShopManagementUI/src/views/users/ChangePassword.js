@@ -23,6 +23,8 @@ const ChangePassword = () => {
                 <Formik
                     enableReinitialize
                     initialValues={{
+                        password: '',
+                        confrimNewPassword: ''
                     }}
                     validationSchema={
                         Yup.object({
@@ -36,7 +38,7 @@ const ChangePassword = () => {
                         axios.fetchPostData(`api/account/ChangePassword`, {
                             password: values.password,
                             confirmPassword: values.confrimNewPassword
-                        }, (response) => {
+                        }, () => {
                             alert("Password Change Successfully");
                         })
                         resetForm();

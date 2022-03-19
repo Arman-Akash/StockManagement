@@ -5,7 +5,6 @@ import {
     CCard,
     CCardBody,
     CRow,
-    CLabel,
     CCol,
     CModal,
     CModalBody,
@@ -18,8 +17,6 @@ import SAInput from '../FormLib/saInput';
 import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-
-///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import DeleteModal from '../commonComponents/DeleteModal';

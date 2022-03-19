@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
     CCard,
     CCardBody,
@@ -11,19 +11,14 @@ import {
 import SAInput from '../FormLib/saInput';
 import SAReactAutoSelect from '../FormLib/SAReactAutoSelect'
 import SADatePicker from '../FormLib/saDatePicker'
-
-
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import * as axios from '../../axios/axiosLib';
 import EditIcon from '../commonComponents/EditIcon';
 import DeleteModal from '../commonComponents/DeleteModal';
 import DeleteIcon from '../commonComponents/DeleteIcon';
-
-///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave, faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
-//Custom hook and state
 import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
 

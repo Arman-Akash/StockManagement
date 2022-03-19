@@ -10,17 +10,16 @@ import {
 } from '@coreui/react'
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faSearch, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faSearch } from '@fortawesome/free-solid-svg-icons';
 import SADatePicker from '../FormLib/saDatePicker';
 import * as axios from '../../axios/axiosLib';
-import { apiHostName } from '../../config';
 import { Form, Formik } from "formik";
 import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
 import SAInput from '../FormLib/saInput';
 import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
 
-const PurchaseReport = (props) => {
+const PurchaseReport = () => {
     let [isOpen, toggleModal] = useState(false);
 
     const fields = [
