@@ -13,7 +13,7 @@ namespace ShopManagement.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class BranchController : ControllerBase
     {
         private readonly IRepository<Branch> _repository;
