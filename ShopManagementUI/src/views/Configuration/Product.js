@@ -46,7 +46,7 @@ const Product = () => {
         manufactureDate: null,
         expireDate: null,
         shelfNo: '',
-        expireDate: null,
+        // expireDate: null,
         details: ''
     }
     let [productObj, setProductObj] = useState(data);

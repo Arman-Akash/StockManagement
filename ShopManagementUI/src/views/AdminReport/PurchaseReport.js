@@ -192,7 +192,7 @@ const PurchaseReport = () => {
                                                 }}
                                                 onClick={() => {
                                                     // axios.fetchPostData(`api/Receive/PurchaseReport`, formProps.values, setResponse);
-                                                    axios.fetchPostData(`api/Receive/PurchaseReport`, formProps.values, undefined, (response) => {
+                                                    axios.fetchPostData(`api/Purchase/PurchaseReport`, formProps.values, undefined, (response) => {
                                                         setResponse(response.data);
                                                         setTotal(response.data.data.reduce((a, b) => a + b.amount, 0).toFixed("2"));
                                                     })

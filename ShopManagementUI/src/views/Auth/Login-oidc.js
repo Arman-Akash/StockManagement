@@ -1,9 +1,7 @@
 import React from 'react'
 import { signinRedirect } from './UserService';
-import { CCard, CCardBody, CImg } from '@coreui/react'
 import { Redirect } from 'react-router-dom'
 
-import logo from "../../assets/idmslogo.png";
 import { useSelector } from 'react-redux'
 
 const Login = (props) => {

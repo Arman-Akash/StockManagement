@@ -45,7 +45,6 @@ const PaymentReceive = () => {
         { label: "P.O", value: "P.O" }
     ]
     let customers = dataApi.useDataApi(`api/Customer`, initialState.initialCollections);
-    let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
     let payments = dataApi.useDataApi(`api/PaymentReceive`, initialState.initialCollections);
 
     // useEffect(() => {

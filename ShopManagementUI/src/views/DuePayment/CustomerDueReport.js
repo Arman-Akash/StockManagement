@@ -39,7 +39,6 @@ const CustomerDueReport = (props) => {
     ]
     let customers = dataApi.useDataApi(`api/Customer`, initialState.initialCollections);
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
-    let customerDues = dataApi.useDataApi(`api/CustomerDue`, initialState.initialCollections);
     let [response, setResponse] = useState({ data: [] });
 
     return (

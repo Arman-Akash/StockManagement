@@ -22,7 +22,6 @@ import { LOGGED_IN_USER } from '../../axios/keys';
 import { Roles } from '../../staticData';
 
 const StockShow = () => {
-
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
 
     const [stocks, setStocks] = useState([]);
