@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import {
     CCol,
     CRow,
@@ -17,15 +17,26 @@ import { Form, Formik } from "formik";
 import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
 import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
+import { loadState } from '../../axios/storage';
+import { LOGGED_IN_USER } from '../../axios/keys';
+import { Roles } from '../../staticData';
 
 const SaleReport = () => {
     let [isOpen, toggleModal] = useState(false);
+    const [disable, setDisable] = useState(true);
+    var user = loadState(LOGGED_IN_USER);
+
+    useEffect(() => {
+        if (user?.permissions == Roles.Admin) {
+            setDisable(false);
+        }
+    }, [])
 
     const fields = ['saleDate',
         { key: 'productName', label: 'Product' },
         { key: 'unitName', label: 'Unit' },
-        'quantity', 
-        {key: 'amount', _classes: 'text-right' }
+        'quantity',
+        { key: 'amount', _classes: 'text-right' }
     ];
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
@@ -39,7 +50,7 @@ const SaleReport = () => {
             initialValues={{
                 startDate: null,
                 endDate: null,
-                branchId: 0,
+                branchId: user?.branch_id,
                 productId: 0
             }}
 
@@ -52,8 +63,26 @@ const SaleReport = () => {
                     return (
                         <CCard>
                             <CCardBody>
-                            <h5 style={{ marginBottom: "10px" }} className='page-title'>Sale Report</h5>
+                                <h5 style={{ marginBottom: "10px" }} className='page-title'>Sale Report</h5>
                                 <Form>
+                                    <CRow>
+                                        <CCol md="4">
+                                            <SAReactAutoSelect
+                                                id="branchId"
+                                                name="branchId"
+                                                label="Branch"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                labelClassName="float-right"
+                                                formProps={formProps}
+                                                isDisabled={disable}
+                                                options={branches.data.data.map(item => {
+                                                    return { label: item.name, value: item.id }
+                                                })}
+                                            />
+                                        </CCol>
+                                    </CRow>
                                     <CRow>
                                         <CCol md="4">
                                             <SADatePicker
@@ -82,21 +111,6 @@ const SaleReport = () => {
                                                 formProps={formProps}
                                                 dateFormat="dd/MM/yyyy"
                                                 placeholderText="dd/MM/yyyy"
-                                            />
-                                        </CCol>
-                                        <CCol md="4">
-                                            <SAReactAutoSelect
-                                                id="branchId"
-                                                name="branchId"
-                                                label="Branch"
-                                                isInline="true"
-                                                lSize="4"
-                                                rSize="8"
-                                                labelClassName="float-right"
-                                                formProps={formProps}
-                                                options={branches.data.data.map(item => {
-                                                    return { label: item.name, value: item.id }
-                                                })}
                                             />
                                         </CCol>
                                         <CCol md="4">

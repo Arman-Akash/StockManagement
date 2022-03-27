@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import {
     CCol,
     CRow,
@@ -18,9 +18,20 @@ import SAReactAutoSelect from '../FormLib/SAReactAutoSelect';
 import SAInput from '../FormLib/saInput';
 import * as dataApi from '../../customHooks/UseDataApi';
 import * as initialState from '../../functionalLib/initialState';
+import { loadState } from '../../axios/storage';
+import { LOGGED_IN_USER } from '../../axios/keys';
+import { Roles } from '../../staticData';
 
 const PurchaseReport = () => {
     let [isOpen, toggleModal] = useState(false);
+    const [disable, setDisable] = useState(true);
+    var user = loadState(LOGGED_IN_USER);
+
+    useEffect(() => {
+        if (user?.permissions == Roles.Admin) {
+            setDisable(false);
+        }
+    }, [])
 
     const fields = [
         { key: 'rcvDate', label: 'Purchase Date' },
@@ -48,7 +59,7 @@ const PurchaseReport = () => {
                 endDate: null,
                 billStartDate: null,
                 billEndDate: null,
-                branchId: 0,
+                branchId: user?.branch_id,
                 productId: 0
             }}
 
@@ -63,6 +74,39 @@ const PurchaseReport = () => {
                             <CCardBody>
                                 <h5 style={{ marginBottom: "10px" }} className='page-title'>Purchase Report</h5>
                                 <Form>
+                                    <CRow>
+                                        <CCol md="4">
+                                            <SAReactAutoSelect
+                                                id="branchId"
+                                                name="branchId"
+                                                label="Branch"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                labelClassName="float-right"
+                                                formProps={formProps}
+                                                isDisabled={disable}
+                                                options={branches.data.data.map(item => {
+                                                    return { label: item.name, value: item.id }
+                                                })}
+                                            />
+                                        </CCol>
+                                        <CCol md="4">
+                                            <SAReactAutoSelect
+                                                id="productId"
+                                                name="productId"
+                                                label="Product"
+                                                isInline="true"
+                                                lSize="4"
+                                                rSize="8"
+                                                labelClassName="float-right"
+                                                formProps={formProps}
+                                                options={products.data.data.map(item => {
+                                                    return { label: item.productCode + " " + item.productName, value: item.id }
+                                                })}
+                                            />
+                                        </CCol>
+                                    </CRow>
                                     <CRow>
                                         <CCol md="4">
                                             <SAInput
@@ -146,36 +190,6 @@ const PurchaseReport = () => {
                                                 formProps={formProps}
                                                 dateFormat="dd/MM/yyyy"
                                                 placeholderText="dd/MM/yyyy"
-                                            />
-                                        </CCol>
-                                        <CCol md="4">
-                                            <SAReactAutoSelect
-                                                id="branchId"
-                                                name="branchId"
-                                                label="Branch"
-                                                isInline="true"
-                                                lSize="4"
-                                                rSize="8"
-                                                labelClassName="float-right"
-                                                formProps={formProps}
-                                                options={branches.data.data.map(item => {
-                                                    return { label: item.name, value: item.id }
-                                                })}
-                                            />
-                                        </CCol>
-                                        <CCol md="4">
-                                            <SAReactAutoSelect
-                                                id="productId"
-                                                name="productId"
-                                                label="Product"
-                                                isInline="true"
-                                                lSize="4"
-                                                rSize="8"
-                                                labelClassName="float-right"
-                                                formProps={formProps}
-                                                options={products.data.data.map(item => {
-                                                    return { label: item.productCode + " " + item.productName, value: item.id }
-                                                })}
                                             />
                                         </CCol>
                                     </CRow>
