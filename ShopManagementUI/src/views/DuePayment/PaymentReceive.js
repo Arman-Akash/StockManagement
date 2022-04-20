@@ -53,7 +53,7 @@ const PaymentReceive = () => {
 
     var data = {
         id: 0,
-        no:'',
+        no: '',
         branchId: 0,
         customerId: 0,
         invoiceNo: '',
@@ -117,6 +117,7 @@ const PaymentReceive = () => {
                                                 label="No"
                                                 isInline="true"
                                                 lSize="4"
+                                                className="text-uppercase"
                                                 isRequired="true"
                                                 rSize="8"
                                                 labelClassName="float-right"
@@ -160,6 +161,7 @@ const PaymentReceive = () => {
                                                 type="text"
                                                 label="Invoice No"
                                                 isInline="true"
+                                                className="text-uppercase"
                                                 lSize="4"
                                                 rSize="8"
                                                 isRequired="true"
@@ -227,6 +229,7 @@ const PaymentReceive = () => {
                                                 label="Bank"
                                                 isInline="true"
                                                 lSize="4"
+                                                className="text-uppercase"
                                                 rSize="8"
                                                 labelClassName="float-right"
                                             />
@@ -239,6 +242,7 @@ const PaymentReceive = () => {
                                                 isInline="true"
                                                 lSize="4"
                                                 rSize="8"
+                                                className="text-uppercase"
                                                 labelClassName="float-right"
                                             />
                                         </CCol>

@@ -67,7 +67,7 @@ const Sale = () => {
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let sales = dataApi.useDataApi(`api/Sale`, initialState.initialCollections);
     const [customer, setCustomer] = useState(initialState.initialCollections);
-    
+
     useEffect(() => {
         axios.fetchGetData('api/Customer', customer, setCustomer);
     }, []);
@@ -152,6 +152,7 @@ const Sale = () => {
                                                                 isInline="true"
                                                                 isRequired="true"
                                                                 lSize="4"
+                                                                className="text-uppercase"
                                                                 rSize="8"
                                                                 labelClassName="float-right"
                                                             />
@@ -165,6 +166,7 @@ const Sale = () => {
                                                                 label="Order No"
                                                                 isInline="true"
                                                                 lSize="4"
+                                                                className="text-uppercase"
                                                                 rSize="8"
                                                                 labelClassName="float-right"
                                                             />

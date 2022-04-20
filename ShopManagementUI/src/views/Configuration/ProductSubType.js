@@ -98,7 +98,7 @@ const ProductSubType = () => {
                     show={isOpen}
                     onClose={() => toggleModal(!isOpen)}
                     color="primary"
-                    style={{marginLeft:"0px"}}
+                    style={{ marginLeft: "0px" }}
                 >
                     <Formik
                         enableReinitialize
@@ -148,6 +148,7 @@ const ProductSubType = () => {
                                                         isRequired="true"
                                                         isInline="true"
                                                         lSize="3"
+                                                        className="text-uppercase"
                                                         rSize="9"
                                                         labelClassName="float-right"
                                                         formProps={formProps}
@@ -166,6 +167,7 @@ const ProductSubType = () => {
                                                         lSize="3"
                                                         rSize="9"
                                                         labelClassName="float-right"
+                                                        className="text-uppercase"
                                                         isRequired="true"
                                                     />
                                                 </CCol>

@@ -142,6 +142,7 @@ const ProductType = () => {
                                                                 rSize="7"
                                                                 labelClassName="float-right"
                                                                 isRequired="true"
+                                                                className="text-uppercase"
                                                             />
                                                         </CCol>
                                                     </CModalBody>

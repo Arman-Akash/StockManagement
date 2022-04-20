@@ -141,6 +141,7 @@ const Unit = () => {
                                                                 lSize="4"
                                                                 rSize="7"
                                                                 labelClassName="float-right"
+                                                                className="text-uppercase"
                                                                 isRequired="true"
                                                             />
                                                         </CCol>

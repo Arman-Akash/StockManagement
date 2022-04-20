@@ -28,28 +28,38 @@ export const outlet = [
   { path: '/purchase', name: 'Product Purchase', component: Purchase },
   { path: '/receive', name: 'Product Receive', component: Receive },
   { path: '/customer', name: 'Customer', component: Customer },
-  { path: '/opening-stock-entry', name: 'Opening Stock Entry', component: OpeningStockEntry },
   { path: '/stock-list', name: 'Stock List', component: StockShow },
   { path: '/stock-adjustment', name: 'Stock Adjustment', component: StockAdjustment },
   { path: '/customer-dues', name: 'Due Payment', component: CustomerDueContainer },
-  { path: '/reorder-alert', name: 'Re-order Alert', component: ReorderAlert },
   { path: '/user/change-password', exact: true, name: 'Access Control', component: ChangePassword },
   { path: '/admin-report', name: 'Admin Report', component: AdminReportContainer }
 ]
-
 export const warehouse = [
-  ...outlet,
+  { path: '/', exact: true, name: 'Home' },
+  { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/transfer', name: 'Transfer', component: Transfer },
+  { path: '/purchase', name: 'Product Purchase', component: Purchase },
+  { path: '/receive', name: 'Product Receive', component: Receive },
+  { path: '/customer', name: 'Customer', component: Customer },
+  { path: '/stock-list', name: 'Stock List', component: StockShow },
+  { path: '/stock-adjustment', name: 'Stock Adjustment', component: StockAdjustment },
+  { path: '/user/change-password', exact: true, name: 'Access Control', component: ChangePassword },
+  { path: '/admin-report', name: 'Admin Report', component: AdminReportContainer },
   
   { path: '/product-type', name: 'Product Type', component: ProductType },
   { path: '/product-sub-type', name: 'Product Sub Type', component: ProductSubType },
   { path: '/unit', name: 'Unit', component: Unit },
   { path: '/product', name: 'Product', component: Product },
-  { path: '/damage-declare', name: 'Damage Declare', component: DamageDeclare }
+  { path: '/damage-declare', name: 'Damage Declare', component: DamageDeclare },
+  { path: '/reorder-alert', name: 'Re-order Alert', component: ReorderAlert },
 ]
 
 //admin
 const routes = [
   ...warehouse,
+  { path: '/sale', name: 'Sale', component: Sale },
+  { path: '/customer-dues', name: 'Due Payment', component: CustomerDueContainer },
+  { path: '/opening-stock-entry', name: 'Opening Stock Entry', component: OpeningStockEntry },
   { path: '/branch', name: 'Branch Information', component: Branch },
   { path: '/users/create-user', exact: true, name: 'Users', component: Users },
 ];

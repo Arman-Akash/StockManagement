@@ -120,6 +120,7 @@ const Transfer = (props) => {
                                                                 label="Transfer Challan"
                                                                 isInline="true"
                                                                 isRequired="true"
+                                                                className="text-uppercase"
                                                                 lSize="4"
                                                                 rSize="8"
                                                                 labelClassName="float-right"
@@ -164,6 +165,7 @@ const Transfer = (props) => {
                                                                 label="Vehicle No"
                                                                 isInline="true"
                                                                 lSize="4"
+                                                                className="text-uppercase"
                                                                 rSize="8"
                                                                 labelClassName="float-right"
                                                             />
@@ -175,6 +177,7 @@ const Transfer = (props) => {
                                                                 type="text"
                                                                 label="Details"
                                                                 isInline="true"
+                                                                className="text-uppercase"
                                                                 lSize="4"
                                                                 rSize="8"
                                                                 labelClassName="float-right"

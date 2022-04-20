@@ -63,6 +63,7 @@ const Product = () => {
         // { key: 'expireDate', label: 'Expire Date' },
         // { key: 'shelfNo', label: 'Shelf No' },
         'actions'];
+
     let productSubTypes = dataApi.useDataApi(`api/ProductSubType`, initialState.initialCollections);
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let units = dataApi.useDataApi(`api/Unit`, initialState.initialCollections);
@@ -191,6 +192,7 @@ const Product = () => {
                                                             label="Product Code"
                                                             isInline="true"
                                                             lSize="4"
+                                                            className="text-uppercase"
                                                             rSize="8"
                                                             labelClassName="float-right"
                                                             isRequired="true"
@@ -210,17 +212,18 @@ const Product = () => {
                                                         />
                                                     </CCol>
                                                     <CCol md="6" style={{ marginBottom: '5px' }}>
-                                                    <SAInput
-                                                        id="packSize"
-                                                        name="packSize"
-                                                        type="text"
-                                                        label="Pack Size"
-                                                        isInline="true"
-                                                        lSize="4"
-                                                        rSize="8"
-                                                        labelClassName="float-right"
-                                                    />
-                                                </CCol>
+                                                        <SAInput
+                                                            id="packSize"
+                                                            name="packSize"
+                                                            type="text"
+                                                            label="Pack Size"
+                                                            isInline="true"
+                                                            lSize="4"
+                                                            rSize="8"
+                                                            className="text-uppercase"
+                                                            labelClassName="float-right"
+                                                        />
+                                                    </CCol>
                                                     <CCol md='6' style={{ marginBottom: '5px' }}>
                                                         <SAReactAutoSelect
                                                             name="unitId"
@@ -236,7 +239,7 @@ const Product = () => {
                                                             })}
                                                         />
                                                     </CCol>
-                                           
+
                                                     <CCol md="6" style={{ marginBottom: '5px' }}>
                                                         <SAInput
                                                             id="origin"
@@ -246,6 +249,7 @@ const Product = () => {
                                                             isInline="true"
                                                             lSize="4"
                                                             rSize="8"
+                                                            className="text-uppercase"
                                                             labelClassName="float-right"
                                                         />
                                                     </CCol>
@@ -308,6 +312,7 @@ const Product = () => {
                                                             label="Product Details"
                                                             isInline="true"
                                                             lSize="2"
+                                                            className="text-uppercase"
                                                             rSize="10"
                                                             labelClassName="float-right"
                                                         />

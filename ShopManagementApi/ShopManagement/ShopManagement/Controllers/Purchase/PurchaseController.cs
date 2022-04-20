@@ -44,6 +44,7 @@ namespace ShopManagement.WebApi.Controllers
                 .Include(e => e.Details)
                 .ThenInclude(e => e.Product)
                 .ThenInclude(e => e.Unit)
+                .OrderByDescending(e => e.Id)
                 .ToListAsync()
             };
 

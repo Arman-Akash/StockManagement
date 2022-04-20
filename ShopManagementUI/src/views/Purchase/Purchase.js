@@ -35,18 +35,16 @@ const Purchase = () => {
     let [receiveObj, setReceiveObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
     const fields = [
-        {key:'lcNumber',label:'LC Number'},
-        {key:'rcvDate',label:'Goods Receiving Date'},
-        {key:'billOfEntryNo',label:'Bill of Entry No'},
-        {key:'billOfEntryDate',label:'Bill of Entry Date'}, 'actions'];
+        { key: 'lcNumber', label: 'LC Number' },
+        { key: 'rcvDate', label: 'Goods Receiving Date' },
+        { key: 'billOfEntryNo', label: 'Bill of Entry No' },
+        { key: 'billOfEntryDate', label: 'Bill of Entry Date' }, 'actions'];
 
     let dataObj = {
         productId: 0,
         quantity: '',
         rate: '',
         amount: '',
-        manufactureDate: null,
-        expireDate: null,
         shelfNo: ''
     };
 
@@ -110,6 +108,7 @@ const Purchase = () => {
                                                                 id="lcNumber"
                                                                 name="lcNumber"
                                                                 type="text"
+                                                                className="text-uppercase"
                                                                 label="LC Number"
                                                                 isInline="true"
                                                                 // isRequired="true"
@@ -126,6 +125,7 @@ const Purchase = () => {
                                                                 label="Bill of Entry No"
                                                                 isInline="true"
                                                                 lSize="4"
+                                                                className="text-uppercase"
                                                                 rSize="8"
                                                                 labelClassName="float-right"
                                                             />
@@ -167,6 +167,7 @@ const Purchase = () => {
                                                                 isInline="true"
                                                                 type="text"
                                                                 lSize="4"
+                                                                className="text-uppercase"
                                                                 rSize="8"
                                                                 labelClassName="float-right"
                                                             />
@@ -177,6 +178,7 @@ const Purchase = () => {
                                                                 label="Rcv. Details"
                                                                 isInline="true"
                                                                 type="text"
+                                                                className="text-uppercase"
                                                                 lSize="4"
                                                                 rSize="8"
                                                                 labelClassName="float-right"
@@ -189,8 +191,8 @@ const Purchase = () => {
                                                             tableName="Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                                                            columns={["Product", "Unit", "Quantity", "Rate", "Amount", "MFG. Date", "EXP. Date", "Actions"]}
-                                                            fields={["productId", "unitName", "quantity", "rate", "amount", "manufactureDate", "expireDate"]}
+                                                            columns={["Product", "Unit", "Quantity", "Rate", "Amount", "Actions"]}
+                                                            fields={["productId", "unitName", "quantity", "rate", "amount"]}
                                                             readOnlyArr={["amount", "unitName"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
@@ -198,7 +200,7 @@ const Purchase = () => {
                                                             fieldsTypeWithValue={[
 
                                                                 {
-                                                                    thStyle: { width: '25%' },
+                                                                    thStyle: { width: '35%' },
                                                                     fieldName: 'productId',
                                                                     fieldType: 'REACT-SELECT',
                                                                     options: products.data.data?.map(product => {
@@ -226,7 +228,7 @@ const Purchase = () => {
                                                                     fieldType: 'text',
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '10%' },
+                                                                    thStyle: { width: '15%' },
                                                                     fieldName: 'quantity',
                                                                     fieldType: 'NUMBER',
                                                                     fieldStyle: { textAlign: 'center' },
@@ -245,7 +247,7 @@ const Purchase = () => {
                                                                     }
                                                                 },
                                                                 {
-                                                                    thStyle: { width: '10%' },
+                                                                    thStyle: { width: '15%' },
                                                                     fieldName: 'rate',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
@@ -264,25 +266,13 @@ const Purchase = () => {
                                                                         onSetDataArray(newArr);
                                                                     }
                                                                 },
-                                                                {
-                                                                    thStyle: { width: '10%' },
-                                                                    fieldName: 'manufactureDate',
-                                                                    dateFormat: 'dd/MM/yyyy',
-                                                                    fieldType: 'REACT-DATEPICKER'
-                                                                },
+                        
                                                                 {
                                                                     thStyle: { width: '15%' },
                                                                     fieldName: 'amount',
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
                                                                     min: 0
-                                                                },
-                                                                {
-                                                                    thStyle: { width: '10%' },
-                                                                    fieldName: 'expireDate',
-                                                                    dateFormat: 'dd/MM/yyyy',
-                                                                    fieldType: 'REACT-DATEPICKER',
-                                                                    fieldStyle: { textAlign: 'center' },
                                                                 }
                                                             ]}
                                                             scopedSlots={
