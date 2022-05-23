@@ -41,6 +41,7 @@ namespace ShopManagement.WebApi.Controllers
             var result = new ListResult<Purchase>()
             {
                 Data = await _repository.Get()
+                .Where(e => e.BranchId == User.GetBranchId())
                 .Include(e => e.Details)
                 .ThenInclude(e => e.Product)
                 .ThenInclude(e => e.Unit)
@@ -69,6 +70,20 @@ namespace ShopManagement.WebApi.Controllers
             result.Data = item;
             return result;
         }
+
+        [HttpGet("LastPurchasePrice/{productId}")]
+        public async Task<Result<decimal>> LastPurchasePrice(int productId)
+        {
+            var result = new Result<decimal>();
+            result.Data = await _purchaseDetailRepository
+                .Get().Where(e => e.ProductId == productId)
+                .OrderByDescending(e => e.Id)
+                .Select(e => e.Rate)
+                .FirstOrDefaultAsync();
+
+            return result;
+        }
+
 
         //[HttpGet("RcvSerNo")]
         //public async Task<Result<string>> ReceiptNo()

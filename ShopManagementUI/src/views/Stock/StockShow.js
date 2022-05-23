@@ -104,6 +104,7 @@ const StockShow = () => {
                     border
                     striped
                     pagination
+                    filter
                 />
 
                 <CRow>

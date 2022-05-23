@@ -39,7 +39,6 @@ const Transfer = (props) => {
         transferDetails: []
     }
     let [transferObj, setTransferObj] = useState({ data: data });
-    let [unitName, setUnitname] = useState('');
     const [saveBtn, setSaveBtn] = useState(true);
 
     const fields = ['transferDate',
@@ -193,7 +192,7 @@ const Transfer = (props) => {
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
                                                             columns={["Product", "Unit", "stock", "Transfer Quantity", "Rate", "Amount", "Actions"]}
                                                             fields={["productId", "unitName", "stock", "quantity", "rate", "amount"]}
-                                                            readOnlyArr={["unitName", "amount"]}
+                                                            readOnlyArr={["unitName", "amount", "rate"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
                                                             onSetDataArray={onSetDataArray}
@@ -209,16 +208,17 @@ const Transfer = (props) => {
                                                                         }
                                                                     }),
                                                                     onOptionChangeHandler: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                        axios.fetchGetData(`api/Product/${e.target.value}`, unitName, setUnitname, (response) => {
+                                                                        axios.fetchGetData(`api/Product/${e.target.value}`, undefined, undefined, (response) => {
                                                                             axios.fetchGetData(`api/Stock/GetStock/${e.target.value}`, undefined, undefined, (stock) => {
-                                                                                let newArr = [...dataArr];
-                                                                                var selectedObj = { ...newArr[indexI] };
-                                                                                selectedObj['unitName'] = response.data.unitName;
-                                                                                selectedObj['stock'] = stock.data;
-                                                                                newArr[indexI] = selectedObj;
-                                                                                console.log(newArr);
-                                                                                onSetDataArray(newArr);
-                                                                                setUnitname(response.data.unitName);
+                                                                                axios.fetchGetData(`api/purchase/LastPurchasePrice/${e.target.value}`, undefined, undefined, (lastPrice) => {
+                                                                                    let newArr = [...dataArr];
+                                                                                    var selectedObj = { ...newArr[indexI] };
+                                                                                    selectedObj['unitName'] = response.data.unitName;
+                                                                                    selectedObj['stock'] = stock.data;
+                                                                                    selectedObj['rate'] = lastPrice.data;
+                                                                                    newArr[indexI] = selectedObj;
+                                                                                    onSetDataArray(newArr);
+                                                                                })
                                                                             })
                                                                         });
                                                                     }
@@ -241,7 +241,6 @@ const Transfer = (props) => {
                                                                         var quantity = parseFloat(e.target.value);
                                                                         var selectedObj = newArr[indexI];
                                                                         selectedObj['quantity'] = quantity;
-                                                                        selectedObj['rate'] = 1;
                                                                         var rate = parseFloat(selectedObj['rate']);
                                                                         var amount = parseFloat(quantity * rate);
                                                                         selectedObj['amount'] = amount;
@@ -255,19 +254,19 @@ const Transfer = (props) => {
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
                                                                     min: 0,
-                                                                    onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                        let newArr = [...dataArr];
-                                                                        var selectedObj = { ...newArr[indexI] };
-                                                                        var rate = parseFloat(e.target.value);
-                                                                        var selectedObj = newArr[indexI];
-                                                                        selectedObj['rate'] = rate;
-                                                                        // selectedObj['quantity'] = 1;
-                                                                        var quantity = parseFloat(selectedObj['quantity']);
-                                                                        var amount = parseFloat(quantity * rate);
-                                                                        selectedObj['amount'] = amount;
-                                                                        newArr[indexI] = selectedObj;
-                                                                        onSetDataArray(newArr);
-                                                                    }
+                                                                    // onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
+                                                                    //     let newArr = [...dataArr];
+                                                                    //     var selectedObj = { ...newArr[indexI] };
+                                                                    //     var rate = parseFloat(e.target.value);
+                                                                    //     var selectedObj = newArr[indexI];
+                                                                    //     selectedObj['rate'] = rate;
+                                                                    //     // selectedObj['quantity'] = 1;
+                                                                    //     var quantity = parseFloat(selectedObj['quantity']);
+                                                                    //     var amount = parseFloat(quantity * rate);
+                                                                    //     selectedObj['amount'] = amount;
+                                                                    //     newArr[indexI] = selectedObj;
+                                                                    //     onSetDataArray(newArr);
+                                                                    // }
                                                                 },
                                                                 {
                                                                     thStyle: { width: '10%' },

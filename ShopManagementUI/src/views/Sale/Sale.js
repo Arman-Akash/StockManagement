@@ -242,8 +242,8 @@ const Sale = () => {
                                                             tableName="Product Sale Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                                                            columns={["Product", "Unit", "Stock", "Sale Quantity", "Rate", "Amount", "Actions"]}
-                                                            fields={["productId", "unitName", "stock", "quantity", "rate", "amount"]}
+                                                            columns={["Product", "Unit", "Stock", "Sale Quantity", "Actions"]}
+                                                            fields={["productId", "unitName", "stock", "quantity"]}
                                                             readOnlyArr={["unitName", "stock", "amount"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
@@ -256,7 +256,7 @@ const Sale = () => {
                                                             fieldsTypeWithValue={[
 
                                                                 {
-                                                                    thStyle: { width: '30%' },
+                                                                    thStyle: { width: '50%' },
                                                                     fieldName: 'productId',
                                                                     fieldType: 'REACT-SELECT',
                                                                     options: products.data.data?.map(product => {
@@ -268,14 +268,16 @@ const Sale = () => {
                                                                     onOptionChangeHandler: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
                                                                         axios.fetchGetData(`api/Product/${e.target.value}`, unitName, setUnitname, (response) => {
                                                                             axios.fetchGetData(`api/Stock/GetStock/${e.target.value}`, undefined, undefined, (stock) => {
-                                                                                let newArr = [...dataArr];
-                                                                                var selectedObj = { ...newArr[indexI] };
-                                                                                selectedObj['unitName'] = response.data.unitName;
-                                                                                selectedObj['stock'] = stock.data;
-                                                                                newArr[indexI] = selectedObj;
-                                                                                console.log(newArr);
-                                                                                onSetDataArray(newArr);
-                                                                                setUnitname(response.data.unitName);
+                                                                                axios.fetchGetData(`api/Transfer/LastTransferPrice/${e.target.value}`, undefined, undefined, (lastPrice) => {
+                                                                                    let newArr = [...dataArr];
+                                                                                    var selectedObj = { ...newArr[indexI] };
+                                                                                    selectedObj['unitName'] = response.data.unitName;
+                                                                                    selectedObj['stock'] = stock.data;
+                                                                                    selectedObj['rate'] = lastPrice.data;
+                                                                                    newArr[indexI] = selectedObj;
+                                                                                    onSetDataArray(newArr);
+                                                                                    setUnitname(response.data.unitName);
+                                                                                })
                                                                             })
                                                                         });
                                                                     }
@@ -304,7 +306,6 @@ const Sale = () => {
                                                                         var quantity = parseFloat(e.target.value);
                                                                         var selectedObj = newArr[indexI];
                                                                         selectedObj['quantity'] = quantity;
-                                                                        selectedObj['rate'] = 1;
                                                                         var rate = parseFloat(selectedObj['rate']);
                                                                         var amount = parseFloat(quantity * rate);
                                                                         selectedObj['amount'] = amount;
@@ -312,33 +313,37 @@ const Sale = () => {
                                                                         onSetDataArray(newArr);
                                                                     }
                                                                 },
-                                                                {
-                                                                    thStyle: { width: '10%' },
-                                                                    fieldName: 'rate',
-                                                                    fieldStyle: { textAlign: 'center' },
-                                                                    fieldType: 'NUMBER',
-                                                                    min: 0,
-                                                                    onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                        let newArr = [...dataArr];
-                                                                        // var selectedObj = { ...newArr[indexI] };
-                                                                        var rate = parseFloat(e.target.value);
-                                                                        var selectedObj = newArr[indexI];
-                                                                        selectedObj['rate'] = rate;
-                                                                        // selectedObj['quantity'] = 1;
-                                                                        var quantity = parseFloat(selectedObj['quantity']);
-                                                                        var amount = parseFloat(quantity * rate);
-                                                                        selectedObj['amount'] = amount;
-                                                                        newArr[indexI] = selectedObj;
-                                                                        onSetDataArray(newArr);
-                                                                    }
-                                                                },
-                                                                {
-                                                                    thStyle: { width: '15%' },
-                                                                    fieldName: 'amount',
-                                                                    fieldStyle: { textAlign: 'center' },
-                                                                    fieldType: 'NUMBER',
-                                                                    min: 0
-                                                                }
+                                                                // {
+                                                                //     thStyle: { width: '10%' },
+                                                                //     fieldName: 'action',
+                                                                // }
+                                                                // {
+                                                                    // thStyle: { width: '10%' },
+                                                                    // fieldName: 'rate',
+                                                                    // fieldStyle: { textAlign: 'center' },
+                                                                    // fieldType: 'NUMBER',
+                                                                    // min: 0,
+                                                                    // onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
+                                                                    //     let newArr = [...dataArr];
+                                                                    //     // var selectedObj = { ...newArr[indexI] };
+                                                                    //     var rate = parseFloat(e.target.value);
+                                                                    //     var selectedObj = newArr[indexI];
+                                                                    //     selectedObj['rate'] = rate;
+                                                                    //     // selectedObj['quantity'] = 1;
+                                                                    //     var quantity = parseFloat(selectedObj['quantity']);
+                                                                    //     var amount = parseFloat(quantity * rate);
+                                                                    //     selectedObj['amount'] = amount;
+                                                                    //     newArr[indexI] = selectedObj;
+                                                                    //     onSetDataArray(newArr);
+                                                                    // }
+                                                                // },
+                                                                // {
+                                                                //     thStyle: { width: '15%' },
+                                                                //     fieldName: 'amount',
+                                                                //     fieldStyle: { textAlign: 'center' },
+                                                                //     fieldType: 'NUMBER',
+                                                                //     min: 0
+                                                                // }
                                                             ]}
                                                             scopedSlots={
                                                                 (item) => {

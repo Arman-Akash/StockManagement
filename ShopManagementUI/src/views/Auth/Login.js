@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import login1 from '../../assets/login-page/images/bgimage.jpg';
-import logo from '../../assets/login-page/images/logomansur.png';
+// import logo from '../../assets/login-page/images/logomansur.png';
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import * as axios from '../../axios/axiosLib';
@@ -96,7 +96,7 @@ const Login = (props) => {
                 </div>
                 <footer>
                     <p className="footer-note">
-                        <span style={{ color: "#fff" }}>Developed by :</span> <a href="https://laatahzanbd.com" target="_blank">Laa Tahzan</a>
+                        <span style={{ color: "#fff" }}>Developed by :</span> <a href="#" target="_blank">Laa Tahzan</a>
                     </p>
                 </footer>
             </div>

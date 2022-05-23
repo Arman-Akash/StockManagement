@@ -163,6 +163,19 @@ namespace ShopManagement.WebApi.Controllers
             };
         }
 
+        [HttpGet("LastTransferPrice/{productId}")]
+        public async Task<Result<decimal>> LastTransferPrice(int productId)
+        {
+            var result = new Result<decimal>();
+            result.Data = await _transferDetailRepository
+                .Get().Where(e => e.ProductId == productId)
+                .OrderByDescending(e => e.Id)
+                .Select(e => e.Rate)
+                .FirstOrDefaultAsync();
+
+            return result;
+        }
+
         [HttpPost]
         public async Task<Result<Transfer>> Post(Transfer transfer)
         {
