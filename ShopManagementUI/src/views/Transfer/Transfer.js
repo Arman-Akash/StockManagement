@@ -169,7 +169,7 @@ const Transfer = (props) => {
                                                                 labelClassName="float-right"
                                                             />
                                                         </CCol>
-                                                        <CCol md="4">
+                                                        {/* <CCol md="4">
                                                             <SATextArea
                                                                 id="details"
                                                                 name="details"
@@ -181,7 +181,7 @@ const Transfer = (props) => {
                                                                 rSize="8"
                                                                 labelClassName="float-right"
                                                             />
-                                                        </CCol>
+                                                        </CCol> */}
                                                     </CRow>
 
                                                     <CRow style={{ marginTop: '10px' }}>
@@ -190,7 +190,7 @@ const Transfer = (props) => {
                                                             tableName="Product Transfer Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                                                            columns={["Product", "Unit", "stock", "Transfer Quantity", "Rate", "Amount", "Actions"]}
+                                                            columns={["Product", "Unit", "Stock", "Transfer Quantity", "Rate", "Amount", "Actions"]}
                                                             fields={["productId", "unitName", "stock", "quantity", "rate", "amount"]}
                                                             readOnlyArr={["unitName", "amount", "rate"]}
                                                             dataArr={dataArr}

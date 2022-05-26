@@ -43,7 +43,7 @@ const Sale = () => {
     const fields = [
         { key: 'saleDate', label: 'Date' },
         { key: 'orderNo', label: 'Order No' },
-        { key: 'customerName', label: 'Name' },
+        { key: 'customerName', label: 'Customer Name' },
         { key: 'billNo', label: 'Bill No' },
         { key: 'amount', label: 'Amount' },
         'print', 'actions'];
@@ -141,8 +141,6 @@ const Sale = () => {
                                                                 placeholderText="dd/MM/yyyy"
                                                             />
                                                         </CCol>
-                                                    </CRow>
-                                                    <CRow>
                                                         <CCol md="4">
                                                             <SAInput
                                                                 id="billNo"
@@ -158,7 +156,7 @@ const Sale = () => {
                                                             />
                                                         </CCol>
 
-                                                        <CCol md="4">
+                                                        {/* <CCol md="4">
                                                             <SAInput
                                                                 id="orderNo"
                                                                 name="orderNo"
@@ -170,7 +168,7 @@ const Sale = () => {
                                                                 rSize="8"
                                                                 labelClassName="float-right"
                                                             />
-                                                        </CCol>
+                                                        </CCol> */}
 
                                                         <CCol md='4'>
                                                             <SAReactCreatableAutoSelect
@@ -195,6 +193,9 @@ const Sale = () => {
                                                                 })}
                                                             />
                                                         </CCol>
+                                                    </CRow>
+                                                    <CRow>
+                                                        
 
                                                         <CCol md="4">
                                                             <SAInput
@@ -242,8 +243,8 @@ const Sale = () => {
                                                             tableName="Product Sale Details:"
                                                             style={{ textAlign: 'center', fontSize: '14px', fontWeight: 'bold', paddingTop: '0px', paddingBottom: '0px' }}
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
-                                                            columns={["Product", "Unit", "Stock", "Sale Quantity", "Actions"]}
-                                                            fields={["productId", "unitName", "stock", "quantity"]}
+                                                            columns={["Product", "Unit", "Stock", "Sale Quantity","Rate", "Actions"]}
+                                                            fields={["productId", "unitName", "stock", "quantity","rate"]}
                                                             readOnlyArr={["unitName", "stock", "amount"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
@@ -256,7 +257,7 @@ const Sale = () => {
                                                             fieldsTypeWithValue={[
 
                                                                 {
-                                                                    thStyle: { width: '50%' },
+                                                                    thStyle: { width: '45%' },
                                                                     fieldName: 'productId',
                                                                     fieldType: 'REACT-SELECT',
                                                                     options: products.data.data?.map(product => {
@@ -317,26 +318,26 @@ const Sale = () => {
                                                                 //     thStyle: { width: '10%' },
                                                                 //     fieldName: 'action',
                                                                 // }
-                                                                // {
-                                                                    // thStyle: { width: '10%' },
-                                                                    // fieldName: 'rate',
-                                                                    // fieldStyle: { textAlign: 'center' },
-                                                                    // fieldType: 'NUMBER',
-                                                                    // min: 0,
-                                                                    // onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                    //     let newArr = [...dataArr];
-                                                                    //     // var selectedObj = { ...newArr[indexI] };
-                                                                    //     var rate = parseFloat(e.target.value);
-                                                                    //     var selectedObj = newArr[indexI];
-                                                                    //     selectedObj['rate'] = rate;
-                                                                    //     // selectedObj['quantity'] = 1;
-                                                                    //     var quantity = parseFloat(selectedObj['quantity']);
-                                                                    //     var amount = parseFloat(quantity * rate);
-                                                                    //     selectedObj['amount'] = amount;
-                                                                    //     newArr[indexI] = selectedObj;
-                                                                    //     onSetDataArray(newArr);
-                                                                    // }
-                                                                // },
+                                                                {
+                                                                    thStyle: { width: '10%' },
+                                                                    fieldName: 'rate',
+                                                                    fieldStyle: { textAlign: 'center' },
+                                                                    fieldType: 'NUMBER',
+                                                                    min: 0,
+                                                                    onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
+                                                                        let newArr = [...dataArr];
+                                                                        // var selectedObj = { ...newArr[indexI] };
+                                                                        var rate = parseFloat(e.target.value);
+                                                                        var selectedObj = newArr[indexI];
+                                                                        selectedObj['rate'] = rate;
+                                                                        // selectedObj['quantity'] = 1;
+                                                                        var quantity = parseFloat(selectedObj['quantity']);
+                                                                        var amount = parseFloat(quantity * rate);
+                                                                        selectedObj['amount'] = amount;
+                                                                        newArr[indexI] = selectedObj;
+                                                                        onSetDataArray(newArr);
+                                                                    }
+                                                                },
                                                                 // {
                                                                 //     thStyle: { width: '15%' },
                                                                 //     fieldName: 'amount',

@@ -52,13 +52,13 @@ const Product = () => {
     let [productObj, setProductObj] = useState(data);
 
     const fields = [
-        { key: 'productSubTypeName', label: 'Product Sub Type' },
-        { key: 'productCode', label: 'Product Code' },
-        { key: 'productName', label: 'Product Name' },
-        { key: 'origin', label: 'Origin' },
-        { key: 'packSize', label: 'Pack Size' },
-        { key: 'unitName', label: 'Unit' },
-        { key: 'reOrderLebel', label: 'Re-Order Label' },
+        { key: 'productSubTypeName', label: 'Product Sub Type', _style: {textAlign:"center"} },
+        { key: 'productCode', label: 'Product Code' , _style: {textAlign:"center"}},
+        { key: 'productName', label: 'Product Name' , _style: {textAlign:"center"}},
+        { key: 'origin', label: 'Origin' , _style: {textAlign:"center"}},
+        { key: 'packSize', label: 'Pack Size' , _style: {textAlign:"center"}},
+        { key: 'unitName', label: 'Unit', _style: {textAlign:"center"} },
+        { key: 'reOrderLebel', label: 'Re-Order Label', _style: {textAlign:"center"} },
         // { key: 'manufactureDate', label: 'Manufacture Date' },
         // { key: 'expireDate', label: 'Expire Date' },
         // { key: 'shelfNo', label: 'Shelf No' },

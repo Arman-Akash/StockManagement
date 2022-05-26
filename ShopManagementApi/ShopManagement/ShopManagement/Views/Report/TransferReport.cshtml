@@ -6,7 +6,7 @@
 @{ 
     var sl = 0;
 }
-<div class="Row">
+<div class="Row" style="margin-top:30px">
     <div class="col-8 text-left">
         <h6>Bill No.</h6>
     </div>
@@ -25,10 +25,10 @@
     <div class="col-2 text-left">
         <h6>Name :</h6>
     </div>
-    <div class="col-7 text-left" style="border-bottom:1px dashed; margin-left:80px; margin-top:-30px">
+    <div class="col-11 text-left" style="border-bottom:1px dashed; margin-left:80px; margin-top:-30px">
         @Model.TransferBranchName
     </div>
-    <div class="col-4" style="float:right; margin-top:-25px;">
+@*    <div class="col-4" style="float:right; margin-top:-25px;">
         <div class="Row">
             <div class="col-7">
                 <h6>Order No :</h6>
@@ -37,7 +37,7 @@
                 8789
             </div>
         </div>
-    </div>
+    </div>*@
 </div>
 <div class="Row">
     <div class="col-2 text-left">
@@ -72,7 +72,7 @@
                         {
                 <tr>
                   <td>@(++sl)</td>
-                  <td>@item.Product.ProductCode @item.Product.ProductName</td>
+                  <td>@*@item.Product.ProductSubType.SubType*@ @item.Product.ProductCode @item.Product.ProductName</td>
                   <td>@item.Quantity @item.Product.Unit.Name</td>
                   <td>@item.Rate</td>
                   <td>@item.Amount</td>
