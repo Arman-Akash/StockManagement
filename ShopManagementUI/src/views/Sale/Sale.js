@@ -46,7 +46,8 @@ const Sale = () => {
         { key: 'customerName', label: 'Customer Name' },
         { key: 'billNo', label: 'Bill No' },
         { key: 'amount', label: 'Amount' },
-        'print', 'actions'];
+        // 'print', 
+        'actions'];
 
     let dataObj = {
         productId: 0,
@@ -426,15 +427,15 @@ const Sale = () => {
                                             />
                                         </td>
                                     ),
-                                'print': (item) => (
-                                    <td>
-                                        <CTooltip content="Sale Print">
-                                            <CLink href={`${apiHostName}/api/Report/SaleReport/${item.id}`} target="_blank">
-                                                <FontAwesomeIcon icon={faPrint} />
-                                            </CLink>
-                                        </CTooltip>
-                                    </td>
-                                )
+                                // 'print': (item) => (
+                                //     <td>
+                                //         <CTooltip content="Sale Print">
+                                //             <CLink href={`${apiHostName}/api/Report/SaleReport/${item.id}`} target="_blank">
+                                //                 <FontAwesomeIcon icon={faPrint} />
+                                //             </CLink>
+                                //         </CTooltip>
+                                //     </td>
+                                // )
                             }}
                         />
                     </CRow>
