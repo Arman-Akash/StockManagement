@@ -93,6 +93,7 @@ namespace ShopManagement.Repository
                 {
                     product.Quantity = os.Quantity;
                     product.Amount = os.Amount;
+                    product.Price = os.Price;
                     product.Id = os.Id;
                 }
             }
@@ -123,6 +124,7 @@ namespace ShopManagement.Repository
                 {
                     product.Quantity = os.Quantity;
                     product.Amount = os.Amount;
+                    product.Price = os.Price;
                     product.Id = os.Id;
                 }
             }

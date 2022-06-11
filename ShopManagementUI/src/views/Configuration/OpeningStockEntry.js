@@ -127,7 +127,7 @@ const OpeningStockEntry = () => {
                             { key: "productName", label: "Product" },
                             'quantity',
                             { key: "unitName", label: 'Unit' },
-                            'amount'
+                            'price','amount'
                           ]}
                           tableFilter
                           border
@@ -146,10 +146,40 @@ const OpeningStockEntry = () => {
                                     onChange={(e) => {
                                       var val = e.target.value;
                                       var arr = [...dataArr];
+                                      var selectedObj = { ...arr[index] };
                                       var product = arr[index];
                                       product.quantity = val;
                                       arr[index] = product;
                                       onSetDataArray(arr);
+                                      product.amount = parseFloat(selectedObj['price'] * val);
+                                    }}
+                                  />
+                                </td>
+                              ),
+                              'price':
+                              (item, index) => (
+                                <td className='p-0'>
+                                  <input
+                                    id="price"
+                                    name="price"
+                                    type="number"
+                                    className='form-control'
+                                    value={item.price}
+                                    onChange={(e) => {
+                                      var val = e.target.value;
+                                      var arr = [...dataArr];
+                                      var selectedObj = { ...arr[index] };
+                                      // var quanity = parseFloat(selectedObj['quantity']);
+                                      var product = arr[index];
+                                      product.price = val;
+                                      var amount = parseFloat(selectedObj['quantity'] * val);
+                                      console.log(amount);
+                                      selectedObj['amount'] = amount;
+                                      console.log(selectedObj['amount']);
+                                      arr[index] = product;
+                                      console.log(arr[index]);
+                                      onSetDataArray(arr);
+                                      product.amount = parseFloat(selectedObj['quantity'] * val);
                                     }}
                                   />
                                 </td>

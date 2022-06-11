@@ -192,7 +192,7 @@ const Transfer = (props) => {
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
                                                             columns={["Product", "Unit", "Stock", "Transfer Quantity", "Rate", "Amount", "Actions"]}
                                                             fields={["productId", "unitName", "stock", "quantity", "rate", "amount"]}
-                                                            readOnlyArr={["unitName", "amount", "rate"]}
+                                                            readOnlyArr={["unitName", "amount"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
                                                             onSetDataArray={onSetDataArray}
@@ -254,19 +254,19 @@ const Transfer = (props) => {
                                                                     fieldStyle: { textAlign: 'center' },
                                                                     fieldType: 'NUMBER',
                                                                     min: 0,
-                                                                    // onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
-                                                                    //     let newArr = [...dataArr];
-                                                                    //     var selectedObj = { ...newArr[indexI] };
-                                                                    //     var rate = parseFloat(e.target.value);
-                                                                    //     var selectedObj = newArr[indexI];
-                                                                    //     selectedObj['rate'] = rate;
-                                                                    //     // selectedObj['quantity'] = 1;
-                                                                    //     var quantity = parseFloat(selectedObj['quantity']);
-                                                                    //     var amount = parseFloat(quantity * rate);
-                                                                    //     selectedObj['amount'] = amount;
-                                                                    //     newArr[indexI] = selectedObj;
-                                                                    //     onSetDataArray(newArr);
-                                                                    // }
+                                                                    onChange: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
+                                                                        let newArr = [...dataArr];
+                                                                        var selectedObj = { ...newArr[indexI] };
+                                                                        var rate = parseFloat(e.target.value);
+                                                                        var selectedObj = newArr[indexI];
+                                                                        selectedObj['rate'] = rate;
+                                                                        // selectedObj['quantity'] = 1;
+                                                                        var quantity = parseFloat(selectedObj['quantity']);
+                                                                        var amount = parseFloat(quantity * rate);
+                                                                        selectedObj['amount'] = amount;
+                                                                        newArr[indexI] = selectedObj;
+                                                                        onSetDataArray(newArr);
+                                                                    }
                                                                 },
                                                                 {
                                                                     thStyle: { width: '10%' },
