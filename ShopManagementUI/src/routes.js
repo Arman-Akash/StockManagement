@@ -7,6 +7,7 @@ const ProductType = React.lazy(() => import('./views/Configuration/ProductType')
 const Unit = React.lazy(() => import('./views/Configuration/Unit'));
 const AdminReportContainer = React.lazy(() => import('./views/AdminReport/AdminReportContainer'));
 const Purchase = React.lazy(() => import('./views/Purchase/Purchase'));
+const LocalPurchase = React.lazy(() => import('./views/Purchase/LocalPurchase'));
 const Sale = React.lazy(() => import('./views/Sale/Sale'));
 const Transfer = React.lazy(() => import('./views/Transfer/Transfer'));
 const Receive = React.lazy(() => import('./views/Transfer/Receive'));
@@ -25,7 +26,7 @@ export const outlet = [
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/sale', name: 'Sale', component: Sale },
   { path: '/transfer', name: 'Transfer', component: Transfer },
-  { path: '/purchase', name: 'Product Purchase', component: Purchase },
+  { path: '/localpurchase', name: 'Local Purchase', component: LocalPurchase },
   { path: '/receive', name: 'Product Receive', component: Receive },
   { path: '/customer', name: 'Customer', component: Customer },
   { path: '/stock-list', name: 'Stock List', component: StockShow },
@@ -58,6 +59,7 @@ export const warehouse = [
 const routes = [
   ...warehouse,
   { path: '/sale', name: 'Sale', component: Sale },
+  { path: '/localpurchase', name: 'Local Purchase', component: LocalPurchase },
   { path: '/customer-dues', name: 'Due Payment', component: CustomerDueContainer },
   { path: '/opening-stock-entry', name: 'Opening Stock Entry', component: OpeningStockEntry },
   { path: '/branch', name: 'Branch Information', component: Branch },

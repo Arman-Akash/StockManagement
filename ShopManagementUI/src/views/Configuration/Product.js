@@ -80,9 +80,10 @@ const Product = () => {
                 />
 
                 {/*Datatable*/}
-                <CDataTable
+                <CDataTable className="table-style"
                     items={products.data.data}
                     fields={fields}
+                    addTableClasses="table table-bordered table-striped table-style"
                     tableFilter
                     border
                     striped

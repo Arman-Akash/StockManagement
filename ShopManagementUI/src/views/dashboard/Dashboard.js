@@ -10,6 +10,7 @@ import CIcon from '@coreui/icons-react';
 
 //Icons
 import iStock from '../../assets/images/stock.png';
+import iLocal from '../../assets/images/local.png';
 import iSell from '../../assets/images/sell.png';
 import iPurchase from '../../assets/images/purchase.png';
 import iStockShow from '../../assets/images/stockShow.png';
@@ -102,7 +103,13 @@ const Dashboard = () => {
             </CLink>
           </CCol>
           <CCol xs="2" sm="2" className="text-center oms-icon">
-            <CLink to="purchase">
+            <CLink to="/localpurchase">
+              <CIcon className='mob-dashboard-img' src={iLocal} />
+              <h6>Local Purchase</h6>
+            </CLink>
+          </CCol>
+          <CCol xs="2" sm="2" className="text-center oms-icon">
+            <CLink to="/purchase">
               <CIcon className='mob-dashboard-img' src={iReceive} />
               <h6>Product Purchase</h6>
             </CLink>
