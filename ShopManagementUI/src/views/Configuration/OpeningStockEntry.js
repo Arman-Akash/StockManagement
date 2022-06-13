@@ -31,6 +31,7 @@ const OpeningStockEntry = () => {
   useEffect(() => {
     axios.fetchGetData(`api/Product/GetByProductSubType/${user?.branch_id}`, undefined, undefined, (response) => {
       onSetDataArray(response.data);
+      console.log(response.data);
     })
 
     if (user?.permissions == Roles.Admin) {

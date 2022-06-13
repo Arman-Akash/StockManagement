@@ -210,12 +210,14 @@ const Transfer = (props) => {
                                                                     onOptionChangeHandler: (e, objProp, indexI, indexJ, dataArr, onSetDataArray) => {
                                                                         axios.fetchGetData(`api/Product/${e.target.value}`, undefined, undefined, (response) => {
                                                                             axios.fetchGetData(`api/Stock/GetStock/${e.target.value}`, undefined, undefined, (stock) => {
-                                                                                axios.fetchGetData(`api/purchase/LastPurchasePrice/${e.target.value}`, undefined, undefined, (lastPrice) => {
+                                                                                axios.fetchGetData(`api/purchase/LastOSPrice/${e.target.value}`, undefined, undefined, (lastPrice) => {
                                                                                     let newArr = [...dataArr];
                                                                                     var selectedObj = { ...newArr[indexI] };
                                                                                     selectedObj['unitName'] = response.data.unitName;
                                                                                     selectedObj['stock'] = stock.data;
                                                                                     selectedObj['rate'] = lastPrice.data;
+                                                                                    console.log(selectedObj['rate']);
+                                                                                    console.log(stock.data);
                                                                                     newArr[indexI] = selectedObj;
                                                                                     onSetDataArray(newArr);
                                                                                 })

@@ -22,16 +22,19 @@ namespace ShopManagement.WebApi.Controllers
         private readonly IRepository<Purchase> _repository;
         private readonly IRepository<PurchaseDetail> _purchaseDetailRepository;
         private readonly IReceiveRepository _receiveRepository;
+        private readonly IRepository<OpeningStock> _openingStockRepository;
         private readonly ILogError _logError;
 
         public PurchaseController(IRepository<Purchase> _repository,
             IRepository<PurchaseDetail> _purchaseDetailRepository,
+            IRepository<OpeningStock> _openingStockRepository,
             IReceiveRepository _receiveReposioty,
             ILogError _logError)
         {
             this._repository = _repository;
             this._logError = _logError;
             this._receiveRepository = _receiveReposioty;
+            this._openingStockRepository = _openingStockRepository;
             this._purchaseDetailRepository = _purchaseDetailRepository;
         }
 
@@ -84,6 +87,18 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
+        [HttpGet("LastOSPrice/{productId}")]
+        public async Task<Result<decimal>> LastOSPrice(int productId)
+        {
+            var result = new Result<decimal>();
+            result.Data = (decimal)await _openingStockRepository
+                .Get().Where(e => e.ProductId == productId)
+                .OrderByDescending(e => e.Id)
+                .Select(e => e.Price)
+                .FirstOrDefaultAsync();
+
+            return result;
+        }
 
         //[HttpGet("RcvSerNo")]
         //public async Task<Result<string>> ReceiptNo()

@@ -71,11 +71,11 @@
                    @foreach (var item in Model.TransferDetails)
                         {
                 <tr>
-                  <td>@(++sl)</td>
-                  <td>@*@item.Product.ProductSubType.SubType*@ @item.Product.ProductCode @item.Product.ProductName</td>
-                  <td>@item.Quantity @item.Product.Unit.Name</td>
-                  <td>@item.Rate</td>
-                  <td>@item.Amount</td>
+                  <td style="text-align:center">@(++sl)</td>
+                  <td style="text-align:center">@*@item.Product.ProductSubType.SubType*@ @item.Product.ProductCode @item.Product.ProductName</td>
+                  <td style="text-align:center">@item.Quantity @item.Product.Unit.Name</td>
+                  <td style="text-align:center">@item.Rate</td>
+                  <td style="text-align:center">@item.Amount</td>
                 </tr>
                         }
               </tbody>
