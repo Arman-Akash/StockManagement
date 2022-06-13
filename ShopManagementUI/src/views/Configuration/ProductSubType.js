@@ -122,6 +122,7 @@ const ProductSubType = () => {
                                     productSubTypes.refresh();
                                 })
                             } else {
+                                values.productType = null;
                                 axios.fetchPutData(`api/ProductSubType/${values.id}`, values, () => {
                                     productSubTypes.refresh();
                                 })
