@@ -129,13 +129,9 @@ const Product = () => {
                         validationSchema={
                             Yup.object({
                                 productCode: Yup.string()
-                                    .min(3, "Product Code should be min 03 Letters")
-                                    .max(100, "Product Code should be in 100 Letters")
                                     .required("Required"),
 
                                 productName: Yup.string()
-                                    .min(3, "Product Name should be min 03 Letters")
-                                    .max(100, "Product Name should be in 100 Letters")
                                     .required("Required"),
 
                                 productSubTypeId: Yup.number().min(1, "please select product sub type")
@@ -146,12 +142,14 @@ const Product = () => {
                             })
                         }
                         onSubmit={(values, { resetForm }) => {
-                            console.log('Inside submit');
+                            console.log(values);
                             if (isAdd) {
                                 axios.fetchPostData('api/Product', values, () => {
                                     products.refresh()
                                 })
                             } else {
+                                values.productSubType = null;
+                                values.unit = null;
                                 axios.fetchPutData(`api/Product/${values.id}`, values, () => {
                                     products.refresh();
                                 })

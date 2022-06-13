@@ -31,7 +31,6 @@ const OpeningStockEntry = () => {
   useEffect(() => {
     axios.fetchGetData(`api/Product/GetByProductSubType/${user?.branch_id}`, undefined, undefined, (response) => {
       onSetDataArray(response.data);
-      console.log(response.data);
     })
 
     if (user?.permissions == Roles.Admin) {
@@ -136,7 +135,7 @@ const OpeningStockEntry = () => {
                           pagination
                           scopedSlots={{
                             'quantity':
-                              (item, index) => (
+                              (item) => (
                                 <td className='p-0'>
                                   <input
                                     id="quanity"
@@ -147,6 +146,7 @@ const OpeningStockEntry = () => {
                                     onChange={(e) => {
                                       var val = e.target.value;
                                       var arr = [...dataArr];
+                                      var index = arr.findIndex(e => e.id == item.id);
                                       var selectedObj = { ...arr[index] };
                                       var product = arr[index];
                                       product.quantity = val;
@@ -158,7 +158,7 @@ const OpeningStockEntry = () => {
                                 </td>
                               ),
                               'price':
-                              (item, index) => (
+                              (item) => (
                                 <td className='p-0'>
                                   <input
                                     id="price"
@@ -169,42 +169,41 @@ const OpeningStockEntry = () => {
                                     onChange={(e) => {
                                       var val = e.target.value;
                                       var arr = [...dataArr];
+                                      var index = arr.findIndex(e => e.id == item.id);
                                       var selectedObj = { ...arr[index] };
                                       // var quanity = parseFloat(selectedObj['quantity']);
                                       var product = arr[index];
                                       product.price = val;
                                       var amount = parseFloat(selectedObj['quantity'] * val);
-                                      console.log(amount);
                                       selectedObj['amount'] = amount;
-                                      console.log(selectedObj['amount']);
                                       arr[index] = product;
-                                      console.log(arr[index]);
                                       onSetDataArray(arr);
                                       product.amount = parseFloat(selectedObj['quantity'] * val);
                                     }}
                                   />
                                 </td>
                               ),
-                            'amount':
-                              (item, index) => (
-                                <td className='p-0'>
-                                  <input
-                                    id="amount"
-                                    name="amount"
-                                    type="number"
-                                    className='form-control'
-                                    value={item.amount}
-                                    onChange={(e) => {
-                                      var val = e.target.value;
-                                      var arr = [...dataArr];
-                                      var product = arr[index];
-                                      product.amount = val;
-                                      arr[index] = product;
-                                      onSetDataArray(arr);
-                                    }}
-                                  />
-                                </td>
-                              )
+                            // 'amount':
+                            //   (item) => (
+                            //     <td className='p-0'>
+                            //       <input
+                            //         id="amount"
+                            //         name="amount"
+                            //         type="number"
+                            //         className='form-control'
+                            //         value={item.amount}
+                            //         // onChange={(e) => {
+                            //         //   var val = e.target.value;
+                            //         //   var arr = [...dataArr];
+                            //         //   var index = arr.findIndex(e => e.id == item.id);
+                            //         //   var product = arr[index];
+                            //         //   product.amount = val;
+                            //         //   arr[index] = product;
+                            //         //   onSetDataArray(arr);
+                            //         // }}
+                            //       />
+                            //     </td>
+                            //   )
                           }}
                         />
                       </CRow>
