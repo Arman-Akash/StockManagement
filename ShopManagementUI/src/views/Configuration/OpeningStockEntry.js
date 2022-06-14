@@ -147,12 +147,12 @@ const OpeningStockEntry = () => {
                                       var val = e.target.value;
                                       var arr = [...dataArr];
                                       var index = arr.findIndex(e => e.id == item.id);
-                                      var selectedObj = { ...arr[index] };
+                                      // var selectedObj = { ...arr[index] };
                                       var product = arr[index];
                                       product.quantity = val;
                                       arr[index] = product;
+                                      product.amount = parseFloat(product.price * val);
                                       onSetDataArray(arr);
-                                      product.amount = parseFloat(selectedObj['price'] * val);
                                     }}
                                   />
                                 </td>
@@ -170,15 +170,13 @@ const OpeningStockEntry = () => {
                                       var val = e.target.value;
                                       var arr = [...dataArr];
                                       var index = arr.findIndex(e => e.id == item.id);
-                                      var selectedObj = { ...arr[index] };
+                                      // var selectedObj = { ...arr[index] };
                                       // var quanity = parseFloat(selectedObj['quantity']);
                                       var product = arr[index];
                                       product.price = val;
-                                      var amount = parseFloat(selectedObj['quantity'] * val);
-                                      selectedObj['amount'] = amount;
+                                      product.amount = parseFloat(product.quantity * val);
                                       arr[index] = product;
                                       onSetDataArray(arr);
-                                      product.amount = parseFloat(selectedObj['quantity'] * val);
                                     }}
                                   />
                                 </td>
