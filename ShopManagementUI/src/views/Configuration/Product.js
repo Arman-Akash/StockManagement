@@ -203,6 +203,7 @@ const Product = () => {
                                                             name="productName"
                                                             type="text"
                                                             label="Product Name"
+                                                            className="text-uppercase"
                                                             isInline="true"
                                                             lSize="4"
                                                             rSize="8"

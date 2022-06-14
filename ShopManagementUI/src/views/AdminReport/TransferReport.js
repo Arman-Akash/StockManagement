@@ -27,7 +27,7 @@ const TransferReport = () => {
     var user = loadState(LOGGED_IN_USER);
 
     useEffect(() => {
-        if (user?.permissions == Roles.Admin) {
+        if (user?.permissions == Roles.Admin || user?.permissions == Roles.Warehouse) {
             setDisable(false);
         }
     }, [])

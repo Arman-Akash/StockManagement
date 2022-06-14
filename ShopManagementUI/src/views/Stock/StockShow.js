@@ -98,6 +98,7 @@ const StockShow = () => {
                         { key: "productName", label: "Product" },
                         { key: 'quantity', label: 'Stock' },
                         { key: "unitName", label: 'Unit' },
+                        { key: "price", label: 'Price' },
                         { key: 'amount', _classes: 'text-right' }
                     ]}
                     tableFilter

@@ -130,6 +130,7 @@ const OpeningStockEntry = () => {
                             'price','amount'
                           ]}
                           tableFilter
+                          addTableClasses="os-table"
                           border
                           striped
                           pagination

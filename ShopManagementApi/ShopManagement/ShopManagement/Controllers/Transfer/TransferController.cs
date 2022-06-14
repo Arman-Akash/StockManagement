@@ -137,31 +137,31 @@ namespace ShopManagement.WebApi.Controllers
             return result;
         }
 
-        [HttpGet("TransferChallan")]
-        public async Task<Result<string>> TransferChallan()
-        {
-            var recNo = "";
-            var lastRef = await _repository.Get()
-                .Where(e => e.TransferDate.Year == DateTime.Now.Year)
-                .OrderByDescending(e => e.Id)
-                .Select(e => e.TransferChallan)
-                .FirstOrDefaultAsync();
+        //[HttpGet("TransferChallan")]
+        //public async Task<Result<string>> TransferChallan()
+        //{
+        //    var recNo = "";
+        //    var lastRef = await _repository.Get()
+        //        .Where(e => e.TransferDate.Year == DateTime.Now.Year)
+        //        .OrderByDescending(e => e.Id)
+        //        .Select(e => e.TransferChallan)
+        //        .FirstOrDefaultAsync();
 
-            if (lastRef == null)
-            {
-                recNo = "TC/" + "0001/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
-            }
-            else
-            {
-                var num = lastRef.Split('/')[1];
-                recNo = "TC/" + (Convert.ToInt32(num) + 1).ToString().PadLeft(4, '0') + "/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
-            }
+        //    if (lastRef == null)
+        //    {
+        //        recNo = "TC/" + "0001/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
+        //    }
+        //    else
+        //    {
+        //        var num = lastRef.Split('/')[1];
+        //        recNo = "TC/" + (Convert.ToInt32(num) + 1).ToString().PadLeft(4, '0') + "/" + DateTime.Now.ToString("MM") + "/" + DateTime.Now.ToString("yy");
+        //    }
 
-            return new Result<string>
-            {
-                Data = recNo
-            };
-        }
+        //    return new Result<string>
+        //    {
+        //        Data = recNo
+        //    };
+        //}
 
         [HttpGet("LastTransferPrice/{productId}")]
         public async Task<Result<decimal>> LastTransferPrice(int productId)

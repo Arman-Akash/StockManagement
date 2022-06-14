@@ -20,7 +20,6 @@ import DeleteModal from '../commonComponents/DeleteModal';
 import DeleteIcon from '../commonComponents/DeleteIcon';
 import EditIcon from '../commonComponents/EditIcon';
 import SADataTable from '../FormLib/saDataTable';
-import SATextArea from '../FormLib/saTextarea';
 import { apiHostName } from '../../../src/config';
 
 const Transfer = (props) => {
@@ -57,7 +56,6 @@ const Transfer = (props) => {
     let products = dataApi.useDataApi(`api/Product`, initialState.initialCollections);
     let branches = dataApi.useDataApi(`api/Branch`, initialState.initialCollections);
     let transfers = dataApi.useDataApi(`api/Transfer`, initialState.initialCollections);
-    let transferChallan = dataApi.useDataApi(`api/Transfer/TransferChallan`, initialState.initialCollections);
 
     return (
         <>
@@ -77,7 +75,6 @@ const Transfer = (props) => {
                                 onSubmit={(values, { resetForm }) => {
                                     values = {
                                         ...values,
-                                        transferChallan: transferChallan.data.data,
                                         transferDetails: dataArr,
                                     }
                                     if (dataArr.length <= 0) {
@@ -87,13 +84,11 @@ const Transfer = (props) => {
                                         if (isAdd) {
                                             axios.fetchPostData('api/Transfer', values, undefined, (response) => {
                                                 transfers.refresh();
-                                                transferChallan.refresh();
                                             });
                                             onSetDataArray([]);
                                         } else {
                                             axios.fetchPutData(`api/Transfer/${values.id}`, values, () => {
                                                 transfers.refresh();
-                                                transferChallan.refresh();
                                             })
                                             onSetDataArray([]);
                                         }
@@ -123,8 +118,6 @@ const Transfer = (props) => {
                                                                 lSize="4"
                                                                 rSize="8"
                                                                 labelClassName="float-right"
-                                                                readOnly={true}
-                                                                value={transferChallan.data.data}
                                                             />
                                                         </CCol>
                                                         <CCol md="4">
@@ -350,6 +343,7 @@ const Transfer = (props) => {
                                                                 ...transferObj,
                                                                 data: {
                                                                     id: item.id,
+                                                                    transferChallan: item.transferChallan,
                                                                     transferDate: item.transferDate,
                                                                     transferedBranchId: item.transferedBranchId,
                                                                     vehicleNo: item.vehicleNo,
@@ -357,7 +351,6 @@ const Transfer = (props) => {
                                                                     rcvFlg: false
                                                                 }
                                                             });
-                                                            transferChallan.setData({ data: item.transferChallan });
                                                             setIsAdd(false);
                                                             item.transferDetails.forEach(e => {
                                                                 e.unitName = e.product.unitName
@@ -387,6 +380,7 @@ const Transfer = (props) => {
                                                                 ...transferObj,
                                                                 data: {
                                                                     id: item.id,
+                                                                    transferChallan: item.transferChallan,
                                                                     transferDate: item.transferDate,
                                                                     transferedBranchId: item.transferedBranchId,
                                                                     vehicleNo: item.vehicleNo,
@@ -394,7 +388,6 @@ const Transfer = (props) => {
                                                                     rcvFlg: false
                                                                 }
                                                             });
-                                                            transferChallan.setData({ data: item.transferChallan });
                                                             setIsAdd(false);
                                                             onSetDataArray(item.transferDetails);
                                                             item.transferDetails.forEach(e => {
