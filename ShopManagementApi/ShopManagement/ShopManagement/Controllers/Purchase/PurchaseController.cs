@@ -92,7 +92,7 @@ namespace ShopManagement.WebApi.Controllers
         {
             var result = new Result<decimal>();
             result.Data = (decimal)await _openingStockRepository
-                .Get().Where(e => e.ProductId == productId)
+                .Get().Where(e => e.ProductId == productId && e.BranchId == User.GetBranchId())
                 .OrderByDescending(e => e.Id)
                 .Select(e => e.Price)
                 .FirstOrDefaultAsync();
