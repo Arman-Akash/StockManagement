@@ -7,53 +7,23 @@
     var sl = 0;
 }
 <div class="Row" style="margin-top:30px">
-    <div class="col-8 text-left">
-        <h6>Bill No.</h6>
-    </div>
-    <div class="col-4" style="float:right; margin-top:-25px;">
-        <div class="Row">
-            <div class="col-6">
-                <h6>Date :</h6>
-            </div>
-            <div class="col-12" style="border-bottom:1px dashed; margin-left:50px; margin-top:-30px">
-                @Model.TransferDate.ToString("dd MM yyyy")
-            </div>
-        </div>
-    </div>
+
+              <div class="col-4"  style="float:left; margin-top:-30px">
+                <h6>Challan No. @Model.TransferChallan</h6>
+              </div>
+              <div class="col-5" >
+              </div>
+              <div class="col-3"  style="float:right;margin-top:-30px">
+                <h6>Date: @Model.TransferDate.ToString("dd-MM-yyyy")</h6>
+              </div>
 </div>
 <div class="Row">
-    <div class="col-2 text-left">
-        <h6>Name :</h6>
-    </div>
-    <div class="col-11 text-left" style="border-bottom:1px dashed; margin-left:80px; margin-top:-30px">
-        @Model.TransferBranchName
-    </div>
-@*    <div class="col-4" style="float:right; margin-top:-25px;">
-        <div class="Row">
-            <div class="col-7">
-                <h6>Order No :</h6>
-            </div>
-            <div class="col-7" style="border-bottom:1px dashed; margin-left:90px; margin-top:-30px">
-                8789
-            </div>
-        </div>
-    </div>*@
-</div>
-<div class="Row">
-    <div class="col-2 text-left">
-        <h6>Address :</h6>
-    </div>
-    <div class="col-12 text-left" style="border-bottom:1px dashed; margin-left:70px;margin-top:-30px">
-        @Model.TransferedBranch.Location
-    </div>
-</div>
-<div class="Row" style="margin-bottom:20px">
-    <div class="col-3 text-left">
-        <h6>Phone No :</h6>
-    </div>
-    <div class="col-12 text-left" style="border-bottom:1px dashed; margin-left:85px;margin-top:-30px">
-        @Model.Branch.PhnNumber
-    </div>
+    <div class="col-6" style="float:left; ">
+                <h6>Branch Name: @Model.BranchName</h6>
+              </div>
+                  <div class="col-12" style="margin-left:10px; text-align:end">
+                <h6>Transfered Branch: @Model.TransferBranchName</h6>
+              </div>
 </div>
 <div class="row">
     <div class="col">
@@ -82,8 +52,9 @@
         </table>
     </div>
 </div>
+<h6 style="text-align:end; margin-left:-10px">Total Amount: 15000.00 Taka</h6>
 
-<div class="Row" style="margin-top:10px;">
+@*<div class="Row" style="margin-top:10px;">
     <div class="col-1 text-left">
         <h6>Say</h6>
     </div>
@@ -93,12 +64,12 @@
 <div class="Row" style="margin-top:30px;">
     <div class="col-12 text-left" style="border-bottom:1px dashed; margin-left:50px;">
     </div>
-</div>
+</div>*@
 <div class="Row" style="margin-top:30px;">
     <div class="col text-left" style="margin-top:10px;">
-        <h6><span style=" border-top: 1px solid;">Received By</span></h6>
+        @*<h6><span style=" border-top: 1px solid;">Received By</span></h6>*@
     </div>
-    <div class="col text-right" style="margin-top:-20px;">
+    <div class="col text-right" style="margin-top:20px;">
         <h6><span style=" border-top: 1px solid;">Authorised Signature</span></h6>
     </div>
 </div>
