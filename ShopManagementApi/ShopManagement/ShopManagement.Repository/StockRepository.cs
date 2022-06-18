@@ -37,13 +37,19 @@ namespace ShopManagement.Repository
                 {
                     Id = e.Id,
                     ProductName = e.ProductCode + " - " + e.ProductName,
-                    UnitName = e.Unit.Name
+                    UnitName = e.Unit.Name,
                 })
                 .ToListAsync();
 
             foreach(var product in products)
             {
+                product.Price = _context.OpeningStocks
+                    .Where(e => e.ProductId == product.Id)
+                    .Select(e => e.Price)
+                    .FirstOrDefault();
+
                 (product.Quantity, product.Amount) = await GetStock(product.Id, branchId);
+                product.Amount = product.Price * product.Quantity;
             }
 
             return products;

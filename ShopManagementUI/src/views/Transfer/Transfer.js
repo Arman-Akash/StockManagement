@@ -40,9 +40,9 @@ const Transfer = (props) => {
     let [transferObj, setTransferObj] = useState({ data: data });
     const [saveBtn, setSaveBtn] = useState(true);
 
-    const fields = ['transferDate',
-        { key: 'branchName', label: 'From Branch' },
-        { key: 'transferBranchName', label: 'To Branch' },
+    const fields = ['transferChallan','transferDate',
+        { key: 'transferBranch', label: 'From Branch' },
+        { key: 'transferedBranch', label: 'To Branch' },
         'vehicleNo', 'details', 'status', 'print', 'actions'];
 
     let dataObj = {
@@ -185,13 +185,13 @@ const Transfer = (props) => {
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
                                                             columns={["Product", "Unit", "Stock", "Transfer Quantity", "Rate", "Amount", "Actions"]}
                                                             fields={["productId", "unitName", "stock", "quantity", "rate", "amount"]}
-                                                            readOnlyArr={["unitName", "amount"]}
+                                                            readOnlyArr={["unitName", "amount","stock"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
                                                             onSetDataArray={onSetDataArray}
                                                             fieldsTypeWithValue={[
                                                                 {
-                                                                    thStyle: { width: '30%' },
+                                                                    thStyle: { width: '37%' },
                                                                     fieldName: 'productId',
                                                                     fieldType: 'REACT-SELECT',
                                                                     options: products.data.data?.map(product => {
@@ -339,24 +339,29 @@ const Transfer = (props) => {
                                                     <EditIcon
                                                         onClick={() => {
                                                             setSaveBtn(true);
-                                                            setTransferObj({
-                                                                ...transferObj,
-                                                                data: {
-                                                                    id: item.id,
-                                                                    transferChallan: item.transferChallan,
-                                                                    transferDate: item.transferDate,
-                                                                    transferedBranchId: item.transferedBranchId,
-                                                                    vehicleNo: item.vehicleNo,
-                                                                    details: item.details,
-                                                                    rcvFlg: false
-                                                                }
-                                                            });
+                                                            axios.fetchGetData(`api/Transfer/${item.id}`, undefined, undefined, (response) => {
+                                                                setTransferObj({
+                                                                    ...transferObj,
+                                                                    data: {
+                                                                        id: item.id,
+                                                                        transferChallan: item.transferChallan,
+                                                                        transferDate: item.transferDate,
+                                                                        transferedBranchId: item.transferedBranchId,
+                                                                        vehicleNo: item.vehicleNo,
+                                                                        details: item.details,
+                                                                        rcvFlg: false
+                                                                    }
+                                                                });
+                                                                var array = response.data;
+                                                                array.transferDetails.forEach(e => {
+                                                                    e.unitName = e.product.unitName
+                                                                })
+                                                            onSetDataArray(array.transferDetails);
+                                                            console.log(response.data);
+                                                            }) 
+                                                           
                                                             setIsAdd(false);
-                                                            item.transferDetails.forEach(e => {
-                                                                e.unitName = e.product.unitName
-                                                            })
-                                                            console.log(item.transferDetails);
-                                                            onSetDataArray(item.transferDetails);
+                                                            // console.log(item.transferDetails);
                                                         }}
                                                     />
                                                     <DeleteIcon

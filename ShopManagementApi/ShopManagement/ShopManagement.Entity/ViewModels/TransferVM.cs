@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShopManagement.Entity.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,7 @@ namespace ShopManagement.Entity.ViewModels
 {
     public class TransferVM
     {
+        public int Id { get; set; }
         public string TransferChallan { get; set; }
         public DateTime TransferDate { get; set; }
         public string VehicleNo { get; set; }

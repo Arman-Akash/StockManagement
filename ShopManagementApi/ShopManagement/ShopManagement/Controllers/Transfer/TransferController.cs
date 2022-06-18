@@ -36,20 +36,33 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ListResult<Transfer>> Get()
+        public async Task<ListResult<TransferVM>> Get()
         {
             var loggedInBraanch = User.GetBranchId();
-            var result = new ListResult<Transfer>()
+            var result = new ListResult<TransferVM>()
             {
                 Data = await _repository.Get()
                 .Where(e => e.BranchId == loggedInBraanch)
-                .Include(e => e.Branch)
-                .Include(e => e.TransferedBranch)
-                .Include(e => e.User)
-                .Include(e => e.ReceivedUser)
-                .Include(e => e.TransferDetails)
-                .ThenInclude(e => e.Product)
-                .ThenInclude(e => e.Unit)
+                .Select( e => new TransferVM
+                { 
+                    Id = e.Id,
+                    TransferChallan = e.TransferChallan,
+                    TransferDate = e.TransferDate,
+                    TransferedBranchId  = e.TransferedBranchId,
+                    TransferedBranch = e.TransferedBranch.Name,
+                    BranchId = e.BranchId,
+                    TransferBranch = e.Branch.Name,
+                    VehicleNo = e.VehicleNo,
+                    Details = e.Details,
+                    Status = e.Status
+                })
+                //.Include(e => e.Branch)
+                //.Include(e => e.TransferedBranch)
+                //.Include(e => e.User)
+                //.Include(e => e.ReceivedUser)
+                //.Include(e => e.TransferDetails)
+                //.ThenInclude(e => e.Product)
+                //.ThenInclude(e => e.Unit)
                 .ToListAsync()
             };
 
