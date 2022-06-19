@@ -40,7 +40,7 @@ const Transfer = (props) => {
     let [transferObj, setTransferObj] = useState({ data: data });
     const [saveBtn, setSaveBtn] = useState(true);
 
-    const fields = ['transferChallan','transferDate',
+    const fields = ['transferChallan', 'transferDate',
         { key: 'transferBranch', label: 'From Branch' },
         { key: 'transferedBranch', label: 'To Branch' },
         'vehicleNo', 'details', 'status', 'print', 'actions'];
@@ -185,7 +185,7 @@ const Transfer = (props) => {
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
                                                             columns={["Product", "Unit", "Stock", "Transfer Quantity", "Rate", "Amount", "Actions"]}
                                                             fields={["productId", "unitName", "stock", "quantity", "rate", "amount"]}
-                                                            readOnlyArr={["unitName", "amount","stock"]}
+                                                            readOnlyArr={["unitName", "amount", "stock"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
                                                             onSetDataArray={onSetDataArray}
@@ -356,10 +356,10 @@ const Transfer = (props) => {
                                                                 array.transferDetails.forEach(e => {
                                                                     e.unitName = e.product.unitName
                                                                 })
-                                                            onSetDataArray(array.transferDetails);
-                                                            console.log(response.data);
-                                                            }) 
-                                                           
+                                                                onSetDataArray(array.transferDetails);
+                                                                console.log(response.data);
+                                                            })
+
                                                             setIsAdd(false);
                                                             // console.log(item.transferDetails);
                                                         }}

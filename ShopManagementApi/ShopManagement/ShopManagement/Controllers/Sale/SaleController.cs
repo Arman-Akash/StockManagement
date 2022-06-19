@@ -36,17 +36,24 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ListResult<Sale>> Get()
+        public async Task<ListResult<SaleVM>> Get()
         {
             var loggedInBraanch = User.GetBranchId();
-            var result = new ListResult<Sale>()
+            var result = new ListResult<SaleVM>()
             {
                 Data = await _repository.Get()
                 .Where(e => e.BranchId == loggedInBraanch)
-                .Include(e => e.Customer)
-                .Include(e => e.SaleDetails)
-                .ThenInclude(e => e.Product)
-                .ThenInclude(e => e.Unit)
+                .Select(e => new SaleVM
+                {
+                    Id = e.Id,
+                    SaleDate = e.SaleDate,
+                    BillNo = e.BillNo,
+                    TransactionType = e.TransactionType,
+                    CustomerId  = e.CustomerId,
+                    CustomerName = e.Customer.Name,
+                    PaidAmount = e.PaidAmount,
+                    Amount = e.Amount,
+                })
                 .ToListAsync()
             };
 
