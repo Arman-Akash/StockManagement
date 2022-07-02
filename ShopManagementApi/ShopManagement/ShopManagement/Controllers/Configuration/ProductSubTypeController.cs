@@ -34,6 +34,7 @@ namespace ShopManagement.WebApi.Controllers
             {
                 Data = await _repository.Get()
                 .Include(e => e.ProductType)
+                .OrderByDescending(e => e.Id)
                 .ToListAsync()
             };
 

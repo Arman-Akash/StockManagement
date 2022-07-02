@@ -21,6 +21,7 @@ namespace ShopManagement.Entity.ViewModels
         public int? ReceivedUserId { get; set; }
         public string ReceivedUser { get; set; }
         public bool RcvFlg { get; set; }
+        public bool IsPrinted { get; set; }
         public string Status { get; set; }
     }
 }

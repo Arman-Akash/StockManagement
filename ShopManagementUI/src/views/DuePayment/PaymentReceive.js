@@ -27,20 +27,20 @@ const PaymentReceive = () => {
     const [isDelete, toggleDeleteModal] = useState(false);
     let fields = [
         { key: 'paymentDate', label: 'Payment Date' },
-        { key: 'invoiceNo', label: 'Invoice No' },
+        { key: 'no', label: 'Money Receipt No' },
         { key: 'customerName', label: 'Customer Name' },
         { key: 'paymentType', label: 'Payment Type' },
         { key: 'amount', label: 'Amount' },
         'actions'
     ];
     const payType = [
-        { label: "Full Payment", value: "Full Payment" },
-        { label: "Part Payment", value: "Part Payment" }
+        { label: "FULL PAYMENT", value: "FULLPAYMENT" },
+        { label: "PART PAYMENT", value: "PARTPAYMENT" }
     ]
 
     const payBy = [
-        { label: "Cash", value: "Cash" },
-        { label: "Cheque", value: "Cheque" },
+        { label: "CASH", value: "CASH" },
+        { label: "CHEQUE", value: "CHEQUE" },
         { label: "D.D", value: "D.D" },
         { label: "P.O", value: "P.O" }
     ]
@@ -56,8 +56,6 @@ const PaymentReceive = () => {
         no: '',
         branchId: 0,
         customerId: 0,
-        invoiceNo: '',
-        invoiceDate: new Date(),
         date: new Date(),
         paymentDate: new Date(),
         paymentType: '',
@@ -114,7 +112,7 @@ const PaymentReceive = () => {
                                                 id="no"
                                                 name="no"
                                                 type="number"
-                                                label="No"
+                                                label="Money Receipt No"
                                                 isInline="true"
                                                 lSize="4"
                                                 className="text-uppercase"
@@ -123,7 +121,6 @@ const PaymentReceive = () => {
                                                 labelClassName="float-right"
                                             />
                                         </CCol>
-                                        <CCol md=""></CCol>
                                         <CCol md="4">
                                             <SADatePicker
                                                 name="date"
@@ -137,9 +134,7 @@ const PaymentReceive = () => {
                                                 placeholderText="dd/MM/yyyy"
                                             />
                                         </CCol>
-                                    </CRow>
-                                    <CRow>
-                                        <CCol md="4">
+                                             <CCol md="4">
                                             <SAReactAutoSelect
                                                 id="customerId"
                                                 name="customerId"
@@ -154,33 +149,9 @@ const PaymentReceive = () => {
                                                     return { label: item.name, value: item.id }
                                                 })} />
                                         </CCol>
-                                        <CCol md="4">
-                                            <SAInput
-                                                id="invoiceNo"
-                                                name="invoiceNo"
-                                                type="text"
-                                                label="Invoice No"
-                                                isInline="true"
-                                                className="text-uppercase"
-                                                lSize="4"
-                                                rSize="8"
-                                                isRequired="true"
-                                                labelClassName="float-right"
-                                            />
-                                        </CCol>
-                                        <CCol md="4">
-                                            <SADatePicker
-                                                name="invoiceDate"
-                                                label="Invoice Date"
-                                                labelClassName="float-right"
-                                                isInline="true"
-                                                lSize="4"
-                                                rSize="8"
-                                                formProps={formProps}
-                                                dateFormat="dd/MM/yyyy"
-                                                placeholderText="dd/MM/yyyy"
-                                            />
-                                        </CCol>
+                                    </CRow>
+                                    <CRow>
+                                   
                                         <CCol md="4">
                                             <SAReactAutoSelect
                                                 id="paymentType"

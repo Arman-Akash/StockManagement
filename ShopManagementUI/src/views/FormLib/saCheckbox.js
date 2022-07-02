@@ -19,9 +19,9 @@ const SACheckBox = ({ label, labelStyle, labelClassName, inputStyle, inputClassN
     let space = <span>&nbsp;&nbsp;</span>
 
     const blockCheckbox = options.map((obj, index) => {
-        let finalStyle = inputStyle !== undefined ? {...{verticalAlign: 'middle'}, ...inputStyle} : {verticalAlign: 'middle'};
-        let finalTitleStyle = titleStyle !== undefined ? { ...{verticalAlign: 'middle', marginLeft: '5px'}, ...titleStyle } : {verticalAlign: 'middle', marginLeft: '5px'};
-        
+        let finalStyle = inputStyle !== undefined ? { ...{ verticalAlign: 'middle' }, ...inputStyle } : { verticalAlign: 'middle' };
+        let finalTitleStyle = titleStyle !== undefined ? { ...{ verticalAlign: 'middle', marginLeft: '5px' }, ...titleStyle } : { verticalAlign: 'middle', marginLeft: '5px' };
+
         return (
             <CFormGroup key={index} variant="checkbox" className="checkbox">
                 <Field type="checkbox" id={obj.id} name={props.name} value={obj.id} style={finalStyle} className={inputClassName} onClick={() => { }} />
@@ -31,8 +31,8 @@ const SACheckBox = ({ label, labelStyle, labelClassName, inputStyle, inputClassN
     });
 
     const inlineCheckbox = options.map((obj, index) => {
-        let finalStyle = inputStyle !== undefined ? {...{verticalAlign: 'middle'}, ...inputStyle} : {verticalAlign: 'middle'};
-        let finalTitleStyle = titleStyle !== undefined ? { ...{verticalAlign: 'middle', marginLeft: '5px'}, ...titleStyle } : {verticalAlign: 'middle', marginLeft: '5px'};
+        let finalStyle = inputStyle !== undefined ? { ...{ verticalAlign: 'middle' }, ...inputStyle } : { verticalAlign: 'middle' };
+        let finalTitleStyle = titleStyle !== undefined ? { ...{ verticalAlign: 'middle', marginLeft: '5px' }, ...titleStyle } : { verticalAlign: 'middle', marginLeft: '5px' };
 
         return (
             <CFormGroup key={index} variant="custom-checkbox" inline>

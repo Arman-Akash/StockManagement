@@ -35,10 +35,10 @@ const Purchase = () => {
     let [receiveObj, setReceiveObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
     const fields = [
-        { key: 'lcNumber', label: 'LC Number' },
-        { key: 'rcvDate', label: 'Goods Receiving Date' },
-        { key: 'billOfEntryNo', label: 'Bill of Entry No' },
-        { key: 'billOfEntryDate', label: 'Bill of Entry Date' }, 'actions'];
+        { key: 'lcNumber', label: 'LC Number' , _style: {textAlign:"center"}},
+        { key: 'rcvDate', label: 'Goods Receiving Date' , _style: {textAlign:"center"}},
+        { key: 'billOfEntryNo', label: 'Bill of Entry No' , _style: {textAlign:"center"}},
+        { key: 'billOfEntryDate', label: 'Bill of Entry Date' , _style: {textAlign:"center"}}, 'actions'];
 
     let dataObj = {
         productId: 0,
@@ -326,7 +326,7 @@ const Purchase = () => {
                             items={productReceives.data.data}
                             fields={fields}
                             tableFilter
-                            addTableClasses="header-text-center"
+                            addTableClasses="table table-bordered table-striped table-style"
                             border
                             striped
                             pagination

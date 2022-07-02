@@ -41,11 +41,11 @@ const Sale = () => {
     let [saleObj, setSaleObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
     const fields = [
-        { key: 'saleDate', label: 'Date' },
-        { key: 'orderNo', label: 'Order No' },
-        { key: 'customerName', label: 'Customer Name' },
-        { key: 'billNo', label: 'Bill No' },
-        { key: 'amount', label: 'Amount' },
+        { key: 'saleDate', label: 'Date' , _style: {textAlign:"center"}},
+        { key: 'billNo', label: 'Bill No' , _style: {textAlign:"center"}},
+        { key: 'customerName', label: 'Customer Name' , _style: {textAlign:"center"}},
+        { key: 'billNo', label: 'Bill No' , _style: {textAlign:"center"}},
+        { key: 'amount', label: 'Amount' , _style: {textAlign:"center"}},
         // 'print', 
         'actions'];
 
@@ -196,7 +196,7 @@ const Sale = () => {
                                                         </CCol>
                                                     </CRow>
                                                     <CRow>
-                                                        
+
 
                                                         <CCol md="4">
                                                             <SAInput
@@ -381,7 +381,7 @@ const Sale = () => {
                             items={sales.data.data}
                             fields={fields}
                             tableFilter
-                            addTableClasses="header-text-center"
+                            addTableClasses="table table-bordered table-striped table-style"
                             border
                             striped
                             pagination
@@ -392,26 +392,27 @@ const Sale = () => {
                                         <td>
                                             <EditIcon
                                                 onClick={() => {
-                                                    setSaleObj({
-                                                        ...saleObj,
-                                                        data: {
-                                                            id: item.id,
-                                                            saleDate: item.saleDate,
-                                                            customerId: item.customerId,
-                                                            billNo: item.billNo,
-                                                            orderNo: item.orderNo,
-                                                            amount: item.amount,
-                                                            paidAmount: item.paidAmount,
-                                                            transactionType: item.transactionType
-                                                        }
-                                                    });
-                                                    console.log(item);
-                                                    setIsAdd(false);
-                                                    onSetDataArray(item.saleDetails);
-                                                    console.log(item.saleDetails);
-                                                    item.saleDetails.forEach(e => {
-                                                        e.unitName = e.product.unitName
+                                                    axios.fetchGetData(`api/Sale/${item.id}`, undefined, undefined, (response) => {
+                                                        setSaleObj({
+                                                            ...saleObj,
+                                                            data: {
+                                                                id: item.id,
+                                                                saleDate: item.saleDate,
+                                                                customerId: item.customerId,
+                                                                billNo: item.billNo,
+                                                                orderNo: item.orderNo,
+                                                                amount: item.amount,
+                                                                paidAmount: item.paidAmount,
+                                                                transactionType: item.transactionType
+                                                            }
+                                                        });
+                                                        var array = response.data;
+                                                        array.saleDetails.forEach(e => {
+                                                            e.unitName = e.product.unitName
+                                                        })
+                                                        onSetDataArray(array.saleDetails);
                                                     })
+                                                    setIsAdd(false);
                                                 }}
                                             />
                                             <DeleteIcon

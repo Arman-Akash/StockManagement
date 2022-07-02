@@ -33,14 +33,27 @@ namespace ShopManagement.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ListResult<Product>> Get()
+        public async Task<ListResult<ProductVM>> Get()
         {
-            var result = new ListResult<Product>()
+            var result = new ListResult<ProductVM>()
             {
                 Data = await _repository.Get()
-                .Include(e => e.Unit)
-                .Include(e => e.ProductSubType)
-                .ThenInclude(e => e.ProductType)
+                .Select(e => new ProductVM
+                {
+                    Id = e.Id,
+                    ProductCode = e.ProductCode,
+                    ProductName = e.ProductName,
+                    ProductCodeName = e.ProductCode+"-"+e.ProductName,
+                    ProductSubTypeId = e.ProductSubTypeId,
+                    ProductSubTypeName= e.ProductSubType.SubType,
+                    Origin = e.Origin,
+                    PackSize = e.PackSize,
+                    ReOrderLebel = e.ReOrderLebel,
+                    UnitId = e.UnitId,
+                    UnitName = e.Unit.Name,
+                    Details = e.Details
+                })
+                .OrderByDescending(e => e.Id)
                 .ToListAsync()
             };
 

@@ -12,7 +12,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 ///Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowAltCircleLeft, faSave, faTimes, faTrash, faEye, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleLeft, faSave, faTimes, faTrash, faEye, faPrint, faCheck } from '@fortawesome/free-solid-svg-icons';
 import * as axios from '../../axios/axiosLib';
 import * as initialState from '../../functionalLib/initialState';
 import * as dataApi from '../../customHooks/UseDataApi';
@@ -21,6 +21,7 @@ import DeleteIcon from '../commonComponents/DeleteIcon';
 import EditIcon from '../commonComponents/EditIcon';
 import SADataTable from '../FormLib/saDataTable';
 import { apiHostName } from '../../../src/config';
+import SACheckBox from '../FormLib/saCheckbox'
 
 const Transfer = (props) => {
     const [isDelete, toggleDeleteModal] = useState(false);
@@ -34,16 +35,21 @@ const Transfer = (props) => {
         details: '',
         transferedBranchId: 0,
         rcvFlg: false,
+        isPrinted: false,
         status: '',
         transferDetails: []
     }
     let [transferObj, setTransferObj] = useState({ data: data });
     const [saveBtn, setSaveBtn] = useState(true);
 
-    const fields = ['transferChallan','transferDate',
-        { key: 'transferBranch', label: 'From Branch' },
-        { key: 'transferedBranch', label: 'To Branch' },
-        'vehicleNo', 'details', 'status', 'print', 'actions'];
+    const fields = [{ key: 'transferChallan', _style: { textAlign: "center" } },
+    { key: 'transferDate', _style: { textAlign: "center" } },
+    { key: 'transferBranch', label: 'From Branch', _style: { textAlign: "center" } },
+    { key: 'transferedBranch', label: 'To Branch', _style: { textAlign: "center" } },
+    { key: 'vehicleNo', _style: { textAlign: "center" } },
+    { key: 'details', _style: { textAlign: "center" } },
+    { key: 'status', _style: { textAlign: "center" } },
+    { key: 'print', _style: { textAlign: "center" } }, 'actions'];
 
     let dataObj = {
         productId: 0,
@@ -185,7 +191,7 @@ const Transfer = (props) => {
                                                             dataTableStyle={{ maxHeight: '200px', overflow: 'auto' }}
                                                             columns={["Product", "Unit", "Stock", "Transfer Quantity", "Rate", "Amount", "Actions"]}
                                                             fields={["productId", "unitName", "stock", "quantity", "rate", "amount"]}
-                                                            readOnlyArr={["unitName", "amount","stock"]}
+                                                            readOnlyArr={["unitName", "amount", "stock"]}
                                                             dataArr={dataArr}
                                                             dataObj={dataObj}
                                                             onSetDataArray={onSetDataArray}
@@ -320,13 +326,12 @@ const Transfer = (props) => {
                             </Formik>
                         </CCol>
                     </CRow>
-
                     <CRow>
-                        <CDataTable
+                        <CDataTable className="table-style"
                             items={transfers.data.data}
                             fields={fields}
                             tableFilter
-                            addTableClasses="header-text-center"
+                            addTableClasses="table table-bordered table-striped table-style"
                             border
                             striped
                             pagination
@@ -356,10 +361,10 @@ const Transfer = (props) => {
                                                                 array.transferDetails.forEach(e => {
                                                                     e.unitName = e.product.unitName
                                                                 })
-                                                            onSetDataArray(array.transferDetails);
-                                                            console.log(response.data);
-                                                            }) 
-                                                           
+                                                                onSetDataArray(array.transferDetails);
+                                                                console.log(response.data);
+                                                            })
+
                                                             setIsAdd(false);
                                                             // console.log(item.transferDetails);
                                                         }}
@@ -381,23 +386,27 @@ const Transfer = (props) => {
                                                         className="text-info"
                                                         onClick={() => {
                                                             setSaveBtn(false);
-                                                            setTransferObj({
-                                                                ...transferObj,
-                                                                data: {
-                                                                    id: item.id,
-                                                                    transferChallan: item.transferChallan,
-                                                                    transferDate: item.transferDate,
-                                                                    transferedBranchId: item.transferedBranchId,
-                                                                    vehicleNo: item.vehicleNo,
-                                                                    details: item.details,
-                                                                    rcvFlg: false
-                                                                }
-                                                            });
-                                                            setIsAdd(false);
-                                                            onSetDataArray(item.transferDetails);
-                                                            item.transferDetails.forEach(e => {
-                                                                e.unitName = e.product.unitName
+                                                            axios.fetchGetData(`api/Transfer/${item.id}`, undefined, undefined, (response) => {
+                                                                setTransferObj({
+                                                                    ...transferObj,
+                                                                    data: {
+                                                                        id: item.id,
+                                                                        transferChallan: item.transferChallan,
+                                                                        transferDate: item.transferDate,
+                                                                        transferedBranchId: item.transferedBranchId,
+                                                                        vehicleNo: item.vehicleNo,
+                                                                        details: item.details,
+                                                                        rcvFlg: false
+                                                                    }
+                                                                });
+                                                                var array = response.data;
+                                                                array.transferDetails.forEach(e => {
+                                                                    e.unitName = e.product.unitName
+                                                                })
+                                                                onSetDataArray(array.transferDetails);
+                                                                console.log(response.data);
                                                             })
+                                                            setIsAdd(false);
                                                         }}
                                                         icon={faEye}
                                                     />
@@ -406,11 +415,24 @@ const Transfer = (props) => {
                                     ),
                                 'print': (item) => (
                                     <td>
-                                        <CTooltip content="Transfer Print">
-                                            <CLink href={`${apiHostName}/api/Report/TransferReport/${item.id}`} target="_blank">
-                                                <FontAwesomeIcon icon={faPrint} />
-                                            </CLink>
-                                        </CTooltip>
+                                        {
+                                            item.isPrinted == true ? <>
+                                                <CTooltip content="Transfer Print">
+                                                    <CLink href={`${apiHostName}/api/Report/TransferReport/${item.id}`} target="_blank">
+                                                        <FontAwesomeIcon
+                                                            icon={faCheck}
+                                                            className="text-success"
+                                                        />
+                                                    </CLink>
+                                                </CTooltip>
+                                            </> :
+                                                <CTooltip content="Transfer Print">
+                                                    <CLink href={`${apiHostName}/api/Report/TransferReport/${item.id}`} target="_blank">
+                                                        <FontAwesomeIcon
+                                                            icon={faPrint} />
+                                                    </CLink>
+                                                </CTooltip>
+                                        }
                                     </td>
                                 )
                             }}
