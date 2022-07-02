@@ -6,6 +6,7 @@ namespace ShopManagement.Entity.ViewModels
 {
     public class ProductVM
     {
+        public int Id { get; set; }
         public int ProductSubTypeId { get; set; }
         public string ProductSubTypeName { get; set; }
         public int UnitId { get; set; }

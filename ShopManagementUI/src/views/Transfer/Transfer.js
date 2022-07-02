@@ -40,10 +40,14 @@ const Transfer = (props) => {
     let [transferObj, setTransferObj] = useState({ data: data });
     const [saveBtn, setSaveBtn] = useState(true);
 
-    const fields = ['transferChallan', 'transferDate',
-        { key: 'transferBranch', label: 'From Branch' },
-        { key: 'transferedBranch', label: 'To Branch' },
-        'vehicleNo', 'details', 'status', 'print', 'actions'];
+    const fields = [{key:'transferChallan', _style: {textAlign:"center"}},
+     {key:'transferDate', _style: {textAlign:"center"}},
+        { key: 'transferBranch', label: 'From Branch' , _style: {textAlign:"center"}},
+        { key: 'transferedBranch', label: 'To Branch' , _style: {textAlign:"center"}},
+        {key:'vehicleNo', _style: {textAlign:"center"}}, 
+        {key:'details', _style: {textAlign:"center"}},
+         {key:'status', _style: {textAlign:"center"}}, 
+         {key:'print', _style: {textAlign:"center"}}, 'actions'];
 
     let dataObj = {
         productId: 0,
@@ -322,11 +326,11 @@ const Transfer = (props) => {
                     </CRow>
 
                     <CRow>
-                        <CDataTable
+                        <CDataTable className="table-style"
                             items={transfers.data.data}
                             fields={fields}
                             tableFilter
-                            addTableClasses="header-text-center"
+                            addTableClasses="table table-bordered table-striped table-style"
                             border
                             striped
                             pagination
@@ -381,23 +385,27 @@ const Transfer = (props) => {
                                                         className="text-info"
                                                         onClick={() => {
                                                             setSaveBtn(false);
-                                                            setTransferObj({
-                                                                ...transferObj,
-                                                                data: {
-                                                                    id: item.id,
-                                                                    transferChallan: item.transferChallan,
-                                                                    transferDate: item.transferDate,
-                                                                    transferedBranchId: item.transferedBranchId,
-                                                                    vehicleNo: item.vehicleNo,
-                                                                    details: item.details,
-                                                                    rcvFlg: false
-                                                                }
-                                                            });
-                                                            setIsAdd(false);
-                                                            onSetDataArray(item.transferDetails);
-                                                            item.transferDetails.forEach(e => {
-                                                                e.unitName = e.product.unitName
+                                                             axios.fetchGetData(`api/Transfer/${item.id}`, undefined, undefined, (response) => {
+                                                                setTransferObj({
+                                                                    ...transferObj,
+                                                                    data: {
+                                                                        id: item.id,
+                                                                        transferChallan: item.transferChallan,
+                                                                        transferDate: item.transferDate,
+                                                                        transferedBranchId: item.transferedBranchId,
+                                                                        vehicleNo: item.vehicleNo,
+                                                                        details: item.details,
+                                                                        rcvFlg: false
+                                                                    }
+                                                                });
+                                                                var array = response.data;
+                                                                array.transferDetails.forEach(e => {
+                                                                    e.unitName = e.product.unitName
+                                                                })
+                                                                onSetDataArray(array.transferDetails);
+                                                                console.log(response.data);
                                                             })
+                                                            setIsAdd(false);
                                                         }}
                                                         icon={faEye}
                                                     />

@@ -38,6 +38,7 @@ namespace ShopManagement.WebApi.Controllers
                 .Where(e => e.BranchId == loggedInBraanch)
                 .Include(e => e.Branch)
                 .Include(e => e.Customer)
+                .OrderByDescending(e => e.Id)
                 .ToListAsync()
             };
 

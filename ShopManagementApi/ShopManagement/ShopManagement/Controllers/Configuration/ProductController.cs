@@ -40,6 +40,7 @@ namespace ShopManagement.WebApi.Controllers
                 Data = await _repository.Get()
                 .Select(e => new ProductVM
                 {
+                    Id = e.Id,
                     ProductCode = e.ProductCode,
                     ProductName = e.ProductName,
                     ProductCodeName = e.ProductCode+"-"+e.ProductName,
@@ -52,7 +53,7 @@ namespace ShopManagement.WebApi.Controllers
                     UnitName = e.Unit.Name,
                     Details = e.Details
                 })
-
+                .OrderByDescending(e => e.Id)
                 .ToListAsync()
             };
 

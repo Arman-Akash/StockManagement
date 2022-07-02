@@ -54,6 +54,7 @@ namespace ShopManagement.WebApi.Controllers
                     PaidAmount = e.PaidAmount,
                     Amount = e.Amount,
                 })
+                .OrderByDescending(e => e.Id)
                 .ToListAsync()
             };
 

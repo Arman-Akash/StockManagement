@@ -36,6 +36,7 @@ namespace ShopManagement.WebApi.Controllers
                 Data = await _repository.Get()
                 .Where(e => e.Customer.BranchId == loggedInBranch)
                 .Include(e => e.Customer)
+                .OrderByDescending(e => e.Id)
                 .ToListAsync()
             };
 

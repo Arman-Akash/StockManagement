@@ -223,10 +223,6 @@ namespace ShopManagement.Data
 
 			builder.Entity<PaymentReceive>(entity =>
 			{
-				entity.Property(e => e.InvoiceNo)
-				   .HasMaxLength(100)
-					.IsRequired();
-
 				entity.Property(e => e.PaymentType)
 				   .HasMaxLength(100);
 

@@ -41,11 +41,11 @@ const Sale = () => {
     let [saleObj, setSaleObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
     const fields = [
-        { key: 'saleDate', label: 'Date' },
-        { key: 'billNo', label: 'Bill No' },
-        { key: 'customerName', label: 'Customer Name' },
-        { key: 'billNo', label: 'Bill No' },
-        { key: 'amount', label: 'Amount' },
+        { key: 'saleDate', label: 'Date' , _style: {textAlign:"center"}},
+        { key: 'billNo', label: 'Bill No' , _style: {textAlign:"center"}},
+        { key: 'customerName', label: 'Customer Name' , _style: {textAlign:"center"}},
+        { key: 'billNo', label: 'Bill No' , _style: {textAlign:"center"}},
+        { key: 'amount', label: 'Amount' , _style: {textAlign:"center"}},
         // 'print', 
         'actions'];
 
@@ -381,7 +381,7 @@ const Sale = () => {
                             items={sales.data.data}
                             fields={fields}
                             tableFilter
-                            addTableClasses="header-text-center"
+                            addTableClasses="table table-bordered table-striped table-style"
                             border
                             striped
                             pagination
