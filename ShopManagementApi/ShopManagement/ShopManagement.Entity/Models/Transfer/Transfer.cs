@@ -24,6 +24,7 @@ namespace ShopManagement.Entity.Models
         public int? ReceivedUserId { get; set; }
         public User ReceivedUser { get; set; }
         public bool RcvFlg { get; set; }
+        public bool IsPrinted { get; set; }
         public string Status { get; set; }
         public ICollection<TransferDetail> TransferDetails { get; set; }
     }
