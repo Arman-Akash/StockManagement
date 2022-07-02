@@ -54,7 +54,8 @@ namespace ShopManagement.WebApi.Controllers
                     TransferBranch = e.Branch.Name,
                     VehicleNo = e.VehicleNo,
                     Details = e.Details,
-                    Status = e.Status
+                    Status = e.Status,
+                    IsPrinted = e.IsPrinted
                 })
                 //.Include(e => e.Branch)
                 //.Include(e => e.TransferedBranch)

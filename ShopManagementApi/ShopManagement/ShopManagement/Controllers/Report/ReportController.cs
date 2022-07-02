@@ -70,6 +70,8 @@ namespace ShopManagement.Web.Controllers
                 .ThenInclude(e => e.Product)
                 .ThenInclude(e => e.Unit)
                 .FirstOrDefault();
+            transfer.IsPrinted = true;
+            _transferRepository.UpdateAsync(transfer);
 
             return new ViewAsPdf("TransferReport", transfer)
             {

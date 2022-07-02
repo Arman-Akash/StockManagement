@@ -415,18 +415,24 @@ const Transfer = (props) => {
                                     ),
                                 'print': (item) => (
                                     <td>
-                                        <CTooltip content="Transfer Print">
-                                            <CLink href={`${apiHostName}/api/Report/TransferReport/${item.id}`} target="_blank">
-                                                {
-                                                    item.isPrinted == true ? <>
+                                        {
+                                            item.isPrinted == true ? <>
+                                                <CTooltip content="Transfer Print">
+                                                    <CLink href={`${apiHostName}/api/Report/TransferReport/${item.id}`} target="_blank">
                                                         <FontAwesomeIcon
-                                                            icon={faCheck} />
-                                                    </> :
+                                                            icon={faCheck}
+                                                            className="text-success"
+                                                        />
+                                                    </CLink>
+                                                </CTooltip>
+                                            </> :
+                                                <CTooltip content="Transfer Print">
+                                                    <CLink href={`${apiHostName}/api/Report/TransferReport/${item.id}`} target="_blank">
                                                         <FontAwesomeIcon
                                                             icon={faPrint} />
-                                                }
-                                            </CLink>
-                                        </CTooltip>
+                                                    </CLink>
+                                                </CTooltip>
+                                        }
                                     </td>
                                 )
                             }}
