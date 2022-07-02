@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import {
     CRow, CCardBody,
-    CCol, CButton, CDataTable, CCard, CLink, CTooltip,
-    CModal,
-    CModalBody,
-    CModalFooter,
-    CModalHeader,
-    CModalTitle,
+    CCol, CButton, CDataTable, CCard, CLink, CTooltip
 } from '@coreui/react';
 import SAInput from '../FormLib/saInput';
 import SADatePicker from '../FormLib/saDatePicker';
@@ -29,7 +24,6 @@ import { apiHostName } from '../../../src/config';
 import SACheckBox from '../FormLib/saCheckbox'
 
 const Transfer = (props) => {
-    const [isOpen, toggleModal] = useState(false);
     const [isDelete, toggleDeleteModal] = useState(false);
     const [isAdd, setIsAdd] = useState(true);
 
@@ -47,12 +41,7 @@ const Transfer = (props) => {
     }
     let [transferObj, setTransferObj] = useState({ data: data });
     const [saveBtn, setSaveBtn] = useState(true);
-    let [checkBoxArr, setCheckboxArr] = useState({
-        issPrintedArr: []
-    });
-    const handleIsPrintedChange = (obj, prop, val) => {
 
-    }
     const fields = [{ key: 'transferChallan', _style: { textAlign: "center" } },
     { key: 'transferDate', _style: { textAlign: "center" } },
     { key: 'transferBranch', label: 'From Branch', _style: { textAlign: "center" } },
@@ -338,99 +327,6 @@ const Transfer = (props) => {
                         </CCol>
                     </CRow>
                     <CRow>
-                        <CModal
-                            show={isOpen}
-                            onClose={() => toggleModal(!isOpen)}
-                            style={{ marginLeft: "0px" }}
-                            color="primary"
-                        >
-                            <Formik
-                                enableReinitialize
-                                initialValues={transferObj}
-                                validationSchema={Yup.object({})}
-                                onSubmit={(values, { resetForm }) => {
-                                    // console.log('Inside submit');
-                                    if (isAdd) {
-                                        axios.fetchPostData(
-                                            "api/Transfer",
-                                            values,
-                                            () => {
-                                                transfers.refresh();
-                                            }
-                                        );
-                                    } else {
-                                        axios.fetchPutData(
-                                            `api/Transfer/${values.id}`,
-                                            values,
-                                            () => {
-                                                transfers.refresh();
-                                            }
-                                        );
-                                    }
-                                    resetForm();
-                                    toggleModal(false);
-                                }}
-                            >
-                                {(formProps) => {
-                                    return (
-                                        <>
-                                            <CModalHeader closeButton>
-                                                <CModalTitle>
-                                                    Iss Printed
-                                                </CModalTitle>
-                                            </CModalHeader>
-                                            <Form>
-                                                <CModalBody>
-                                                    {/* Provide name*/}
-                                                    <CCol md="12">
-                                                        <SACheckBox
-                                                            id="isPrinted"
-                                                            name="Is Printed?"
-                                                            lSize="3"
-                                                            rSize="8"
-                                                            isInline="true"
-                                                            handleChange={handleIsPrintedChange}
-                                                            formProps={formProps}
-                                                            options={[{
-                                                                id: 'isPrinted',
-                                                                value: 'true',
-                                                                title: 'Is Printed?'
-                                                            }]}
-                                                        />
-                                                    </CCol>
-                                                </CModalBody>
-                                                <CModalFooter>
-                                                    <CButton
-                                                        type="submit"
-                                                        color="success"
-                                                        size="sm"
-                                                    >
-                                                        <FontAwesomeIcon
-                                                            icon={faSave}
-                                                        />{" "}
-                                                        Save
-                                                    </CButton>
-                                                    <CButton
-                                                        color="secondary"
-                                                        size="sm"
-                                                        onClick={() => {
-                                                            toggleModal(!isOpen);
-                                                        }}
-                                                    >
-                                                        <FontAwesomeIcon
-                                                            icon={faTimes}
-                                                        />{" "}
-                                                        Cancel
-                                                    </CButton>
-                                                </CModalFooter>
-                                            </Form>
-                                        </>
-                                    );
-                                }}
-                            </Formik>
-                        </CModal>
-                    </CRow>
-                    <CRow>
                         <CDataTable className="table-style"
                             items={transfers.data.data}
                             fields={fields}
@@ -443,21 +339,6 @@ const Transfer = (props) => {
                                 'actions':
                                     (item) => (
                                         <td>
-                                            <FontAwesomeIcon
-                                                title="Is Printed?"
-                                                className="text-info"
-                                                icon={faCheck}
-                                                onClick={() => {
-                                                    setTransferObj({
-                                                        ...transferObj,
-                                                        data: {
-                                                            id: item.id,
-                                                        },
-                                                    });
-                                                    setIsAdd(false);
-                                                    toggleModal(!isOpen);
-                                                }}
-                                            />
                                             {
                                                 item.status == "Pending" ? <>
                                                     <EditIcon
