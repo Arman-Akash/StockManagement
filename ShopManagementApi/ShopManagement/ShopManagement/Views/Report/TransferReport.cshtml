@@ -3,72 +3,72 @@
   Layout = "../shared/_layoutMTex.cshtml";
   ViewData["Date"] = "12-05-2021";
 }
-@{ 
-    var sl = 0;
+@{
+  var sl = 0;
 }
 <div class="Row" style="margin-top:30px">
 
-              <div class="col-12"  style="text-align:start ; margin-top:-30px">
-                <h6>Challan No. @Model.TransferChallan</h6>
-              </div>
-              
-              <div class="col-12"  style="text-align:end;margin-top:-30px">
-                <h6>Date: @Model.TransferDate.ToString("dd-MM-yyyy")</h6>
-              </div>
+  <div class="col-12" style="text-align:start ; margin-top:-30px">
+    <h6>Challan No. @Model.TransferChallan</h6>
+  </div>
+
+  <div class="col-12" style="text-align:end;margin-top:-30px">
+    <h6>Date: @Model.TransferDate.ToString("dd-MM-yyyy")</h6>
+  </div>
 </div>
 <div class="Row">
-    <div class="col-12" style="text-align:start; ">
-                <h6>Branch Name: @Model.BranchName</h6>
-              </div>
-                  <div class="col-12" style="text-align:end ; margin-top:-20px;">
-                <h6>Transfered Branch: @Model.TransferBranchName</h6>
-              </div>
+  <div class="col-12" style="text-align:start; ">
+    <h6>Branch Name: @Model.BranchName</h6>
+  </div>
+  <div class="col-12" style="text-align:end ; margin-top:-20px;">
+    <h6>Transfered Branch: @Model.TransferBranchName</h6>
+  </div>
 </div>
 <div class="row">
-    <div class="col">
-        <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">SL</th>
-                  <th scope="col">Description of Goods</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Unit Price</th>
-                  <th scope="col">Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                   @foreach (var item in Model.TransferDetails)
-                        {
-                <tr>
-                  <td style="text-align:center">@(++sl)</td>
-                  <td style="text-align:center">@*@item.Product.ProductSubType.SubType*@ @item.Product.ProductCode @item.Product.ProductName</td>
-                  <td style="text-align:center">@item.Quantity @item.Product.Unit.Name</td>
-                  <td style="text-align:center">@item.Rate</td>
-                  <td style="text-align:center">@item.Amount</td>
-                </tr>
-                        }
-              </tbody>
-        </table>
-    </div>
+  <div class="col">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">SL</th>
+          <th scope="col">Description of Goods</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Unit Price</th>
+          <th scope="col">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var item in Model.TransferDetails)
+        {
+          <tr>
+            <td style="text-align:center">@(++sl)</td>
+            <td style="text-align:center">@*@item.Product.ProductSubType.SubType*@ @item.Product.ProductCode @item.Product.ProductName</td>
+            <td style="text-align:center">@item.Quantity @item.Product.Unit.Name</td>
+            <td style="text-align:center">@item.Rate</td>
+            <td style="text-align:center">@item.Amount</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 </div>
-<h6 style="text-align:end; margin-left:-10px">Total Amount: 15000.00 Taka</h6>
+<h6 style="text-align:end; margin-left:-10px">Total Amount: @Model.TransferDetails.Sum(e => e.Amount) Taka</h6>
 
 @*<div class="Row" style="margin-top:10px;">
-    <div class="col-1 text-left">
-        <h6>Say</h6>
-    </div>
-    <div class="col-12 text-left" style="border-bottom:1px dashed; margin-left:50px;">
-    </div>
-</div>
+      <div class="col-1 text-left">
+          <h6>Say</h6>
+      </div>
+      <div class="col-12 text-left" style="border-bottom:1px dashed; margin-left:50px;">
+      </div>
+  </div>
+  <div class="Row" style="margin-top:30px;">
+      <div class="col-12 text-left" style="border-bottom:1px dashed; margin-left:50px;">
+      </div>
+  </div>*@
 <div class="Row" style="margin-top:30px;">
-    <div class="col-12 text-left" style="border-bottom:1px dashed; margin-left:50px;">
-    </div>
-</div>*@
-<div class="Row" style="margin-top:30px;">
-    <div class="col text-left" style="margin-top:10px;">
-        @*<h6><span style=" border-top: 1px solid;">Received By</span></h6>*@
-    </div>
-    <div class="col text-right" style="margin-top:20px;">
-        <h6><span style=" border-top: 1px solid;">Authorised Signature</span></h6>
-    </div>
+  <div class="col text-left" style="margin-top:10px;">
+    @*<h6><span style=" border-top: 1px solid;">Received By</span></h6>*@
+  </div>
+  <div class="col text-right" style="margin-top:20px;">
+    <h6><span style=" border-top: 1px solid;">Authorised Signature</span></h6>
+  </div>
 </div>
