@@ -9,6 +9,7 @@ namespace ShopManagement.Entity.ViewModels
         public int Id { get; set; }
         public DateTime SaleDate { get; set; }
         public string OrderNo { get; set; }
+        public string Remarks { get; set; }
         public string BillNo { get; set; }
         public int BranchId { get; set; }
         public string BranchName { get; set; }

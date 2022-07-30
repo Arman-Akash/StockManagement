@@ -34,6 +34,7 @@ const Sale = () => {
         customerId: null,
         orderNo: '',
         amount: '',
+        remarks: '',
         paidAmount: 0,
         transactionType: '',
         saleDetails: []
@@ -41,11 +42,12 @@ const Sale = () => {
     let [saleObj, setSaleObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
     const fields = [
-        { key: 'saleDate', label: 'Date' , _style: {textAlign:"center"}},
-        { key: 'billNo', label: 'Bill No' , _style: {textAlign:"center"}},
-        { key: 'customerName', label: 'Customer Name' , _style: {textAlign:"center"}},
-        { key: 'billNo', label: 'Bill No' , _style: {textAlign:"center"}},
-        { key: 'amount', label: 'Amount' , _style: {textAlign:"center"}},
+        { key: 'saleDate', label: 'Date', _style: { textAlign: "center" } },
+        { key: 'billNo', label: 'Bill No', _style: { textAlign: "center" } },
+        { key: 'customerName', label: 'Customer Name', _style: { textAlign: "center" } },
+        { key: 'billNo', label: 'Bill No', _style: { textAlign: "center" } },
+        { key: 'amount', label: 'Amount', _style: { textAlign: "center" } },
+        { key: 'remarks', label: 'Remarks', _style: { textAlign: "center" } },
         // 'print', 
         'actions'];
 
@@ -236,6 +238,18 @@ const Sale = () => {
                                                                 labelClassName="float-right"
                                                             />
                                                         </CCol>
+                                                        <CCol md='4'>
+                                                            <SATextArea
+                                                                name="remarks"
+                                                                label="Remarks"
+                                                                isInline="true"
+                                                                type="text"
+                                                                className="text-uppercase"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                labelClassName="float-right"
+                                                            />
+                                                        </CCol>
                                                     </CRow>
 
                                                     <CRow style={{ marginTop: '10px' }}>
@@ -403,6 +417,7 @@ const Sale = () => {
                                                                 orderNo: item.orderNo,
                                                                 amount: item.amount,
                                                                 paidAmount: item.paidAmount,
+                                                                remarks: item.remarks,
                                                                 transactionType: item.transactionType
                                                             }
                                                         });

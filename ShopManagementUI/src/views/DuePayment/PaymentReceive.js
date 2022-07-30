@@ -59,6 +59,7 @@ const PaymentReceive = () => {
         date: new Date(),
         paymentDate: new Date(),
         paymentType: '',
+        chequeNo: '',
         paidBy: '',
         bank: '',
         bankBranchName: '',
@@ -134,7 +135,7 @@ const PaymentReceive = () => {
                                                 placeholderText="dd/MM/yyyy"
                                             />
                                         </CCol>
-                                             <CCol md="4">
+                                        <CCol md="4">
                                             <SAReactAutoSelect
                                                 id="customerId"
                                                 name="customerId"
@@ -151,7 +152,7 @@ const PaymentReceive = () => {
                                         </CCol>
                                     </CRow>
                                     <CRow>
-                                   
+
                                         <CCol md="4">
                                             <SAReactAutoSelect
                                                 id="paymentType"
@@ -192,6 +193,19 @@ const PaymentReceive = () => {
                                         </CCol>
                                     </CRow>
                                     <CRow>
+                                        <CCol md="4">
+                                            <SAInput
+                                                id="chequeNo"
+                                                name="chequeNo"
+                                                type="text"
+                                                label="Cheque No"
+                                                isInline="true"
+                                                lSize="4"
+                                                className="text-uppercase"
+                                                rSize="8"
+                                                labelClassName="float-right"
+                                            />
+                                        </CCol>
                                         <CCol md="4">
                                             <SAInput
                                                 id="bank"
@@ -271,6 +285,7 @@ const PaymentReceive = () => {
                                                 paymentDate: item.paymentDate,
                                                 paymentType: item.paymentType,
                                                 paidBy: item.paidBy,
+                                                chequeNo: item.chequeNo,
                                                 bank: item.bank,
                                                 bankBranchName: item.bankBranchName,
                                                 customerId: item.customerId,

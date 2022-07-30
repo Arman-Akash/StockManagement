@@ -27,14 +27,17 @@ const Purchase = () => {
         billOfEntryNo: '',
         rcvDate: '',
         rcvFrom: '',
+        comment: '',
         details: []
     }
     let [receiveObj, setReceiveObj] = useState({ data: data });
     let [unitName, setUnitname] = useState('');
     const fields = [
-        { key: 'rcvDate', label: 'Date' , _style: {textAlign:"center"}},
-        { key: 'billOfEntryNo', label: 'Memo No.', _style: {textAlign:"center"} },
-        { key: 'rcvFrom', label: 'Receive From' , _style: {textAlign:"center"}}, 'actions'];
+        { key: 'rcvDate', label: 'Date', _style: { textAlign: "center" } },
+        { key: 'billOfEntryNo', label: 'Memo No.', _style: { textAlign: "center" } },
+        { key: 'rcvFrom', label: 'Receive From', _style: { textAlign: "center" } },
+        { key: 'comment', label: 'Remarks', _style: { textAlign: "center" } },
+        'actions'];
 
     let dataObj = {
         productId: 0,
@@ -99,7 +102,7 @@ const Purchase = () => {
                                                 <div style={{ padding: "0px" }}>
 
                                                     <CRow>
-                                                       
+
                                                         <CCol md="4">
                                                             <SADatePicker
                                                                 id="rcvDate"
@@ -139,8 +142,20 @@ const Purchase = () => {
                                                                 labelClassName="float-right"
                                                             />
                                                         </CCol>
+                                                        <CCol md='4'>
+                                                            <SATextArea
+                                                                name="comment"
+                                                                label="Remarks"
+                                                                isInline="true"
+                                                                type="text"
+                                                                className="text-uppercase"
+                                                                lSize="4"
+                                                                rSize="8"
+                                                                labelClassName="float-right"
+                                                            />
+                                                        </CCol>
                                                     </CRow>
-                                                    
+
                                                     <CRow style={{ marginTop: '10px' }}>
                                                         <SADataTable className="sadatatable-phn"
                                                             md="12"
@@ -222,7 +237,7 @@ const Purchase = () => {
                                                                         onSetDataArray(newArr);
                                                                     }
                                                                 },
-                        
+
                                                                 {
                                                                     thStyle: { width: '15%' },
                                                                     fieldName: 'amount',
@@ -298,6 +313,7 @@ const Purchase = () => {
                                                             id: item.id,
                                                             rcvDate: item.rcvDate,
                                                             billOfEntryNo: item.billOfEntryNo,
+                                                            comment: item.comment,
                                                             rcvFrom: item.rcvFrom
                                                         }
                                                     });
