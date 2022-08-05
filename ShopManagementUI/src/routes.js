@@ -26,6 +26,7 @@ export const outlet = [
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/sale', name: 'Sale', component: Sale },
   { path: '/transfer', name: 'Transfer', component: Transfer },
+  { path: '/product', name: 'Product', component: Product },
   { path: '/localpurchase', name: 'Local Purchase', component: LocalPurchase },
   { path: '/receive', name: 'Product Receive', component: Receive },
   { path: '/customer', name: 'Customer', component: Customer },
@@ -45,7 +46,7 @@ export const warehouse = [
   { path: '/stock-adjustment', name: 'Stock Adjustment', component: StockAdjustment },
   { path: '/user/change-password', exact: true, name: 'Access Control', component: ChangePassword },
   { path: '/admin-report', name: 'Admin Report', component: AdminReportContainer },
-  
+
   { path: '/product-type', name: 'Product Type', component: ProductType },
   { path: '/product-sub-type', name: 'Product Sub Type', component: ProductSubType },
   { path: '/unit', name: 'Unit', component: Unit },

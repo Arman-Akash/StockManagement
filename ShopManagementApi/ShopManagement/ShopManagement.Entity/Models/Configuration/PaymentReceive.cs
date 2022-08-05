@@ -7,6 +7,7 @@ namespace ShopManagement.Entity.Models
     public partial class PaymentReceive : BaseModel
     {
         public int No { get; set; }
+        public string ChequeNo { get; set; }
         public DateTime Date { get; set; }
         public int BranchId { get; set; }
         public Branch Branch { get; set; }

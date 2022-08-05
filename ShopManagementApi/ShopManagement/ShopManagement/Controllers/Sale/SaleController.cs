@@ -48,6 +48,7 @@ namespace ShopManagement.WebApi.Controllers
                     Id = e.Id,
                     SaleDate = e.SaleDate,
                     BillNo = e.BillNo,
+                    Remarks = e.Remarks,
                     TransactionType = e.TransactionType,
                     CustomerId  = e.CustomerId,
                     CustomerName = e.Customer.Name,

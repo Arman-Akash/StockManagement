@@ -13,7 +13,7 @@ namespace ShopManagement.Entity.Models
         }
         public DateTime SaleDate { get; set; }
 
-        //public string BuyerName { get; set; }
+        public string Remarks { get; set; }
         public string OrderNo { get; set; }
         public string BillNo { get; set; }
         public int BranchId { get; set; }
