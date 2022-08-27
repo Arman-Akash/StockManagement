@@ -151,6 +151,7 @@ namespace ShopManagement.WebApi.Controllers
                 Quantity = e.Quantity,
                 Amount = e.Amount
             })
+             .OrderByDescending(e => e.Id)
              .ToListAsync();
 
             return listResult;

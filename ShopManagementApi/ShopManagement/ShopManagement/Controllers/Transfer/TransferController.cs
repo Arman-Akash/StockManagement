@@ -126,6 +126,7 @@ namespace ShopManagement.WebApi.Controllers
                 .Include(e => e.Branch)
                 .Include(e => e.User)
                 .Include(e => e.ReceivedUser)
+                .OrderByDescending(e => e.Id)
                 .ToListAsync()
             };
 
@@ -295,6 +296,7 @@ namespace ShopManagement.WebApi.Controllers
                 Quantity = e.Quantity,
                 Amount = e.Amount
             })
+             .OrderByDescending(e => e.Id)
              .ToListAsync();
 
             return listResult;
